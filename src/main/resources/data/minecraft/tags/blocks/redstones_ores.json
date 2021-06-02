@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:andesite_redstone_ore",
+		"universal_ores:diorite_redstone_ore",
+		"universal_ores:granite_redstone_ore",
+		"universal_ores:tuff_redstone_ore"
+	]
+}

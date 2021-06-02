@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"universal_ores:smelting/ores/diorite/coal"
+		]
+	},
+	"criteria": {
+		"has_diorite_coal_ore": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": ["universal_ores:diorite_coal_ore"]
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "universal_ores:smelting/ores/diorite/coal"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_diorite_coal_ore",
+			"has_the_recipe"
+		]
+	]
+}

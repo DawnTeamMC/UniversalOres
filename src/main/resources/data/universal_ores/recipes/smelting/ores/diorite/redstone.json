@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "universal_ores:diorite_redstone_ore"
+	},
+	"result": "minecraft:redstone",
+	"experience": 0.7,
+	"cookingtime": 200
+}

@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:andesite_diamond_ore",
+		"universal_ores:diorite_diamond_ore",
+		"universal_ores:granite_diamond_ore",
+		"universal_ores:tuff_diamond_ore"
+	]
+}

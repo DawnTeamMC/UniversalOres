@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "universal_ores:granite_gold_ore"
+	},
+	"result": "minecraft:gold_ingot",
+	"experience": 1.0,
+	"cookingtime": 200
+}

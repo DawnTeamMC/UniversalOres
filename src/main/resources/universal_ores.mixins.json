@@ -1,0 +1,9 @@
+{
+	"required": true,
+	"package": "com.hugman.universal_ores.mixin",
+	"compatibilityLevel": "JAVA_16",
+	"mixins": ["ConfiguredFeaturesMixin"],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

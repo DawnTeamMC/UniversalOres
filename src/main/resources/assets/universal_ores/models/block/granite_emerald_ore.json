@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "universal_ores:block/granite_emerald_ore"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:andesite_lapis_ore",
+		"universal_ores:diorite_lapis_ore",
+		"universal_ores:granite_lapis_ore",
+		"universal_ores:tuff_lapis_ore"
+	]
+}
