@@ -40,7 +40,7 @@
 		},
 		"modupdater": {
 			"strategy": "curseforge",
-			"projectID": 399648
+			"projectID": 489884
 		}
 	},
 	"license": "MIT"
