@@ -1,5 +1,6 @@
 package com.hugman.universal_ores;
 
+import com.google.common.reflect.Reflection;
 import com.hugman.dawn.api.object.ModData;
 import com.hugman.universal_ores.init.UniversalOresBlocks;
 import net.fabricmc.api.ModInitializer;
@@ -9,7 +10,7 @@ public class UniversalOres implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		UniversalOresBlocks.init();
+		Reflection.initialize(UniversalOresBlocks.class);
 		MOD_DATA.registerCreators();
 	}
 }
