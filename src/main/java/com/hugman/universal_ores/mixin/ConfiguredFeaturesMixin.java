@@ -1,9 +1,10 @@
 package com.hugman.universal_ores.mixin;
 
 import com.google.common.collect.ImmutableList;
+import com.hugman.universal_ores.creator.bundle.block.OverworldOreBundle;
 import com.hugman.universal_ores.init.UniversalOresBlocks;
-import com.hugman.universal_ores.init.world.UniversalOresRuleTests;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import com.hugman.universal_ores.util.OreUtil;
+import net.minecraft.world.gen.feature.OreConfiguredFeatures;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -12,100 +13,89 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ConfiguredFeatures.class)
+import java.util.ArrayList;
+import java.util.List;
+
+@Mixin(OreConfiguredFeatures.class)
 public class ConfiguredFeaturesMixin {
 	@Shadow
 	@Final
 	@Mutable
-	public static ImmutableList<OreFeatureConfig.Target> COAL_ORE_TARGETS, IRON_ORE_TARGETS, GOLD_ORE_TARGETS, COPPER_ORE_TARGETS, LAPIS_ORE_TARGETS, REDSTONE_ORE_TARGETS, EMERALD_ORE_TARGETS, DIAMOND_ORE_TARGETS;
+	public static List<OreFeatureConfig.Target> COAL_ORES, IRON_ORES, OVERWORLD_GOLD_ORES, COPPER_ORES, LAPIS_ORES, DIAMOND_ORES;
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;COAL_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;COAL_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addCoalOreTargets(CallbackInfo ci) {
-		COAL_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.coal().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.coal().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.coal().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.coal().getDefaultState()))
-				.addAll(COAL_ORE_TARGETS)
+		COAL_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::coal))
+				.addAll(COAL_ORES)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;IRON_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;IRON_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addIronOreTargets(CallbackInfo ci) {
-		IRON_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.iron().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.iron().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.iron().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.iron().getDefaultState()))
-				.addAll(IRON_ORE_TARGETS)
+		IRON_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::iron))
+				.addAll(IRON_ORES)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;GOLD_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;OVERWORLD_GOLD_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addGoldOreTargets(CallbackInfo ci) {
-		GOLD_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.gold().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.gold().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.gold().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.gold().getDefaultState()))
-				.addAll(GOLD_ORE_TARGETS)
+		OVERWORLD_GOLD_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::gold))
+				.addAll(OVERWORLD_GOLD_ORES)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;COPPER_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;COPPER_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addCopperOreTargets(CallbackInfo ci) {
-		COPPER_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.copper().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.copper().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.copper().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.copper().getDefaultState()))
-				.addAll(COPPER_ORE_TARGETS)
+		COPPER_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::copper))
+				.addAll(COPPER_ORES)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;LAPIS_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;LAPIS_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addLapisOreTargets(CallbackInfo ci) {
-		LAPIS_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.lapis().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.lapis().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.lapis().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.lapis().getDefaultState()))
-				.addAll(LAPIS_ORE_TARGETS)
+		LAPIS_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::lapis))
+				.addAll(LAPIS_ORES)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;REDSTONE_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
-	private static void addRedstoneOreTargets(CallbackInfo ci) {
-		REDSTONE_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.redstone().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.redstone().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.redstone().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.redstone().getDefaultState()))
-				.addAll(REDSTONE_ORE_TARGETS)
+	@ModifyArg(
+			method = "<clinit>",
+			slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=ore_redstone")),
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/OreFeatureConfig;<init>(Ljava/util/List;I)V", ordinal = 0)
+	)
+	private static List<OreFeatureConfig.Target> modifyRedstoneTargets(List<OreFeatureConfig.Target> original) {
+		return ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::redstone))
+				.addAll(original)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;EMERALD_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
-	private static void addEmeraldOreTargets(CallbackInfo ci) {
-		EMERALD_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.emerald().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.emerald().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.emerald().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.emerald().getDefaultState()))
-				.addAll(EMERALD_ORE_TARGETS)
+	@ModifyArg(
+			method = "<clinit>",
+			slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=ore_emerald")),
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/gen/feature/OreFeatureConfig;<init>(Ljava/util/List;I)V", ordinal = 0)
+	)
+	private static List<OreFeatureConfig.Target> modifyEmeraldTargets(List<OreFeatureConfig.Target> original) {
+		return ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::emerald))
+				.addAll(original)
 				.build();
 	}
 
-	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/ConfiguredFeatures;DIAMOND_ORE_TARGETS:Lcom/google/common/collect/ImmutableList;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
+	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/gen/feature/OreConfiguredFeatures;DIAMOND_ORES:Ljava/util/List;", opcode = Opcodes.PUTSTATIC, ordinal = 0, shift = At.Shift.AFTER))
 	private static void addDiamondOreTargets(CallbackInfo ci) {
-		DIAMOND_ORE_TARGETS = ImmutableList.<OreFeatureConfig.Target>builder()
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.ANDESITE_RULE, UniversalOresBlocks.ANDESITE_ORES.diamond().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.DIORITE_RULE, UniversalOresBlocks.DIORITE_ORES.diamond().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.GRANITE_RULE, UniversalOresBlocks.GRANITE_ORES.diamond().getDefaultState()))
-				.add(OreFeatureConfig.createTarget(UniversalOresRuleTests.TUFF_RULE, UniversalOresBlocks.TUFF_ORES.diamond().getDefaultState()))
-				.addAll(DIAMOND_ORE_TARGETS)
+		DIAMOND_ORES = ImmutableList.<OreFeatureConfig.Target>builder()
+				.addAll(OreUtil.getNewOverworldTargets(OverworldOreBundle::diamond))
+				.addAll(DIAMOND_ORES)
 				.build();
 	}
 }
