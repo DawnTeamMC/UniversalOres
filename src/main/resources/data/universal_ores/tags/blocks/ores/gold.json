@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:andesite_gold_ore",
+		"universal_ores:diorite_gold_ore",
+		"universal_ores:granite_gold_ore",
+		"universal_ores:tuff_gold_ore",
+		"universal_ores:calcite_gold_ore"
+	]
+}

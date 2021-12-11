@@ -1,9 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"universal_ores:andesite_coal_ore",
-		"universal_ores:diorite_coal_ore",
-		"universal_ores:granite_coal_ore",
-		"universal_ores:tuff_coal_ore"
+		"#universal_ores:ores/coal"
 	]
 }

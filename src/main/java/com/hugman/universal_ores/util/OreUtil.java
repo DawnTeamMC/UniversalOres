@@ -19,12 +19,14 @@ public class OreUtil {
 	public static final RuleTest DIORITE_RULE = new BlockMatchRuleTest(Blocks.DIORITE);
 	public static final RuleTest GRANITE_RULE = new BlockMatchRuleTest(Blocks.GRANITE);
 	public static final RuleTest TUFF_RULE = new BlockMatchRuleTest(Blocks.TUFF);
+	public static final RuleTest CALCITE_RULE = new BlockMatchRuleTest(Blocks.CALCITE);
 
 	public static List<OreFeatureConfig.Target> getNewOverworldTargets(Function<OverworldOreBundle, Block> state) {
 		return List.of(
 				OreFeatureConfig.createTarget(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).getDefaultState()),
-				OreFeatureConfig.createTarget(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).getDefaultState()));
+				OreFeatureConfig.createTarget(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).getDefaultState()),
+				OreFeatureConfig.createTarget(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).getDefaultState()));
 	}
 }

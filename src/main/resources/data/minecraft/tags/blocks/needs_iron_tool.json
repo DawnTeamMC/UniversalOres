@@ -1,21 +1,9 @@
 {
 	"replace": false,
 	"values": [
-		"universal_ores:andesite_gold_ore",
-		"universal_ores:diorite_gold_ore",
-		"universal_ores:granite_gold_ore",
-		"universal_ores:tuff_gold_ore",
-		"universal_ores:andesite_redstone_ore",
-		"universal_ores:diorite_redstone_ore",
-		"universal_ores:granite_redstone_ore",
-		"universal_ores:tuff_redstone_ore",
-		"universal_ores:andesite_emerald_ore",
-		"universal_ores:diorite_emerald_ore",
-		"universal_ores:granite_emerald_ore",
-		"universal_ores:tuff_emerald_ore",
-		"universal_ores:andesite_diamond_ore",
-		"universal_ores:diorite_diamond_ore",
-		"universal_ores:granite_diamond_ore",
-		"universal_ores:tuff_diamond_ore"
+		"#universal_ores:ores/gold",
+		"#universal_ores:ores/redstone",
+		"#universal_ores:ores/emerald",
+		"#universal_ores:ores/diamond"
 	]
 }

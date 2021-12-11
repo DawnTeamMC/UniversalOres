@@ -1,9 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"universal_ores:andesite_copper_ore",
-		"universal_ores:diorite_copper_ore",
-		"universal_ores:granite_copper_ore",
-		"universal_ores:tuff_copper_ore"
+		"#universal_ores:ores/copper"
 	]
 }
