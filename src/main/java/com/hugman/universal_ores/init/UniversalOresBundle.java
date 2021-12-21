@@ -15,9 +15,4 @@ public abstract class UniversalOresBundle extends Bundle {
 		UniversalOres.MOD_DATA.addCreator(creator);
 		return creator;
 	}
-
-	protected static <V extends Bundle> V bundle(V bundle) {
-		UniversalOres.MOD_DATA.addBundle(bundle);
-		return bundle;
-	}
 }
