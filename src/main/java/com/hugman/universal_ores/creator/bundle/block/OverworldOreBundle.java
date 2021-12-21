@@ -22,14 +22,14 @@ public class OverworldOreBundle extends Bundle {
 	 */
 	public OverworldOreBundle(String name, AbstractBlock.Settings settings) {
 		BlockCreator.Builder builder = new BlockCreator.Builder().settings(settings).itemGroup(ItemGroup.BUILDING_BLOCKS);
-		COAL_ORE = put(builder.copy().name(name + "_coal_ore").blockProvider(s -> new OreBlock(s, UniformIntProvider.create(0, 2))).build());
-		IRON_ORE = put(builder.copy().name(name + "_iron_ore").blockProvider(OreBlock::new).build());
-		COPPER_ORE = put(builder.copy().name(name + "_copper_ore").blockProvider(OreBlock::new).build());
-		GOLD_ORE = put(builder.copy().name(name + "_gold_ore").blockProvider(OreBlock::new).build());
-		REDSTONE_ORE = put(builder.copy().name(name + "_redstone_ore").blockProvider(RedstoneOreBlock::new).settings(FabricBlockSettings.copyOf(settings).ticksRandomly().luminance((state) -> (Boolean) state.get(Properties.LIT) ? 9 : 0)).build());
-		EMERALD_ORE = put(builder.copy().name(name + "_emerald_ore").blockProvider(s -> new OreBlock(s, UniformIntProvider.create(3, 7))).build());
-		LAPIS_ORE = put(builder.copy().name(name + "_lapis_ore").blockProvider(s -> new OreBlock(s, UniformIntProvider.create(2, 5))).build());
-		DIAMOND_ORE = put(builder.copy().name(name + "_diamond_ore").blockProvider(s -> new OreBlock(s, UniformIntProvider.create(3, 7))).build());
+		COAL_ORE = put(builder.copy().name(name + "_coal_ore").provider(s -> new OreBlock(s, UniformIntProvider.create(0, 2))).build());
+		IRON_ORE = put(builder.copy().name(name + "_iron_ore").provider(OreBlock::new).build());
+		COPPER_ORE = put(builder.copy().name(name + "_copper_ore").provider(OreBlock::new).build());
+		GOLD_ORE = put(builder.copy().name(name + "_gold_ore").provider(OreBlock::new).build());
+		REDSTONE_ORE = put(builder.copy().name(name + "_redstone_ore").provider(RedstoneOreBlock::new).settings(FabricBlockSettings.copyOf(settings).ticksRandomly().luminance((state) -> (Boolean) state.get(Properties.LIT) ? 9 : 0)).build());
+		EMERALD_ORE = put(builder.copy().name(name + "_emerald_ore").provider(s -> new OreBlock(s, UniformIntProvider.create(3, 7))).build());
+		LAPIS_ORE = put(builder.copy().name(name + "_lapis_ore").provider(s -> new OreBlock(s, UniformIntProvider.create(2, 5))).build());
+		DIAMOND_ORE = put(builder.copy().name(name + "_diamond_ore").provider(s -> new OreBlock(s, UniformIntProvider.create(3, 7))).build());
 	}
 
 	public Block coal() {

@@ -24,7 +24,7 @@
 	"depends": {
 		"minecraft": ">=1.18",
 		"fabric": "*",
-		"dawn": ">=3.0.0"
+		"dawn": ">=3.2.0"
 	},
 	"custom": {
 		"modmenu": {
