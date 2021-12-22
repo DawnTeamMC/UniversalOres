@@ -1,0 +1,48 @@
+{
+	"modmenu.descriptionTranslation.universal_ores": "Добавляет варианты руд для андезита, диорита, гранита и туфа.",
+
+	"block.universal_ores.andesite_coal_ore": "Угленосный андезит",
+	"block.universal_ores.andesite_iron_ore": "Железоносный андезит",
+	"block.universal_ores.andesite_gold_ore": "Золотоносный андезит",
+	"block.universal_ores.andesite_copper_ore": "Меденосный андезит",
+	"block.universal_ores.andesite_lapis_ore": "Лазуритоносный андезит",
+	"block.universal_ores.andesite_redstone_ore": "Редстоуноносный андезит",
+	"block.universal_ores.andesite_emerald_ore": "Изумрудоносный андезит",
+	"block.universal_ores.andesite_diamond_ore": "Алмазоносный андезит",
+
+	"block.universal_ores.diorite_coal_ore": "Угленосный диорит",
+	"block.universal_ores.diorite_iron_ore": "Железоносный диорит",
+	"block.universal_ores.diorite_gold_ore": "Золотоносный диорит",
+	"block.universal_ores.diorite_copper_ore": "Меденосный диорит",
+	"block.universal_ores.diorite_lapis_ore": "Лазуритоносный диорит",
+	"block.universal_ores.diorite_redstone_ore": "Редстоуноносный диорит",
+	"block.universal_ores.diorite_emerald_ore": "Изумрудоносный диорит",
+	"block.universal_ores.diorite_diamond_ore": "Алмазоносный диорит",
+
+	"block.universal_ores.granite_coal_ore": "Угленосный гранит",
+	"block.universal_ores.granite_iron_ore": "Железоносный гранит",
+	"block.universal_ores.granite_gold_ore": "Золотоносный гранит",
+	"block.universal_ores.granite_copper_ore": "Меденосный гранит",
+	"block.universal_ores.granite_lapis_ore": "Лазуритоносный гранит",
+	"block.universal_ores.granite_redstone_ore": "Редстоуноносный гранит",
+	"block.universal_ores.granite_emerald_ore": "Изумрудоносный гранит",
+	"block.universal_ores.granite_diamond_ore": "Алмазоносный гранит",
+
+	"block.universal_ores.tuff_coal_ore": "Угленосный туф",
+	"block.universal_ores.tuff_iron_ore": "Железоносный туф",
+	"block.universal_ores.tuff_gold_ore": "Золотоносный туф",
+	"block.universal_ores.tuff_copper_ore": "Меденосный туф",
+	"block.universal_ores.tuff_lapis_ore": "Лазуритоносный туф",
+	"block.universal_ores.tuff_redstone_ore": "Редстоуноносный туф",
+	"block.universal_ores.tuff_emerald_ore": "Изумрудоносный туф",
+	"block.universal_ores.tuff_diamond_ore": "Алмазоносный туф",
+
+	"block.universal_ores.calcite_coal_ore": "Угленосный кальцит",
+	"block.universal_ores.calcite_iron_ore": "Железоносный кальцит",
+	"block.universal_ores.calcite_gold_ore": "Золотоносный кальцит",
+	"block.universal_ores.calcite_copper_ore": "Меденосный кальцит",
+	"block.universal_ores.calcite_lapis_ore": "Лазуритоносный кальцит",
+	"block.universal_ores.calcite_redstone_ore": "Редстоуноносный кальцит",
+	"block.universal_ores.calcite_emerald_ore": "Изумрудоносный кальцит",
+	"block.universal_ores.calcite_diamond_ore": "Алмазоносный кальцит"
+}
