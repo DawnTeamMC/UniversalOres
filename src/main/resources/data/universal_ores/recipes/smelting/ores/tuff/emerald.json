@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "emerald",
 	"ingredient": {
 		"item": "universal_ores:tuff_emerald_ore"
 	},

@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "coal",
 	"ingredient": {
 		"item": "universal_ores:tuff_coal_ore"
 	},

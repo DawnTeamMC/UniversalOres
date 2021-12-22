@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "coal",
 	"ingredient": {
 		"item": "universal_ores:diorite_coal_ore"
 	},
