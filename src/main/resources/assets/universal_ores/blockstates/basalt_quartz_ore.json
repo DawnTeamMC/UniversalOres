@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "universal_ores:block/basalt_quartz_ore"
+		}
+	}
+}
