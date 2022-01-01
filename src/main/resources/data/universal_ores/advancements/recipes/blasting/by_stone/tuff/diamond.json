@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"universal_ores:blasting/by_stone/tuff/diamond"
+		]
+	},
+	"criteria": {
+		"has_tuff_diamond_ore": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": ["universal_ores:tuff_diamond_ore"]
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "universal_ores:blasting/by_stone/tuff/diamond"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_tuff_diamond_ore",
+			"has_the_recipe"
+		]
+	]
+}

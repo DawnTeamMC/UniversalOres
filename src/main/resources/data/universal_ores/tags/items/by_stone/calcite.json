@@ -1,0 +1,13 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:calcite_coal_ore",
+		"universal_ores:calcite_iron_ore",
+		"universal_ores:calcite_gold_ore",
+		"universal_ores:calcite_copper_ore",
+		"universal_ores:calcite_redstone_ore",
+		"universal_ores:calcite_lapis_ore",
+		"universal_ores:calcite_emerald_ore",
+		"universal_ores:calcite_diamond_ore"
+	]
+}

@@ -1,6 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"#universal_ores:ores/iron"
+		"#universal_ores:by_ore/iron"
 	]
 }

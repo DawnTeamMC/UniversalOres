@@ -1,0 +1,13 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:andesite_coal_ore",
+		"universal_ores:andesite_iron_ore",
+		"universal_ores:andesite_gold_ore",
+		"universal_ores:andesite_copper_ore",
+		"universal_ores:andesite_redstone_ore",
+		"universal_ores:andesite_lapis_ore",
+		"universal_ores:andesite_emerald_ore",
+		"universal_ores:andesite_diamond_ore"
+	]
+}

@@ -1,6 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"#universal_ores:ores/redstone"
+		"#universal_ores:by_ore/redstone"
 	]
 }

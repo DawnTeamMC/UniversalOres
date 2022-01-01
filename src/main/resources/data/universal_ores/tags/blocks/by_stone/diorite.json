@@ -1,0 +1,13 @@
+{
+	"replace": false,
+	"values": [
+		"universal_ores:diorite_coal_ore",
+		"universal_ores:diorite_iron_ore",
+		"universal_ores:diorite_gold_ore",
+		"universal_ores:diorite_copper_ore",
+		"universal_ores:diorite_redstone_ore",
+		"universal_ores:diorite_lapis_ore",
+		"universal_ores:diorite_emerald_ore",
+		"universal_ores:diorite_diamond_ore"
+	]
+}

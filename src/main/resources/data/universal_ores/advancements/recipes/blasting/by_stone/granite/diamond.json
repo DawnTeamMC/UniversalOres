@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"universal_ores:blasting/by_stone/granite/diamond"
+		]
+	},
+	"criteria": {
+		"has_granite_diamond_ore": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": ["universal_ores:granite_diamond_ore"]
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "universal_ores:blasting/by_stone/granite/diamond"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_granite_diamond_ore",
+			"has_the_recipe"
+		]
+	]
+}

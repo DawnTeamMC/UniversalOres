@@ -1,8 +1,8 @@
 {
 	"replace": false,
 	"values": [
-		"#universal_ores:ores/iron",
-		"#universal_ores:ores/copper",
-		"#universal_ores:ores/lapis"
+		"#universal_ores:by_ore/iron",
+		"#universal_ores:by_ore/copper",
+		"#universal_ores:by_ore/lapis"
 	]
 }

@@ -1,13 +1,10 @@
 {
 	"replace": false,
 	"values": [
-		"#universal_ores:ores/coal",
-		"#universal_ores:ores/iron",
-		"#universal_ores:ores/gold",
-		"#universal_ores:ores/copper",
-		"#universal_ores:ores/redstone",
-		"#universal_ores:ores/lapis",
-		"#universal_ores:ores/emerald",
-		"#universal_ores:ores/diamond"
+		"#universal_ores:by_stone/andesite",
+		"#universal_ores:by_stone/diorite",
+		"#universal_ores:by_stone/andesite",
+		"#universal_ores:by_stone/tuff",
+		"#universal_ores:by_stone/calcite",
 	]
 }
