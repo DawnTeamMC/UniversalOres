@@ -44,5 +44,11 @@
 	"block.universal_ores.calcite_lapis_ore": "Calcite Lapis Lazuli Ore",
 	"block.universal_ores.calcite_redstone_ore": "Calcite Redstone Ore",
 	"block.universal_ores.calcite_emerald_ore": "Calcite Emerald Ore",
-	"block.universal_ores.calcite_diamond_ore": "Calcite Diamond Ore"
+	"block.universal_ores.calcite_diamond_ore": "Calcite Diamond Ore",
+
+	"block.universal_ores.blackstone_gold_ore": "Blackstone Gold Ore",
+	"block.universal_ores.blackstone_quartz_ore": "Blackstone Quartz Ore",
+
+	"block.universal_ores.basalt_gold_ore": "Basalt Gold Ore",
+	"block.universal_ores.basalt_quartz_ore": "Basalt Quartz Ore"
 }
