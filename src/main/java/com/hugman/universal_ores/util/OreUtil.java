@@ -3,7 +3,6 @@ package com.hugman.universal_ores.util;
 import com.hugman.universal_ores.creator.bundle.block.OverworldOreBundle;
 import com.hugman.universal_ores.init.UniversalOresBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
@@ -11,8 +10,6 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class OreUtil {
 	public static final RuleTest ANDESITE_RULE = new BlockMatchRuleTest(Blocks.ANDESITE);
