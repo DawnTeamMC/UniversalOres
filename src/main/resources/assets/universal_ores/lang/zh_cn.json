@@ -1,0 +1,54 @@
+{
+	"modmenu.descriptionTranslation.universal_ores": "为安山岩、闪长岩、花岗岩、凝灰岩与方解石添加了对应的矿石变种。",
+
+	"block.universal_ores.andesite_coal_ore": "安山岩煤矿石",
+	"block.universal_ores.andesite_iron_ore": "安山岩铁矿石",
+	"block.universal_ores.andesite_gold_ore": "安山岩金矿石",
+	"block.universal_ores.andesite_copper_ore": "安山岩铜矿石",
+	"block.universal_ores.andesite_lapis_ore": "安山岩青金石矿石",
+	"block.universal_ores.andesite_redstone_ore": "安山岩红石矿石",
+	"block.universal_ores.andesite_emerald_ore": "安山岩绿宝石矿石",
+	"block.universal_ores.andesite_diamond_ore": "安山岩钻石矿石",
+
+	"block.universal_ores.diorite_coal_ore": "闪长岩煤矿石",
+	"block.universal_ores.diorite_iron_ore": "闪长岩铁矿石",
+	"block.universal_ores.diorite_gold_ore": "闪长岩金矿石",
+	"block.universal_ores.diorite_copper_ore": "闪长岩铜矿石",
+	"block.universal_ores.diorite_lapis_ore": "闪长岩青金石矿石",
+	"block.universal_ores.diorite_redstone_ore": "闪长岩红石矿石",
+	"block.universal_ores.diorite_emerald_ore": "闪长岩绿宝石矿石",
+	"block.universal_ores.diorite_diamond_ore": "闪长岩钻石矿石",
+
+	"block.universal_ores.granite_coal_ore": "花岗岩煤矿石",
+	"block.universal_ores.granite_iron_ore": "花岗岩铁矿石",
+	"block.universal_ores.granite_gold_ore": "花岗岩金矿石",
+	"block.universal_ores.granite_copper_ore": "花岗岩铜矿石",
+	"block.universal_ores.granite_lapis_ore": "花岗岩青金石矿石",
+	"block.universal_ores.granite_redstone_ore": "花岗岩红石矿石",
+	"block.universal_ores.granite_emerald_ore": "花岗岩绿宝石矿石",
+	"block.universal_ores.granite_diamond_ore": "花岗岩钻石矿石",
+
+	"block.universal_ores.tuff_coal_ore": "凝灰岩煤矿石",
+	"block.universal_ores.tuff_iron_ore": "凝灰岩铁矿石",
+	"block.universal_ores.tuff_gold_ore": "凝灰岩金矿石",
+	"block.universal_ores.tuff_copper_ore": "凝灰岩铜矿石",
+	"block.universal_ores.tuff_lapis_ore": "凝灰岩青金石矿石",
+	"block.universal_ores.tuff_redstone_ore": "凝灰岩红石矿石",
+	"block.universal_ores.tuff_emerald_ore": "凝灰岩绿宝石矿石",
+	"block.universal_ores.tuff_diamond_ore": "凝灰岩钻石矿石",
+	
+	"block.universal_ores.calcite_coal_ore": "方解石煤矿石",
+	"block.universal_ores.calcite_iron_ore": "方解石铁矿石",
+	"block.universal_ores.calcite_gold_ore": "方解石金矿石",
+	"block.universal_ores.calcite_copper_ore": "方解石铜矿石",
+	"block.universal_ores.calcite_lapis_ore": "方解石青金石矿石",
+	"block.universal_ores.calcite_redstone_ore": "方解石红石矿石",
+	"block.universal_ores.calcite_emerald_ore": "方解石绿宝石矿石",
+	"block.universal_ores.calcite_diamond_ore": "方解石钻石矿石",
+
+	"block.universal_ores.blackstone_gold_ore": "黑石金矿石",
+	"block.universal_ores.blackstone_quartz_ore": "黑石下界石英矿石",
+
+	"block.universal_ores.basalt_gold_ore": "玄武岩金矿石",
+	"block.universal_ores.basalt_quartz_ore": "玄武岩下界石英矿石"
+}
