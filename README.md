@@ -1,6 +1,6 @@
 [![Universal Ores](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/universal_ores/header.png)](https://dawnteammc.github.io/universal_ores)
 
-# 🌸 Universal Ores
+# 💎 Universal Ores
 [![Latest release](https://img.shields.io/github/release/DawnTeamMC/UniversalOres.svg)](https://github.com/DawnTeamMC/UniversalOres/releases/latest)
 [![CurseForge downloads](http://cf.way2muchnoise.eu/full_universal-ores_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/universal-ores)
 [![License (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
