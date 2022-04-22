@@ -22,7 +22,7 @@ You can download the latest stable builds from both pages without signing up for
 ⚠ Universal Ores **needs** the following mods to be installed:
 
 - Fabric API: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
-- Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnTeamMC) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
+- Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnAPI) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).

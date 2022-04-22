@@ -12,7 +12,7 @@ Universal Ores is a mod for the latest version of Minecraft that adds new vanill
 ⚠ Universal Ores **needs** the following mods to be installed:
 
 - Fabric API: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
-- Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnTeamMC) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
+- Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnAPI) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
 
 ## ❤️ Support
 [![Patreon supporters](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DHugman%26type%3Dpatrons&style=flat-square)](https://patreon.com/Hugman)
