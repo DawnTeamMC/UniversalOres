@@ -1,4 +1,4 @@
-[![Universal Ores](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/universal_ores/header.png)](https://dawnteammc.github.io/universal_ores)
+[![Universal Ores](https://dawnteammc.github.io/universal_ores/images/header.png)](https://dawnteammc.github.io/universal_ores)
 
 # 💎 Universal Ores
 [![Latest release](https://img.shields.io/github/release/DawnTeamMC/UniversalOres.svg)](https://github.com/DawnTeamMC/UniversalOres/releases/latest)
