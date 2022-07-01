@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "copper_ingot",
 	"ingredient": {
 		"item": "universal_ores:calcite_copper_ore"
 	},

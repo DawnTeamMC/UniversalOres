@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "iron_ingot",
 	"ingredient": {
 		"item": "universal_ores:andesite_iron_ore"
 	},

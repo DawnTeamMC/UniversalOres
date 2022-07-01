@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "iron_ingot",
 	"ingredient": {
 		"item": "universal_ores:tuff_iron_ore"
 	},

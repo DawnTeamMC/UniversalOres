@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "gold_ingot",
 	"ingredient": {
 		"item": "universal_ores:diorite_gold_ore"
 	},

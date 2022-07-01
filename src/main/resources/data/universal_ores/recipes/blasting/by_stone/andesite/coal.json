@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "coal",
 	"ingredient": {
 		"item": "universal_ores:andesite_coal_ore"
 	},

@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "redstone",
 	"ingredient": {
 		"item": "universal_ores:andesite_redstone_ore"
 	},
