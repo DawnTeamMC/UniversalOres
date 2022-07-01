@@ -3,7 +3,8 @@
 [![Discord user count](https://img.shields.io/discord/504608980799062036?label=&color=424549&labelColor=7289da&style=for-the-badge&logo=Discord&logoColor=DDE4EF)](https://discord.gg/8ksTVJu)
 [![Twitter followers](https://img.shields.io/twitter/follow/DawnTeamMC?label=&color=424549&labelColor=1DA1F2&style=for-the-badge&logo=Twitter&logoColor=DDE4EF)](https://twitter.com/DawnTeamMC)
 
-Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, diorite, granite, tuff and calcite that generate naturally where they should precisely be.
+Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
+diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
 
 **You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores).**
 
@@ -13,6 +14,10 @@ Universal Ores is a mod for the latest version of Minecraft that adds new vanill
 
 - Fabric API: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
 - Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnAPI) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
+
+### Compatible mods
+Universal Ores is compatible with other mods and data packs, as long as they use **the vanilla configured features**.
+There is no feasible solution to enable wider compatibility.
 
 ## ❤️ Support
 [![Patreon supporters](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DHugman%26type%3Dpatrons&style=flat-square)](https://patreon.com/Hugman)

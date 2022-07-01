@@ -2,14 +2,15 @@
 
 # 💎 Universal Ores
 [![Latest release](https://img.shields.io/github/release/DawnTeamMC/UniversalOres.svg)](https://github.com/DawnTeamMC/UniversalOres/releases/latest)
-[![CurseForge downloads](http://cf.way2muchnoise.eu/full_universal-ores_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/universal-ores)
+[![CurseForge downloads](http://cf.way2muchnoise.eu/full_489884_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/universal-ores)
 [![License (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
 [![GitHub stars](https://img.shields.io/github/stars/DawnTeamMC/UniversalOres.svg?style=flat-square)]()
 
 [![Discord user count](https://img.shields.io/discord/504608980799062036.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/8ksTVJu)
 [![Twitter followers](https://img.shields.io/twitter/follow/DawnTeamMC.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DawnTeamMC)
 
-Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, diorite, granite, tuff and calcite that generate naturally where they should precisely be.
+Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
+diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
 
 **You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores).**
 
@@ -23,6 +24,9 @@ You can download the latest stable builds from both pages without signing up for
 
 - Fabric API: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
 - Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnAPI) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
+
+### Compatible mods
+Universal Ores is compatible with other mods and data packs, as long as they use **the vanilla configured features**. There is no feasible solution to enable wider compatibility.
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).
