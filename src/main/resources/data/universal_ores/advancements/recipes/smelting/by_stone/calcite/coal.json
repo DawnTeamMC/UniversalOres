@@ -6,7 +6,7 @@
 		]
 	},
 	"criteria": {
-		"has_calcite_coal_ore": {
+		"has_the_ore": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
@@ -25,7 +25,7 @@
 	},
 	"requirements": [
 		[
-			"has_calcite_coal_ore",
+			"has_the_ore",
 			"has_the_recipe"
 		]
 	]
