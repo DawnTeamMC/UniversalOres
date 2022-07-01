@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "copper_ingot",
 	"ingredient": {
 		"item": "universal_ores:tuff_copper_ore"
 	},

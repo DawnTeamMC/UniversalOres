@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "emerald",
 	"ingredient": {
 		"item": "universal_ores:calcite_emerald_ore"
 	},

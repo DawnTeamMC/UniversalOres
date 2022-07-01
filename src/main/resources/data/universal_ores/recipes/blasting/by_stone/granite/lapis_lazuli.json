@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "lapis_lazuli",
 	"ingredient": {
 		"item": "universal_ores:granite_lapis_ore"
 	},

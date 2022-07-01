@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:smelting",
+	"group": "diamond",
 	"ingredient": {
 		"item": "universal_ores:granite_diamond_ore"
 	},

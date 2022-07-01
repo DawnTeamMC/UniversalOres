@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 14,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:blackstone"
+        },
+        "state": {
+          "Name": "universal_ores:blackstone_quartz_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:basalt"
+        },
+        "state": {
+          "Name": "universal_ores:basalt_quartz_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:netherrack"
+        },
+        "state": {
+          "Name": "universal_ores:nether_quartz_ore"
+        }
+      }
+    ]
+  }
+}

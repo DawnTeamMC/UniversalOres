@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "group": "quartz",
+  "ingredient": {
+    "item": "universal_ores:basalt_quartz_ore"
+  },
+  "result": "minecraft:quartz",
+  "experience": 0.2,
+  "cookingtime": 100
+}

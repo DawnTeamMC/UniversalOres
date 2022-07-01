@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "gold_ingot",
 	"ingredient": {
 		"item": "universal_ores:granite_gold_ore"
 	},

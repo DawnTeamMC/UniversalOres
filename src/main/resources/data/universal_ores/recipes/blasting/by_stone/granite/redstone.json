@@ -1,5 +1,6 @@
 {
 	"type": "minecraft:blasting",
+	"group": "redstone",
 	"ingredient": {
 		"item": "universal_ores:granite_redstone_ore"
 	},
