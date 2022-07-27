@@ -28,7 +28,7 @@
           "block": "minecraft:netherrack"
         },
         "state": {
-          "Name": "universal_ores:nether_gold_ore"
+          "Name": "minecraft:nether_gold_ore"
         }
       }
     ]
