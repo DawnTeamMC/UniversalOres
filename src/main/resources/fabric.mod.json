@@ -22,9 +22,8 @@
 		"universal_ores.mixins.json"
 	],
 	"depends": {
-		"minecraft": ">=1.19",
-		"fabric": "*",
-		"dawn": ">=3.5.0"
+		"dawn": ">=4.1.0",
+		"fabric": "*"
 	},
 	"custom": {
 		"modmenu": {
