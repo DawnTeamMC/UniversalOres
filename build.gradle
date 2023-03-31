@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.1-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
 }
 
 apply from: 'https://dawnteammc.github.io/resources/gradle_scripts/fabric-mod/java-17.gradle'
@@ -9,8 +9,8 @@ apply from: 'https://dawnteammc.github.io/resources/gradle_scripts/fabric-transl
 repositories {
     maven { url 'https://jitpack.io' }                  // Required for Dawn API
 
+    maven { url 'https://maven.terraformersmc.com/' }   // Required for Mod Menu and Terraform APIs
     maven { url 'https://maven.shedaniel.me/' }         // Required for Cloth Config
-    maven { url 'https://maven.terraformersmc.com/' }   // Required for Mod Menu
     maven { url 'https://maven.ryanliptak.com/' }       // Required for AppleSkin
 }
 

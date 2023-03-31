@@ -28,8 +28,6 @@ public class NetherOres {
 	public void register(Registrar r) {
 		r.add(this.name + "_gold_ore", this.gold);
 		r.add(this.name + "_quartz_ore", this.quartz);
-
-		// TODO: add to creative inventory
 	}
 
 	public ExperienceDroppingBlock gold() {
