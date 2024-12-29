@@ -1,0 +1,52 @@
+{
+  "block.universal_ores.andesite_coal_ore": "Minério de carvão de andesito",
+  "block.universal_ores.andesite_iron_ore": "Minério de ferro de andesito",
+  "block.universal_ores.andesite_gold_ore": "Minério de ouro de andesito",
+  "block.universal_ores.andesite_copper_ore": "Minério de cobre de andesito",
+  "block.universal_ores.andesite_lapis_ore": "Minério de lápis-lazúli de andesito",
+  "block.universal_ores.andesite_redstone_ore": "Minério de redstone de andesito",
+  "block.universal_ores.andesite_emerald_ore": "Minério de esmeralda de andesito",
+  "block.universal_ores.andesite_diamond_ore": "Minério de diamante de andesito",
+
+  "block.universal_ores.diorite_coal_ore": "Minério de carvão de diorito",
+  "block.universal_ores.diorite_iron_ore": "Minério de ferro de diorito",
+  "block.universal_ores.diorite_gold_ore": "Minério de ouro de diorito",
+  "block.universal_ores.diorite_copper_ore": "Minério de cobre de diorito",
+  "block.universal_ores.diorite_lapis_ore": "Minério de lápis-lazúli de diorito",
+  "block.universal_ores.diorite_redstone_ore": "Minério de redstone de diorito",
+  "block.universal_ores.diorite_emerald_ore": "Minério de esmeralda de diorito",
+  "block.universal_ores.diorite_diamond_ore": "Minério de diamante de diorito",
+
+  "block.universal_ores.granite_coal_ore": "Minério de carvão de granito",
+  "block.universal_ores.granite_iron_ore": "Minério de ferro de granito",
+  "block.universal_ores.granite_gold_ore": "Minério de ouro de granito",
+  "block.universal_ores.granite_copper_ore": "Minério de cobre de granito",
+  "block.universal_ores.granite_lapis_ore": "Minério de lápis-lazúli de granito",
+  "block.universal_ores.granite_redstone_ore": "Minério de redstone de granito",
+  "block.universal_ores.granite_emerald_ore": "Minério de esmeralda de granito",
+  "block.universal_ores.granite_diamond_ore": "Minério de diamante de granito",
+
+  "block.universal_ores.tuff_coal_ore": "Minério de carvão de tuf",
+  "block.universal_ores.tuff_iron_ore": "Minério de ferro de tuf",
+  "block.universal_ores.tuff_gold_ore": "Minério de ouro de tuf",
+  "block.universal_ores.tuff_copper_ore": "Minério de cobre de tuf",
+  "block.universal_ores.tuff_lapis_ore": "Minério de lápis-lazúli de tuf",
+  "block.universal_ores.tuff_redstone_ore": "Minério de redstone de tuf",
+  "block.universal_ores.tuff_emerald_ore": "Minério de esmeralda de tuf",
+  "block.universal_ores.tuff_diamond_ore": "Minério de diamante de tuf",
+
+  "block.universal_ores.calcite_coal_ore": "Minério de carvão de calcita",
+  "block.universal_ores.calcite_iron_ore": "Minério de ferro de calcita",
+  "block.universal_ores.calcite_gold_ore": "Minério de ouro de calcita",
+  "block.universal_ores.calcite_copper_ore": "Minério de cobre de calcita",
+  "block.universal_ores.calcite_lapis_ore": "Minério de lápis-lazúli de calcita",
+  "block.universal_ores.calcite_redstone_ore": "Minério de redstone de calcita",
+  "block.universal_ores.calcite_emerald_ore": "Minério de esmeralda de calcita",
+  "block.universal_ores.calcite_diamond_ore": "Minério de diamante de calcita",
+
+  "block.universal_ores.blackstone_gold_ore": "Minério de ouro de pedra negra",
+  "block.universal_ores.blackstone_quartz_ore": "Minério de quartzo de pedra negra",
+
+  "block.universal_ores.basalt_gold_ore": "Minério de ouro de basalto",
+  "block.universal_ores.basalt_quartz_ore": "Minério de quartzo de basalto"
+}

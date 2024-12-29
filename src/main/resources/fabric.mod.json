@@ -1,55 +1,47 @@
 {
 	"schemaVersion": 1,
-	"name": "Universal Ores",
 	"id": "universal_ores",
 	"version": "${version}",
-	"icon": "assets/universal_ores/textures/logo.png",
+	"name": "UniversalOres",
+	"description": "\uD83D\uDC8E Patches Missing Ores Blocks to Minecraft.",
 	"authors": [
-		"Hugman"
+		"HealerPlusMC"
 	],
 	"contact": {
-		"homepage": "https://dawnteammc.github.io/universal_ores",
-		"sources": "https://github.com/DawnTeamMC/UniversalOres",
-		"issues": "https://github.com/DawnTeamMC/UniversalOres/issues"
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/universal-ores-enhanced",
+		"sources": ""
 	},
+	"license": "LGPL v3.0",
+	"icon": "assets/universal_ores/textures/logo.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.hugman.universal_ores.UniversalOres"
+			"net.universal_ores.UniversalOres"
+		],
+		"fabric-datagen": [
+			"net.universal_ores.UniversalOresDataGenerator"
 		]
 	},
-	"mixins": [
-		"universal_ores.mixins.json"
-	],
 	"depends": {
-		"minecraft": "1.20.x",
-		"dawn": ">=5.0.0",
-		"fabric": "*"
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": ">=0.102.0"
 	},
-	"custom": {
-		"modmenu": {
-			"links": {
-				"modmenu.twitter": "https://twitter.com/DawnTeamMC",
-				"modmenu.discord": "https://discord.gg/8ksTVJu",
-				"modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric",
-				"modmenu.modrinth": "https://modrinth.com/mod/universal_ores",
-				"modmenu.github_releases": "https://github.com/DawnTeamMC/UniversalOres/releases/",
-				"modmenu.crowdin": "https://crowdin.com/project/dawnteam",
-				"modmenu.wiki": "https://github.com/DawnTeamMC/UniversalOres/wiki/"
-			}
-		},
-		"modupdater": {
-			"strategy": "curseforge",
-			"projectID": 489884
-		},
-		"mc-publish": {
-			"curseforge": 489884,
-			"modrinth": "68kWHuUF",
-			"loaders": [
-				"fabric",
-				"quilt"
-			]
-		}
+	"suggests": {
+		"another-mod": "*"
 	},
-	"license": "LGPL v3.0"
+
+	"mc-publish": {
+		"curseforge": 1153782,
+		"modrinth": "sUkBOCw1",
+		"loaders": [
+			"fabric",
+			"quilt"
+		]
+	},
+	"modupdater": {
+		"strategy": "curseforge",
+		"projectID": 1153782
+	}
 }

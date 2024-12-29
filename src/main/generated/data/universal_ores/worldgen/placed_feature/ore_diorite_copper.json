@@ -1,0 +1,27 @@
+{
+  "feature": "universal_ores:ore_diorite_copper",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 7
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 55
+        },
+        "min_inclusive": {
+          "absolute": 9
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

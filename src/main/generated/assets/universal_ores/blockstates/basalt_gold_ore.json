@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "universal_ores:block/basalt_gold_ore"
+    }
+  }
+}

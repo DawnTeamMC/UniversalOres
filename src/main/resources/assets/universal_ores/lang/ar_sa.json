@@ -1,0 +1,52 @@
+{
+  "block.universal_ores.andesite_coal_ore": "خام الفحم الأنديسايت",
+  "block.universal_ores.andesite_iron_ore": "خام الحديد الأنديسايت",
+  "block.universal_ores.andesite_gold_ore": "خام الذهب الأنديسايت",
+  "block.universal_ores.andesite_copper_ore": "خام النحاس الأنديسايت",
+  "block.universal_ores.andesite_lapis_ore": "خام اللازورد الأنديسايت",
+  "block.universal_ores.andesite_redstone_ore": "خام الريستون الأنديسايت",
+  "block.universal_ores.andesite_emerald_ore": "خام الزمرد الأنديسايت",
+  "block.universal_ores.andesite_diamond_ore": "خام الماس الأنديسايت",
+
+  "block.universal_ores.diorite_coal_ore": "خام الفحم الديوريت",
+  "block.universal_ores.diorite_iron_ore": "خام الحديد الديوريت",
+  "block.universal_ores.diorite_gold_ore": "خام الذهب الديوريت",
+  "block.universal_ores.diorite_copper_ore": "خام النحاس الديوريت",
+  "block.universal_ores.diorite_lapis_ore": "خام اللازورد الديوريت",
+  "block.universal_ores.diorite_redstone_ore": "خام الريستون الديوريت",
+  "block.universal_ores.diorite_emerald_ore": "خام الزمرد الديوريت",
+  "block.universal_ores.diorite_diamond_ore": "خام الماس الديوريت",
+
+  "block.universal_ores.granite_coal_ore": "خام الفحم الجرانيت",
+  "block.universal_ores.granite_iron_ore": "خام الحديد الجرانيت",
+  "block.universal_ores.granite_gold_ore": "خام الذهب الجرانيت",
+  "block.universal_ores.granite_copper_ore": "خام النحاس الجرانيت",
+  "block.universal_ores.granite_lapis_ore": "خام اللازورد الجرانيت",
+  "block.universal_ores.granite_redstone_ore": "خام الريستون الجرانيت",
+  "block.universal_ores.granite_emerald_ore": "خام الزمرد الجرانيت",
+  "block.universal_ores.granite_diamond_ore": "خام الماس الجرانيت",
+
+  "block.universal_ores.tuff_coal_ore": "خام الفحم التوف",
+  "block.universal_ores.tuff_iron_ore": "خام الحديد التوف",
+  "block.universal_ores.tuff_gold_ore": "خام الذهب التوف",
+  "block.universal_ores.tuff_copper_ore": "خام النحاس التوف",
+  "block.universal_ores.tuff_lapis_ore": "خام اللازورد التوف",
+  "block.universal_ores.tuff_redstone_ore": "خام الريستون التوف",
+  "block.universal_ores.tuff_emerald_ore": "خام الزمرد التوف",
+  "block.universal_ores.tuff_diamond_ore": "خام الماس التوف",
+
+  "block.universal_ores.calcite_coal_ore": "خام الفحم الكالسيت",
+  "block.universal_ores.calcite_iron_ore": "خام الحديد الكالسيت",
+  "block.universal_ores.calcite_gold_ore": "خام الذهب الكالسيت",
+  "block.universal_ores.calcite_copper_ore": "خام النحاس الكالسيت",
+  "block.universal_ores.calcite_lapis_ore": "خام اللازورد الكالسيت",
+  "block.universal_ores.calcite_redstone_ore": "خام الريستون الكالسيت",
+  "block.universal_ores.calcite_emerald_ore": "خام الزمرد الكالسيت",
+  "block.universal_ores.calcite_diamond_ore": "خام الماس الكالسيت",
+
+  "block.universal_ores.blackstone_gold_ore": "خام الذهب بلاكستون",
+  "block.universal_ores.blackstone_quartz_ore": "خام الكوارتز بلاكستون",
+
+  "block.universal_ores.basalt_gold_ore": "خام الذهب البازلت",
+  "block.universal_ores.basalt_quartz_ore": "خام الكوارتز البازلت"
+}

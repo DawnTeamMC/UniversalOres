@@ -1,0 +1,52 @@
+{
+  "block.universal_ores.andesite_coal_ore": "Quặng than Andesite",
+  "block.universal_ores.andesite_iron_ore": "Quặng sắt Andesite",
+  "block.universal_ores.andesite_gold_ore": "Quặng vàng Andesite",
+  "block.universal_ores.andesite_copper_ore": "Quặng đồng Andesite",
+  "block.universal_ores.andesite_lapis_ore": "Quặng lapis Andesite",
+  "block.universal_ores.andesite_redstone_ore": "Quặng Redstone Andesite",
+  "block.universal_ores.andesite_emerald_ore": "Quặng ngọc lục bảo Andesite",
+  "block.universal_ores.andesite_diamond_ore": "Quặng kim cương Andesite",
+
+  "block.universal_ores.diorite_coal_ore": "Quặng than Diorite",
+  "block.universal_ores.diorite_iron_ore": "Quặng sắt Diorite",
+  "block.universal_ores.diorite_gold_ore": "Quặng vàng Diorite",
+  "block.universal_ores.diorite_copper_ore": "Quặng đồng Diorite",
+  "block.universal_ores.diorite_lapis_ore": "Quặng lapis Diorite",
+  "block.universal_ores.diorite_redstone_ore": "Quặng Redstone Diorite",
+  "block.universal_ores.diorite_emerald_ore": "Quặng ngọc lục bảo Diorite",
+  "block.universal_ores.diorite_diamond_ore": "Quặng kim cương Diorite",
+
+  "block.universal_ores.granite_coal_ore": "Quặng than Granite",
+  "block.universal_ores.granite_iron_ore": "Quặng sắt Granite",
+  "block.universal_ores.granite_gold_ore": "Quặng vàng Granite",
+  "block.universal_ores.granite_copper_ore": "Quặng đồng Granite",
+  "block.universal_ores.granite_lapis_ore": "Quặng lapis Granite",
+  "block.universal_ores.granite_redstone_ore": "Quặng Redstone Granite",
+  "block.universal_ores.granite_emerald_ore": "Quặng ngọc lục bảo Granite",
+  "block.universal_ores.granite_diamond_ore": "Quặng kim cương Granite",
+
+  "block.universal_ores.tuff_coal_ore": "Quặng than Tuff",
+  "block.universal_ores.tuff_iron_ore": "Quặng sắt Tuff",
+  "block.universal_ores.tuff_gold_ore": "Quặng vàng Tuff",
+  "block.universal_ores.tuff_copper_ore": "Quặng đồng Tuff",
+  "block.universal_ores.tuff_lapis_ore": "Quặng lapis Tuff",
+  "block.universal_ores.tuff_redstone_ore": "Quặng Redstone Tuff",
+  "block.universal_ores.tuff_emerald_ore": "Quặng ngọc lục bảo Tuff",
+  "block.universal_ores.tuff_diamond_ore": "Quặng kim cương Tuff",
+
+  "block.universal_ores.calcite_coal_ore": "Quặng than Calcite",
+  "block.universal_ores.calcite_iron_ore": "Quặng sắt Calcite",
+  "block.universal_ores.calcite_gold_ore": "Quặng vàng Calcite",
+  "block.universal_ores.calcite_copper_ore": "Quặng đồng Calcite",
+  "block.universal_ores.calcite_lapis_ore": "Quặng lapis Calcite",
+  "block.universal_ores.calcite_redstone_ore": "Quặng Redstone Calcite",
+  "block.universal_ores.calcite_emerald_ore": "Quặng ngọc lục bảo Calcite",
+  "block.universal_ores.calcite_diamond_ore": "Quặng kim cương Calcite",
+
+  "block.universal_ores.blackstone_gold_ore": "Quặng vàng Blackstone",
+  "block.universal_ores.blackstone_quartz_ore": "Quặng thạch anh Blackstone",
+
+  "block.universal_ores.basalt_gold_ore": "Quặng vàng Basalt",
+  "block.universal_ores.basalt_quartz_ore": "Quặng thạch anh Basalt"
+}

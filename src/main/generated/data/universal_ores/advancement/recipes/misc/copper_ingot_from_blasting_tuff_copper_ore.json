@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:copper_ingot_from_blasting_tuff_copper_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tuff_copper_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "universal_ores:tuff_copper_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tuff_copper_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:copper_ingot_from_blasting_tuff_copper_ore"
+    ]
+  }
+}

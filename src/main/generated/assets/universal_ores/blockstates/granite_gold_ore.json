@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "universal_ores:block/granite_gold_ore"
+    }
+  }
+}

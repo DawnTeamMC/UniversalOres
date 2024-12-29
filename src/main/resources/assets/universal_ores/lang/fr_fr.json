@@ -1,0 +1,52 @@
+{
+  "block.universal_ores.andesite_coal_ore": "Minerai de charbon Andesite",
+  "block.universal_ores.andesite_iron_ore": "Minerai de fer Andesite",
+  "block.universal_ores.andesite_gold_ore": "Minerai d'or Andesite",
+  "block.universal_ores.andesite_copper_ore": "Minerai de cuivre Andesite",
+  "block.universal_ores.andesite_lapis_ore": "Minerai de Lapis Lazuli Andesite",
+  "block.universal_ores.andesite_redstone_ore": "Minerai de Redstone Andesite",
+  "block.universal_ores.andesite_emerald_ore": "Minerai d'émeraude Andesite",
+  "block.universal_ores.andesite_diamond_ore": "Minerai de diamant Andesite",
+
+  "block.universal_ores.diorite_coal_ore": "Minerai de charbon Diorite",
+  "block.universal_ores.diorite_iron_ore": "Minerai de fer Diorite",
+  "block.universal_ores.diorite_gold_ore": "Minerai d'or Diorite",
+  "block.universal_ores.diorite_copper_ore": "Minerai de cuivre Diorite",
+  "block.universal_ores.diorite_lapis_ore": "Minerai de Lapis Lazuli Diorite",
+  "block.universal_ores.diorite_redstone_ore": "Minerai de Redstone Diorite",
+  "block.universal_ores.diorite_emerald_ore": "Minerai d'émeraude Diorite",
+  "block.universal_ores.diorite_diamond_ore": "Minerai de diamant Diorite",
+
+  "block.universal_ores.granite_coal_ore": "Minerai de charbon Granite",
+  "block.universal_ores.granite_iron_ore": "Minerai de fer Granite",
+  "block.universal_ores.granite_gold_ore": "Minerai d'or Granite",
+  "block.universal_ores.granite_copper_ore": "Minerai de cuivre Granite",
+  "block.universal_ores.granite_lapis_ore": "Minerai de Lapis Lazuli Granite",
+  "block.universal_ores.granite_redstone_ore": "Minerai de Redstone Granite",
+  "block.universal_ores.granite_emerald_ore": "Minerai d'émeraude Granite",
+  "block.universal_ores.granite_diamond_ore": "Minerai de diamant Granite",
+
+  "block.universal_ores.tuff_coal_ore": "Minerai de charbon Tuffeau",
+  "block.universal_ores.tuff_iron_ore": "Minerai de fer Tuffeau",
+  "block.universal_ores.tuff_gold_ore": "Minerai d'or Tuffeau",
+  "block.universal_ores.tuff_copper_ore": "Minerai de cuivre Tuffeau",
+  "block.universal_ores.tuff_lapis_ore": "Minerai de Lapis Lazuli Tuffeau",
+  "block.universal_ores.tuff_redstone_ore": "Minerai de Redstone Tuffeau",
+  "block.universal_ores.tuff_emerald_ore": "Minerai d'émeraude Tuffeau",
+  "block.universal_ores.tuff_diamond_ore": "Minerai de diamant Tuffeau",
+
+  "block.universal_ores.calcite_coal_ore": "Minerai de charbon Calcite",
+  "block.universal_ores.calcite_iron_ore": "Minerai de fer Calcite",
+  "block.universal_ores.calcite_gold_ore": "Minerai d'or Calcite",
+  "block.universal_ores.calcite_copper_ore": "Minerai de cuivre Calcite",
+  "block.universal_ores.calcite_lapis_ore": "Minerai de Lapis Lazuli Calcite",
+  "block.universal_ores.calcite_redstone_ore": "Minerai de Redstone Calcite",
+  "block.universal_ores.calcite_emerald_ore": "Minerai d'émeraude Calcite",
+  "block.universal_ores.calcite_diamond_ore": "Minerai de diamant Calcite",
+
+  "block.universal_ores.blackstone_gold_ore": "Minerai d'or Blackstone",
+  "block.universal_ores.blackstone_quartz_ore": "Minerai de Quartz Blackstone",
+
+  "block.universal_ores.basalt_gold_ore": "Minerai d'or Basalte",
+  "block.universal_ores.basalt_quartz_ore": "Minerai de Quartz Basalte"
+}

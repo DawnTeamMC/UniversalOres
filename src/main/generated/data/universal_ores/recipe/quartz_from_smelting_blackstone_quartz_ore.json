@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "group": "quartz",
+  "ingredient": {
+    "item": "universal_ores:blackstone_quartz_ore"
+  },
+  "result": {
+    "id": "minecraft:quartz"
+  }
+}

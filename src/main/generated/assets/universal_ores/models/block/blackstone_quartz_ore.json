@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "universal_ores:block/blackstone_quartz_ore"
+  }
+}

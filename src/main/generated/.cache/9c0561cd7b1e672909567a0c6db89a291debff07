@@ -1,0 +1,11 @@
+// 1.21	2024-12-26T19:46:14.8232158	UniversalOres/Tags for minecraft:block
+f9ef47a782cc8ff167eb9aec22b0fc78f96cff8e data\universal_ores\tags\block\blackstone_ore_replaceables.json
+411f6180b37eea00f0069105f932d6024ebc8cfd data\universal_ores\tags\block\andesite_ore_replaceables.json
+a9d9ea4becab53f2ae18b53a28175f1dae5fcaf4 data\universal_ores\tags\block\tuff_ore_replaceables.json
+ebcf7881dcf42cb3d8c8b5c2e92ebf16fd9d7284 data\universal_ores\tags\block\calcite_ore_replaceables.json
+1315b61dc9ea4c76ad5f8c7868e023e536074de3 data\minecraft\tags\block\needs_iron_tool.json
+c5a8e9863f73bdad2a131270da9a2c9f09c840e0 data\universal_ores\tags\block\basalt_ore_replaceables.json
+bb23c35771e96cc866b5387d5569746e64c23a4c data\universal_ores\tags\block\diorite_ore_replaceables.json
+277febcb81e6cdedb2c430d51bcd1850d597779d data\universal_ores\tags\block\granite_ore_replaceables.json
+8bd48301a78f07575caab899304f613a11922d30 data\minecraft\tags\block\needs_stone_tool.json
+2a06f5c7b657f4738dbb0e9a7e25808826242f65 data\minecraft\tags\block\mineable\pickaxe.json

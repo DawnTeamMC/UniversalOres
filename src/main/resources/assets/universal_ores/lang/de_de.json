@@ -1,0 +1,52 @@
+{
+  "block.universal_ores.andesite_coal_ore": "Andesit Kohlenerz",
+  "block.universal_ores.andesite_iron_ore": "Andesit Eisenerz",
+  "block.universal_ores.andesite_gold_ore": "Andesit Goldenerz",
+  "block.universal_ores.andesite_copper_ore": "Andesit Kupfererz",
+  "block.universal_ores.andesite_lapis_ore": "Andesit Lapislazuli-Erz",
+  "block.universal_ores.andesite_redstone_ore": "Andesit Redstone-Erz",
+  "block.universal_ores.andesite_emerald_ore": "Andesit Smaragd-Erz",
+  "block.universal_ores.andesite_diamond_ore": "Andesit Diamanterz",
+
+  "block.universal_ores.diorite_coal_ore": "Diorit Kohlenerz",
+  "block.universal_ores.diorite_iron_ore": "Diorit Eisenerz",
+  "block.universal_ores.diorite_gold_ore": "Diorit Goldenerz",
+  "block.universal_ores.diorite_copper_ore": "Diorit Kupfererz",
+  "block.universal_ores.diorite_lapis_ore": "Diorit Lapislazuli-Erz",
+  "block.universal_ores.diorite_redstone_ore": "Diorit Redstone-Erz",
+  "block.universal_ores.diorite_emerald_ore": "Diorit Smaragd-Erz",
+  "block.universal_ores.diorite_diamond_ore": "Diorit Diamanterz",
+
+  "block.universal_ores.granite_coal_ore": "Granit Kohlenerz",
+  "block.universal_ores.granite_iron_ore": "Granit Eisenerz",
+  "block.universal_ores.granite_gold_ore": "Granit Goldenerz",
+  "block.universal_ores.granite_copper_ore": "Granit Kupfererz",
+  "block.universal_ores.granite_lapis_ore": "Granit Lapislazuli-Erz",
+  "block.universal_ores.granite_redstone_ore": "Granit Redstone-Erz",
+  "block.universal_ores.granite_emerald_ore": "Granit Smaragd-Erz",
+  "block.universal_ores.granite_diamond_ore": "Granit Diamanterz",
+
+  "block.universal_ores.tuff_coal_ore": "Tuff Kohlenerz",
+  "block.universal_ores.tuff_iron_ore": "Tuff Eisenerz",
+  "block.universal_ores.tuff_gold_ore": "Tuff Goldenerz",
+  "block.universal_ores.tuff_copper_ore": "Tuff Kupfererz",
+  "block.universal_ores.tuff_lapis_ore": "Tuff Lapislazuli-Erz",
+  "block.universal_ores.tuff_redstone_ore": "Tuff Redstone-Erz",
+  "block.universal_ores.tuff_emerald_ore": "Tuff Smaragd-Erz",
+  "block.universal_ores.tuff_diamond_ore": "Tuff Diamanterz",
+
+  "block.universal_ores.calcite_coal_ore": "Kalkstein Kohlenerz",
+  "block.universal_ores.calcite_iron_ore": "Kalkstein Eisenerz",
+  "block.universal_ores.calcite_gold_ore": "Kalkstein Goldenerz",
+  "block.universal_ores.calcite_copper_ore": "Kalkstein Kupfererz",
+  "block.universal_ores.calcite_lapis_ore": "Kalkstein Lapislazuli-Erz",
+  "block.universal_ores.calcite_redstone_ore": "Kalkstein Redstone-Erz",
+  "block.universal_ores.calcite_emerald_ore": "Kalkstein Smaragd-Erz",
+  "block.universal_ores.calcite_diamond_ore": "Kalkstein Diamanterz",
+
+  "block.universal_ores.blackstone_gold_ore": "Blackstone Goldenerz",
+  "block.universal_ores.blackstone_quartz_ore": "Blackstone Quarzerz",
+
+  "block.universal_ores.basalt_gold_ore": "Basalt Goldenerz",
+  "block.universal_ores.basalt_quartz_ore": "Basalt Quarzerz"
+}

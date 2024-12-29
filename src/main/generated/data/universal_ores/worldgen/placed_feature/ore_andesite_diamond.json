@@ -1,0 +1,27 @@
+{
+  "feature": "universal_ores:ore_andesite_diamond",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 7
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "max_inclusive": {
+          "above_bottom": 14
+        },
+        "min_inclusive": {
+          "above_bottom": -63
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
