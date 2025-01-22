@@ -15,15 +15,14 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.hugman.universal_ores.UniversalOres"
+			"fr.hugman.universal_ores.UniversalOres"
 		]
 	},
 	"mixins": [
 		"universal_ores.mixins.json"
 	],
 	"depends": {
-		"minecraft": "1.20.x",
-		"dawn": ">=5.0.0",
+		"minecraft": "^1.21.1",
 		"fabric": "*"
 	},
 	"custom": {

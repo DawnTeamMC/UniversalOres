@@ -1,8 +1,8 @@
-package com.hugman.universal_ores.util;
+package fr.hugman.universal_ores.util;
 
 import com.google.common.collect.ImmutableList;
-import com.hugman.universal_ores.block.OverworldOres;
-import com.hugman.universal_ores.registry.content.UniversalOresBlocks;
+import fr.hugman.universal_ores.block.OverworldOreBlocks;
+import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
@@ -20,13 +20,14 @@ public class OreUtil {
 	public static final RuleTest TUFF_RULE = new BlockMatchRuleTest(Blocks.TUFF);
 	public static final RuleTest CALCITE_RULE = new BlockMatchRuleTest(Blocks.CALCITE);
 
-	public static List<OreFeatureConfig.Target> getNewOverworldTargets(Function<OverworldOres, Block> state) {
+	public static List<OreFeatureConfig.Target> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
 		return List.of(
 				OreFeatureConfig.createTarget(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).getDefaultState()),
-				OreFeatureConfig.createTarget(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).getDefaultState()));
+				OreFeatureConfig.createTarget(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).getDefaultState())
+		);
 	}
 
 	@Nullable
@@ -53,28 +54,28 @@ public class OreUtil {
 	@Nullable
 	private static List<OreFeatureConfig.Target> getNewTargetsByBlock(Block block) {
 		if(block == Blocks.COAL_ORE) {
-			return getNewOverworldTargets(OverworldOres::coal);
+			return getNewOverworldTargets(OverworldOreBlocks::coal);
 		}
 		if(block == Blocks.IRON_ORE) {
-			return getNewOverworldTargets(OverworldOres::iron);
+			return getNewOverworldTargets(OverworldOreBlocks::iron);
 		}
 		if(block == Blocks.GOLD_ORE) {
-			return getNewOverworldTargets(OverworldOres::gold);
+			return getNewOverworldTargets(OverworldOreBlocks::gold);
 		}
 		if(block == Blocks.COPPER_ORE) {
-			return getNewOverworldTargets(OverworldOres::copper);
+			return getNewOverworldTargets(OverworldOreBlocks::copper);
 		}
 		if(block == Blocks.REDSTONE_ORE) {
-			return getNewOverworldTargets(OverworldOres::redstone);
+			return getNewOverworldTargets(OverworldOreBlocks::redstone);
 		}
 		if(block == Blocks.LAPIS_ORE) {
-			return getNewOverworldTargets(OverworldOres::lapis);
+			return getNewOverworldTargets(OverworldOreBlocks::lapis);
 		}
 		if(block == Blocks.DIAMOND_ORE) {
-			return getNewOverworldTargets(OverworldOres::diamond);
+			return getNewOverworldTargets(OverworldOreBlocks::diamond);
 		}
 		if(block == Blocks.EMERALD_ORE) {
-			return getNewOverworldTargets(OverworldOres::emerald);
+			return getNewOverworldTargets(OverworldOreBlocks::emerald);
 		}
 		return null;
 	}

@@ -1,6 +1,6 @@
-package com.hugman.universal_ores.mixin;
+package fr.hugman.universal_ores.mixin;
 
-import com.hugman.universal_ores.util.OreUtil;
+import fr.hugman.universal_ores.util.OreUtil;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

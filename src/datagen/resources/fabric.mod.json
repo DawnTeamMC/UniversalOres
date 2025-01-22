@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"name": "Universal Ores Data Generator",
+	"id": "universal_ores-datagen",
+	"version": "1.0.0",
+	"authors": [
+		"Hugman"
+	],
+	"environment": "*",
+	"entrypoints": {
+		"fabric-datagen": [
+			"fr.hugman.universal_ores.data.UniversalOresDataGenerator"
+		]
+	}
+}
