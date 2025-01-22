@@ -5,10 +5,14 @@
 
 name: Check Build
 on:
-  pull_request:
-    types: [review_requested, ready_for_review]
   push:
-    branches: [main, dev]
+    branches: [ main, dev ]
+  pull_request:
+    branches:
+      - main
+      - dev
+    types: [ opened, synchronize, reopened, ready_for_review ]
+    draft: false
 
 jobs:
   build:
