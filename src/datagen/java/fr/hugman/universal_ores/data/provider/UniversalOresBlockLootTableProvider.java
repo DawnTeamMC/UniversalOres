@@ -3,8 +3,6 @@ package fr.hugman.universal_ores.data.provider;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.loot.entry.ItemEntry;
@@ -52,8 +50,8 @@ public class UniversalOresBlockLootTableProvider extends FabricBlockLootTablePro
         for (var block : UniversalOresBlocks.NETHER_GOLD_ORES) {
             this.addDrop(block, b -> this.dropsWithSilkTouch(b,
                     this.applyExplosionDecay(b, ItemEntry.builder(Items.GOLD_NUGGET)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 6.0F)))
-                                    .apply(ApplyBonusLootFunction.oreDrops(enchantments.getOrThrow(Enchantments.FORTUNE)))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 6.0F)))
+                            .apply(ApplyBonusLootFunction.oreDrops(enchantments.getOrThrow(Enchantments.FORTUNE)))
                     )
             ));
         }

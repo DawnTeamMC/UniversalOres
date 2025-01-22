@@ -1,54 +1,54 @@
 {
-	"schemaVersion": 1,
-	"name": "Universal Ores",
-	"id": "universal_ores",
-	"version": "${version}",
-	"icon": "assets/universal_ores/textures/logo.png",
-	"authors": [
-		"Hugman"
-	],
-	"contact": {
-		"homepage": "https://dawnteammc.github.io/universal_ores",
-		"sources": "https://github.com/DawnTeamMC/UniversalOres",
-		"issues": "https://github.com/DawnTeamMC/UniversalOres/issues"
-	},
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"fr.hugman.universal_ores.UniversalOres"
-		]
-	},
-	"mixins": [
-		"universal_ores.mixins.json"
-	],
-	"depends": {
-		"minecraft": "^1.21.1",
-		"fabric": "*"
-	},
-	"custom": {
-		"modmenu": {
-			"links": {
-				"modmenu.twitter": "https://twitter.com/DawnTeamMC",
-				"modmenu.discord": "https://discord.gg/8ksTVJu",
-				"modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric",
-				"modmenu.modrinth": "https://modrinth.com/mod/universal_ores",
-				"modmenu.github_releases": "https://github.com/DawnTeamMC/UniversalOres/releases/",
-				"modmenu.crowdin": "https://crowdin.com/project/dawnteam",
-				"modmenu.wiki": "https://github.com/DawnTeamMC/UniversalOres/wiki/"
-			}
-		},
-		"modupdater": {
-			"strategy": "curseforge",
-			"projectID": 489884
-		},
-		"mc-publish": {
-			"curseforge": 489884,
-			"modrinth": "68kWHuUF",
-			"loaders": [
-				"fabric",
-				"quilt"
-			]
-		}
-	},
-	"license": "LGPL v3.0"
+  "schemaVersion": 1,
+  "name": "Universal Ores",
+  "id": "universal_ores",
+  "version": "${version}",
+  "icon": "assets/universal_ores/textures/logo.png",
+  "authors": [
+    "Hugman"
+  ],
+  "contact": {
+    "homepage": "https://dawnteammc.github.io/universal_ores",
+    "sources": "https://github.com/DawnTeamMC/UniversalOres",
+    "issues": "https://github.com/DawnTeamMC/UniversalOres/issues"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "fr.hugman.universal_ores.UniversalOres"
+    ]
+  },
+  "mixins": [
+    "universal_ores.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "^1.21.1",
+    "fabric": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.twitter": "https://twitter.com/DawnTeamMC",
+        "modmenu.discord": "https://discord.gg/8ksTVJu",
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric",
+        "modmenu.modrinth": "https://modrinth.com/mod/universal_ores",
+        "modmenu.github_releases": "https://github.com/DawnTeamMC/UniversalOres/releases/",
+        "modmenu.crowdin": "https://crowdin.com/project/dawnteam",
+        "modmenu.wiki": "https://github.com/DawnTeamMC/UniversalOres/wiki/"
+      }
+    },
+    "modupdater": {
+      "strategy": "curseforge",
+      "projectID": 489884
+    },
+    "mc-publish": {
+      "curseforge": 489884,
+      "modrinth": "68kWHuUF",
+      "loaders": [
+        "fabric",
+        "quilt"
+      ]
+    }
+  },
+  "license": "LGPL v3.0"
 }

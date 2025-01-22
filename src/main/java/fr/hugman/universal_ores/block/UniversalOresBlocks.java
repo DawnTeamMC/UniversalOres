@@ -43,8 +43,8 @@ public class UniversalOresBlocks {
     public static final NetherOreBlocks BLACKSTONE_ORES = registerNetherOres("blackstone", BLACKSTONE);
     public static final NetherOreBlocks BASALT_ORES = registerNetherOres("basalt", BASALT);
 
-    public static final OverworldOreBlocks[] OVERWORLD_ORE_BLOCKS = new OverworldOreBlocks[] {GRANITE_ORES, DIORITE_ORES, ANDESITE_ORES, TUFF_ORES, CALCITE_ORES};
-    public static final NetherOreBlocks[] NETHER_ORE_BLOCKS = new NetherOreBlocks[] {BLACKSTONE_ORES, BASALT_ORES};
+    public static final OverworldOreBlocks[] OVERWORLD_ORE_BLOCKS = new OverworldOreBlocks[]{GRANITE_ORES, DIORITE_ORES, ANDESITE_ORES, TUFF_ORES, CALCITE_ORES};
+    public static final NetherOreBlocks[] NETHER_ORE_BLOCKS = new NetherOreBlocks[]{BLACKSTONE_ORES, BASALT_ORES};
 
     public static final Block[] COAL_ORES = Arrays.stream(UniversalOresBlocks.OVERWORLD_ORE_BLOCKS).map(OverworldOreBlocks::coal).toArray(Block[]::new);
     public static final Block[] IRON_ORES = Arrays.stream(UniversalOresBlocks.OVERWORLD_ORE_BLOCKS).map(OverworldOreBlocks::iron).toArray(Block[]::new);
