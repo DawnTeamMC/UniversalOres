@@ -1,6 +1,7 @@
 package fr.hugman.universal_ores.util;
 
 import com.google.common.collect.ImmutableList;
+import fr.hugman.universal_ores.block.NetherOreBlocks;
 import fr.hugman.universal_ores.block.OverworldOreBlocks;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.minecraft.block.Block;
@@ -20,6 +21,9 @@ public class OreUtil {
 	public static final RuleTest TUFF_RULE = new BlockMatchRuleTest(Blocks.TUFF);
 	public static final RuleTest CALCITE_RULE = new BlockMatchRuleTest(Blocks.CALCITE);
 
+	public static final RuleTest BLACKSTONE_RULE = new BlockMatchRuleTest(Blocks.BLACKSTONE);
+	public static final RuleTest BASALT_RULE = new BlockMatchRuleTest(Blocks.BASALT);
+
 	public static List<OreFeatureConfig.Target> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
 		return List.of(
 				OreFeatureConfig.createTarget(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).getDefaultState()),
@@ -27,6 +31,13 @@ public class OreUtil {
 				OreFeatureConfig.createTarget(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).getDefaultState()),
 				OreFeatureConfig.createTarget(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).getDefaultState())
+		);
+	}
+
+	public static List<OreFeatureConfig.Target> getNewNetherTargets(Function<NetherOreBlocks, Block> state) {
+		return List.of(
+				OreFeatureConfig.createTarget(BLACKSTONE_RULE, state.apply(UniversalOresBlocks.BLACKSTONE_ORES).getDefaultState()),
+				OreFeatureConfig.createTarget(BASALT_RULE, state.apply(UniversalOresBlocks.BASALT_ORES).getDefaultState())
 		);
 	}
 
@@ -76,6 +87,12 @@ public class OreUtil {
 		}
 		if(block == Blocks.EMERALD_ORE) {
 			return getNewOverworldTargets(OverworldOreBlocks::emerald);
+		}
+		if(block == Blocks.NETHER_GOLD_ORE) {
+			return getNewNetherTargets(NetherOreBlocks::gold);
+		}
+		if(block == Blocks.NETHER_QUARTZ_ORE) {
+			return getNewNetherTargets(NetherOreBlocks::quartz);
 		}
 		return null;
 	}

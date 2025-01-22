@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 
 public class UniversalOres implements ModInitializer {
-	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String MOD_ID = "universal_ores";
 
 	@Override
