@@ -3,6 +3,7 @@ package fr.hugman.universal_ores.data.provider;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 
@@ -36,7 +37,7 @@ public class UniversalOresBlockTagProvider extends FabricTagProvider.BlockTagPro
                 .add(UniversalOresBlocks.COPPER_ORES)
                 .add(UniversalOresBlocks.LAPIS_ORES);
 
-        this.getOrCreateTagBuilder(BlockTags.SNAPS_GOAT_HORN)
+        getOrCreateTagBuilder(BlockTags.SNAPS_GOAT_HORN)
                 .add(UniversalOresBlocks.COAL_ORES)
                 .add(UniversalOresBlocks.IRON_ORES)
                 .add(UniversalOresBlocks.COPPER_ORES)
@@ -54,6 +55,7 @@ public class UniversalOresBlockTagProvider extends FabricTagProvider.BlockTagPro
                 .add(UniversalOresBlocks.NETHER_GOLD_ORES)
                 .add(UniversalOresBlocks.QUARTZ_ORES);
 
-
+        getOrCreateTagBuilder(ConventionalBlockTags.QUARTZ_ORES)
+                .add(UniversalOresBlocks.QUARTZ_ORES);
     }
 }

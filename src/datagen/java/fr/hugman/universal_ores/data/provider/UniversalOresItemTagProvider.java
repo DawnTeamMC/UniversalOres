@@ -2,6 +2,8 @@ package fr.hugman.universal_ores.data.provider;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
@@ -24,6 +26,6 @@ public class UniversalOresItemTagProvider extends FabricTagProvider.ItemTagProvi
         copy(BlockTags.COAL_ORES, ItemTags.COAL_ORES);
         copy(BlockTags.EMERALD_ORES, ItemTags.EMERALD_ORES);
         copy(BlockTags.COPPER_ORES, ItemTags.COPPER_ORES);
-
+        copy(ConventionalBlockTags.QUARTZ_ORES, ConventionalItemTags.QUARTZ_ORES);
     }
 }
