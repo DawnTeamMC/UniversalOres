@@ -21,7 +21,7 @@ public class UniversalOresBlockLootTableProvider extends FabricBlockLootTablePro
 
     @Override
     public void generate() {
-        var enchantments = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        var enchantments = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
 
         for (var block : UniversalOresBlocks.COAL_ORES) {
             this.addDrop(block, b -> this.oreDrops(b, Items.COAL));

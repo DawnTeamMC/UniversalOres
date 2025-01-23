@@ -18,7 +18,7 @@ public class UniversalOresDataGenerator implements DataGeneratorEntrypoint {
         var blockTags = pack.addProvider(UniversalOresBlockTagProvider::new);
         pack.addProvider((fabricDataOutput, completableFuture) -> new UniversalOresItemTagProvider(fabricDataOutput, completableFuture, blockTags));
         pack.addProvider(UniversalOresBlockLootTableProvider::new);
-        pack.addProvider(UniversalOresRecipeGenerator::new);
+        pack.addProvider(UniversalOresRecipeGenerator::create);
     }
 
     @Override

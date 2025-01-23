@@ -93,11 +93,11 @@ public class UniversalOresBlocks {
     }
 
     private static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings blockSettings) {
-        var block = factory.apply(blockSettings);
+        var block = factory.apply(blockSettings.registryKey(key));
         Registry.register(Registries.BLOCK, key, block);
 
         var itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, key.getValue());
-        Registry.register(Registries.ITEM, itemRegistryKey, new BlockItem(block, new Item.Settings()));
+        Registry.register(Registries.ITEM, itemRegistryKey, new BlockItem(block, new Item.Settings().registryKey(itemRegistryKey).useBlockPrefixedTranslationKey()));
 
         return block;
     }
