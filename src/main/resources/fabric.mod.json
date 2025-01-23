@@ -34,7 +34,6 @@
         "modmenu.modrinth": "https://modrinth.com/mod/universal_ores",
         "modmenu.github_releases": "https://github.com/DawnTeamMC/UniversalOres/releases/",
         "modmenu.crowdin": "https://crowdin.com/project/dawnteam",
-        "modmenu.wiki": "https://github.com/DawnTeamMC/UniversalOres/wiki/"
       }
     },
     "modupdater": {

@@ -1,13 +1,14 @@
 [![Universal Ores](https://dawnteammc.github.io/universal_ores/images/header.png)](https://dawnteammc.github.io/universal_ores)
 
 # 💎 Universal Ores
-[![Latest release](https://img.shields.io/github/release/DawnTeamMC/UniversalOres.svg)](https://github.com/DawnTeamMC/UniversalOres/releases/latest)
-[![CurseForge downloads](http://cf.way2muchnoise.eu/full_489884_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric)
-[![License (Polyform Shield 1.0.0)](https://img.shields.io/badge/code%20license-Polyform%20Shield%201.0.0-green.svg?style=flat-square)](https://polyformproject.org/licenses/shield/1.0.0/)
-[![GitHub stars](https://img.shields.io/github/stars/DawnTeamMC/UniversalOres.svg?style=flat-square)]()
 
-[![Discord user count](https://img.shields.io/discord/504608980799062036.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/8ksTVJu)
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/DawnTeamMC)](https://twitter.com/DawnTeamMC)
+[![Latest release](https://img.shields.io/github/release/DawnTeamMC/UniversalOres.svg?label=Latest%20version&style=for-the-badge)](https://github.com/DawnTeamMC/UniversalOres/releases/latest)
+[![CurseForge downloads](http://cf.way2muchnoise.eu/full_489884_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric)
+
+[![Discord user count](https://img.shields.io/discord/504608980799062036?label=&color=424549&labelColor=7289da&style=for-the-badge&logo=Discord&logoColor=DDE4EF)](https://discord.gg/8ksTVJu)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/DawnTeamMC?style=for-the-badge&labelColor=424549&color=424549&logo=x)](https://twitter.com/DawnTeamMC)
+
+[![License (Polyform Shield 1.0.0)](https://img.shields.io/badge/code%20license-Polyform%20Shield%201.0.0-green.svg?style=for-the-badge)](https://polyformproject.org/licenses/shield/1.0.0/)
 
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
 diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
@@ -17,16 +18,8 @@ diorite, granite, tuff, calcite, blackstone and basalt that generate naturally w
 ## 📦 Download
 We use [CurseForge](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric) and [Modrinth](https://modrinth.com/mod/universal_ores) to publish **stable builds** of Universal Ores for Minecraft.
 
-You can download the latest stable builds from both pages without signing up for an account, although [downloading on CurseForge](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric) is currently preferred.
-
-### Required mods
-⚠ Universal Ores **needs** the following mods to be installed:
-
-- Fabric API: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
-- Dawn API: [GitHub](https://github.com/DawnTeamMC/DawnAPI) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/dawn) / [Modrinth](https://modrinth.com/mod/dawn)
-
-### Compatible mods
-Universal Ores is compatible with other mods and data packs, as long as they use **the vanilla configured features**. There is no feasible solution to enable wider compatibility.
+⚠ Universal Ores **requires** Fabric API to be
+installed: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).
@@ -35,11 +28,13 @@ If you're running into bugs or other problems, feel free to open an issue on our
 Please refer to the [contributing guide](https://github.com/DawnTeamMC/UniversalOres/blob/master/CONTRIBUTING.md) for more information.
 
 ### Translations
-The Dawn Team mods makes use of crowd sourced translations using Crowdin.  
+
+The Dawn Team mods makes use of crowd-sourced translations using Crowdin.  
 You can help translate the Dawn Team mods to any language supported in Minecraft by joining our team of avid translators [here](https://crowdin.com/project/dawnteam).
 
 ## ❤️ Support
-[![Patreon supporters](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DHugman%26type%3Dpatrons&style=flat-square)](https://patreon.com/Hugman)
+
+[![Patreon supporters](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DHugman%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/Hugman)
 
 You can support Universal Ores on the [Patreon page of the founder, main developer and maintainer of the Dawn Team mods (Hugman)](https://patreon.com/Hugman).
 
