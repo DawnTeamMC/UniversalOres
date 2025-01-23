@@ -57,7 +57,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
           changelog: ${{ github.event.release.body }}
-          java: 17
+          java: 21
 
           modrinth-featured: false
 
