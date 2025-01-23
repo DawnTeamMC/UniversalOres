@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.TexturedModel;
 
 public class UniversalOresModelProvider extends FabricModelProvider {
     public UniversalOresModelProvider(FabricDataOutput output) {
@@ -17,9 +18,8 @@ public class UniversalOresModelProvider extends FabricModelProvider {
         for (var ores : UniversalOresBlocks.OVERWORLD_ORE_BLOCKS) {
             ores.forEach(gen::registerSimpleCubeAll);
         }
-        for (var ores : UniversalOresBlocks.NETHER_ORE_BLOCKS) {
-            ores.forEach(gen::registerSimpleCubeAll);
-        }
+        UniversalOresBlocks.BLACKSTONE_ORES.forEach(gen::registerSimpleCubeAll);
+        UniversalOresBlocks.BASALT_ORES.forEach(block -> gen.registerAxisRotated(block, TexturedModel.CUBE_COLUMN));
     }
 
     @Override
