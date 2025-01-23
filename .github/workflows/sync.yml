@@ -6,7 +6,7 @@ name: Synchronize Project
 on:
   push:
     paths:
-      - 'src/main/resources/assets/universal_ores/lang/en_us.json'
+      - 'src/client/resources/assets/universal_ores/lang/en_us.json'
     branches: [main, dev]
 
 jobs:
