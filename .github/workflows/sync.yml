@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - 'src/client/resources/assets/universal_ores/lang/en_us.json'
+      - 'crowdin.yml'
     branches: [main, dev]
 
 jobs:
