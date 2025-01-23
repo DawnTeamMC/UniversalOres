@@ -3,6 +3,6 @@ api_token_env: "CROWDIN_PERSONAL_TOKEN"
 preserve_hierarchy: true
 
 files:
-  - source: "src/main/resources/assets/universal_ores/lang/en_us.json"
-    translation: "src/main/resources/assets/universal_ores/lang/%locale_with_underscore%.json"
+  - source: "src/client/resources/assets/universal_ores/lang/en_us.json"
+    translation: "src/client/resources/assets/universal_ores/lang/%locale_with_underscore%.json"
     dest: "universal_ores.json"
