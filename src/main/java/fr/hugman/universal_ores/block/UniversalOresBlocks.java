@@ -26,6 +26,8 @@ public class UniversalOresBlocks {
     private static final Function<AbstractBlock.Settings, Block> DIAMOND_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), s);
     private static final Function<AbstractBlock.Settings, Block> NETHER_GOLD_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 1), s.sounds(BlockSoundGroup.NETHER_GOLD_ORE));
     private static final Function<AbstractBlock.Settings, Block> QUARTZ_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), s.sounds(BlockSoundGroup.NETHER_ORE));
+    private static final Function<AbstractBlock.Settings, Block> NETHER_GOLD_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformIntProvider.create(0, 1), s.sounds(BlockSoundGroup.NETHER_GOLD_ORE));
+    private static final Function<AbstractBlock.Settings, Block> QUARTZ_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformIntProvider.create(2, 5), s.sounds(BlockSoundGroup.NETHER_ORE));
 
     private static final Supplier<AbstractBlock.Settings> GRANITE = () -> AbstractBlock.Settings.copyShallow(Blocks.GRANITE).strength(3.0F, 3.0F);
     private static final Supplier<AbstractBlock.Settings> DIORITE = () -> AbstractBlock.Settings.copyShallow(Blocks.DIORITE).strength(3.0F, 3.0F);
@@ -41,7 +43,7 @@ public class UniversalOresBlocks {
     public static final OverworldOreBlocks TUFF_ORES = registerOverworldOres("tuff", TUFF);
     public static final OverworldOreBlocks CALCITE_ORES = registerOverworldOres("calcite", CALCITE);
     public static final NetherOreBlocks BLACKSTONE_ORES = registerNetherOres("blackstone", BLACKSTONE);
-    public static final NetherOreBlocks BASALT_ORES = registerNetherOres("basalt", BASALT);
+    public static final NetherOreBlocks BASALT_ORES = registerNetherPillarOres("basalt", BASALT);
 
     public static final OverworldOreBlocks[] OVERWORLD_ORE_BLOCKS = new OverworldOreBlocks[]{GRANITE_ORES, DIORITE_ORES, ANDESITE_ORES, TUFF_ORES, CALCITE_ORES};
     public static final NetherOreBlocks[] NETHER_ORE_BLOCKS = new NetherOreBlocks[]{BLACKSTONE_ORES, BASALT_ORES};
@@ -76,6 +78,13 @@ public class UniversalOresBlocks {
         return new NetherOreBlocks(
                 register(prefix + "_gold_ore", NETHER_GOLD_ORE, settingsSupplier),
                 register(prefix + "_quartz_ore", QUARTZ_ORE, settingsSupplier)
+        );
+    }
+
+    private static NetherOreBlocks registerNetherPillarOres(String prefix, Supplier<AbstractBlock.Settings> settingsSupplier) {
+        return new NetherOreBlocks(
+                register(prefix + "_gold_ore", NETHER_GOLD_ORE_PILLAR, settingsSupplier),
+                register(prefix + "_quartz_ore", QUARTZ_ORE_PILLAR, settingsSupplier)
         );
     }
 
