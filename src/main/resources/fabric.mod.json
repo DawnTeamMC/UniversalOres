@@ -21,6 +21,7 @@
   "mixins": [
     "universal_ores.mixins.json"
   ],
+  "accessWidener": "universal_ores.accesswidener",
   "depends": {
     "minecraft": "^1.21.1",
     "fabric": "*"

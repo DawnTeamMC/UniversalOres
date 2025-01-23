@@ -20,6 +20,8 @@ dependencies {
 }
 
 loom {
+    accessWidenerPath = file("src/main/resources/universal_ores.accesswidener")
+
     splitEnvironmentSourceSets()
 
     mods {
