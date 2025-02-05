@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "fr.hugman.universal_ores.UniversalOres"
+    ],
+    "client": [
+      "fr.hugman.universal_ores.client.UniversalOresClient"
     ]
   },
   "mixins": [
