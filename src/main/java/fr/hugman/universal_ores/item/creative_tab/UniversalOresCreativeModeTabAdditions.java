@@ -1,11 +1,11 @@
-package fr.hugman.universal_ores.itemgroup;
+package fr.hugman.universal_ores.item.creative_tab;
 
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Blocks;
 
-public class UniversalOresItemGroupAdditions {
+public class UniversalOresCreativeModeTabAdditions {
     public static void appendItemGroups() {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(entries -> {
             entries.insertAfter(Blocks.DEEPSLATE_COAL_ORE, UniversalOresBlocks.COAL_ORES);

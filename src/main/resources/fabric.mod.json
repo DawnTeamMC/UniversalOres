@@ -23,7 +23,7 @@
   ],
   "accessWidener": "universal_ores.accesswidener",
   "depends": {
-    "minecraft": "~26.1",
+    "minecraft": "~26.1-",
     "fabric-api": "*"
   },
   "custom": {

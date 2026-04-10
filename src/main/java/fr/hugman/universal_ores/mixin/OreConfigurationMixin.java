@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import java.util.List;
 
 @Mixin(OreConfiguration.class)
-public class OreFeatureMixin {
+public class OreConfigurationMixin {
     @ModifyVariable(method = "<init>(Ljava/util/List;IF)V", at = @At("HEAD"), argsOnly = true)
     private static List<OreConfiguration.TargetBlockState> modifyTargets(List<OreConfiguration.TargetBlockState> targetBlockStates) {
         var newTargets = OreUtil.getNewTargets(targetBlockStates);
