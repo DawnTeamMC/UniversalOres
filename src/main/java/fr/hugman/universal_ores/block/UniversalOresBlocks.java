@@ -1,41 +1,41 @@
 package fr.hugman.universal_ores.block;
 
 import fr.hugman.universal_ores.UniversalOres;
-import net.minecraft.block.*;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
 
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class UniversalOresBlocks {
-    private static final Function<AbstractBlock.Settings, Block> NO_EXP_ORE = s -> new ExperienceDroppingBlock(ConstantIntProvider.create(0), s);
-    private static final Function<AbstractBlock.Settings, Block> REDSTONE_ORE = s -> new RedstoneOreBlock(s.ticksRandomly().luminance((state) -> (Boolean) state.get(Properties.LIT) ? 9 : 0));
-    private static final Function<AbstractBlock.Settings, Block> COAL_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), s);
-    private static final Function<AbstractBlock.Settings, Block> EMERALD_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), s);
-    private static final Function<AbstractBlock.Settings, Block> LAPIS_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), s);
-    private static final Function<AbstractBlock.Settings, Block> DIAMOND_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), s);
-    private static final Function<AbstractBlock.Settings, Block> NETHER_GOLD_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 1), s.sounds(BlockSoundGroup.NETHER_GOLD_ORE));
-    private static final Function<AbstractBlock.Settings, Block> QUARTZ_ORE = s -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), s.sounds(BlockSoundGroup.NETHER_ORE));
-    private static final Function<AbstractBlock.Settings, Block> NETHER_GOLD_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformIntProvider.create(0, 1), s.sounds(BlockSoundGroup.NETHER_GOLD_ORE));
-    private static final Function<AbstractBlock.Settings, Block> QUARTZ_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformIntProvider.create(2, 5), s.sounds(BlockSoundGroup.NETHER_ORE));
+    private static final Function<BlockBehaviour.Properties, Block> NO_EXP_ORE = s -> new DropExperienceBlock(ConstantInt.of(0), s);
+    private static final Function<BlockBehaviour.Properties, Block> REDSTONE_ORE = s -> new RedStoneOreBlock(s.randomTicks().lightLevel((state) -> (Boolean) state.getValue(BlockStateProperties.LIT) ? 9 : 0));
+    private static final Function<BlockBehaviour.Properties, Block> COAL_ORE = s -> new DropExperienceBlock(UniformInt.of(0, 2), s);
+    private static final Function<BlockBehaviour.Properties, Block> EMERALD_ORE = s -> new DropExperienceBlock(UniformInt.of(3, 7), s);
+    private static final Function<BlockBehaviour.Properties, Block> LAPIS_ORE = s -> new DropExperienceBlock(UniformInt.of(2, 5), s);
+    private static final Function<BlockBehaviour.Properties, Block> DIAMOND_ORE = s -> new DropExperienceBlock(UniformInt.of(3, 7), s);
+    private static final Function<BlockBehaviour.Properties, Block> NETHER_GOLD_ORE = s -> new DropExperienceBlock(UniformInt.of(0, 1), s.sound(SoundType.NETHER_GOLD_ORE));
+    private static final Function<BlockBehaviour.Properties, Block> QUARTZ_ORE = s -> new DropExperienceBlock(UniformInt.of(2, 5), s.sound(SoundType.NETHER_ORE));
+    private static final Function<BlockBehaviour.Properties, Block> NETHER_GOLD_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformInt.of(0, 1), s.sound(SoundType.NETHER_GOLD_ORE));
+    private static final Function<BlockBehaviour.Properties, Block> QUARTZ_ORE_PILLAR = s -> new DropExperienceRotatedPillarBlock(UniformInt.of(2, 5), s.sound(SoundType.NETHER_ORE));
 
-    private static final Supplier<AbstractBlock.Settings> GRANITE = () -> AbstractBlock.Settings.copyShallow(Blocks.GRANITE).strength(3.0F, 3.0F);
-    private static final Supplier<AbstractBlock.Settings> DIORITE = () -> AbstractBlock.Settings.copyShallow(Blocks.DIORITE).strength(3.0F, 3.0F);
-    private static final Supplier<AbstractBlock.Settings> ANDESITE = () -> AbstractBlock.Settings.copyShallow(Blocks.ANDESITE).strength(3.0F, 3.0F);
-    private static final Supplier<AbstractBlock.Settings> TUFF = () -> AbstractBlock.Settings.copyShallow(Blocks.TUFF).strength(3.0F, 3.0F);
-    private static final Supplier<AbstractBlock.Settings> CALCITE = () -> AbstractBlock.Settings.copyShallow(Blocks.CALCITE).strength(0.5F, 0.5F);
-    private static final Supplier<AbstractBlock.Settings> BLACKSTONE = () -> AbstractBlock.Settings.copyShallow(Blocks.BLACKSTONE).strength(3.0F, 3.0F);
-    private static final Supplier<AbstractBlock.Settings> BASALT = () -> AbstractBlock.Settings.copyShallow(Blocks.BASALT).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> GRANITE = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.GRANITE).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> DIORITE = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.DIORITE).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> ANDESITE = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.ANDESITE).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> TUFF = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.TUFF).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> CALCITE = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CALCITE).strength(0.5F, 0.5F);
+    private static final Supplier<BlockBehaviour.Properties> BLACKSTONE = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.BLACKSTONE).strength(3.0F, 3.0F);
+    private static final Supplier<BlockBehaviour.Properties> BASALT = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.BASALT).strength(3.0F, 3.0F);
 
     public static final OverworldOreBlocks GRANITE_ORES = registerOverworldOres("granite", GRANITE);
     public static final OverworldOreBlocks DIORITE_ORES = registerOverworldOres("diorite", DIORITE);
@@ -61,7 +61,7 @@ public class UniversalOresBlocks {
     public static final Block[] QUARTZ_ORES = Arrays.stream(UniversalOresBlocks.NETHER_ORE_BLOCKS).map(NetherOreBlocks::quartz).toArray(Block[]::new);
 
 
-    private static OverworldOreBlocks registerOverworldOres(String prefix, Supplier<AbstractBlock.Settings> settingsSupplier) {
+    private static OverworldOreBlocks registerOverworldOres(String prefix, Supplier<BlockBehaviour.Properties> settingsSupplier) {
         return new OverworldOreBlocks(
                 register(prefix + "_coal_ore", COAL_ORE, settingsSupplier),
                 register(prefix + "_iron_ore", NO_EXP_ORE, settingsSupplier),
@@ -74,35 +74,35 @@ public class UniversalOresBlocks {
         );
     }
 
-    private static NetherOreBlocks registerNetherOres(String prefix, Supplier<AbstractBlock.Settings> settingsSupplier) {
+    private static NetherOreBlocks registerNetherOres(String prefix, Supplier<BlockBehaviour.Properties> settingsSupplier) {
         return new NetherOreBlocks(
                 register(prefix + "_gold_ore", NETHER_GOLD_ORE, settingsSupplier),
                 register(prefix + "_quartz_ore", QUARTZ_ORE, settingsSupplier)
         );
     }
 
-    private static NetherOreBlocks registerNetherPillarOres(String prefix, Supplier<AbstractBlock.Settings> settingsSupplier) {
+    private static NetherOreBlocks registerNetherPillarOres(String prefix, Supplier<BlockBehaviour.Properties> settingsSupplier) {
         return new NetherOreBlocks(
                 register(prefix + "_gold_ore", NETHER_GOLD_ORE_PILLAR, settingsSupplier),
                 register(prefix + "_quartz_ore", QUARTZ_ORE_PILLAR, settingsSupplier)
         );
     }
 
-    private static Block register(String key, Function<AbstractBlock.Settings, Block> factory, Supplier<AbstractBlock.Settings> supplier) {
+    private static Block register(String key, Function<BlockBehaviour.Properties, Block> factory, Supplier<BlockBehaviour.Properties> supplier) {
         return register(keyOf(key), factory, supplier.get());
     }
 
-    private static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings blockSettings) {
-        var block = factory.apply(blockSettings.registryKey(key));
-        Registry.register(Registries.BLOCK, key, block);
+    private static Block register(ResourceKey<Block> key, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties blockSettings) {
+        var block = factory.apply(blockSettings.setId(key));
+        Registry.register(BuiltInRegistries.BLOCK, key, block);
 
-        var itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, key.getValue());
-        Registry.register(Registries.ITEM, itemRegistryKey, new BlockItem(block, new Item.Settings().registryKey(itemRegistryKey).useBlockPrefixedTranslationKey()));
+        var itemRegistryKey = ResourceKey.create(Registries.ITEM, key.identifier());
+        Registry.register(BuiltInRegistries.ITEM, itemRegistryKey, new BlockItem(block, new Item.Properties().setId(itemRegistryKey).useBlockDescriptionPrefix()));
 
         return block;
     }
 
-    private static RegistryKey<Block> keyOf(String id) {
-        return RegistryKey.of(RegistryKeys.BLOCK, UniversalOres.id(id));
+    private static ResourceKey<Block> keyOf(String id) {
+        return ResourceKey.create(Registries.BLOCK, UniversalOres.id(id));
     }
 }

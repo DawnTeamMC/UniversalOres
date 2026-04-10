@@ -4,46 +4,45 @@ import com.google.common.collect.ImmutableList;
 import fr.hugman.universal_ores.block.NetherOreBlocks;
 import fr.hugman.universal_ores.block.OverworldOreBlocks;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.RuleTest;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
 public class OreUtil {
-    public static final RuleTest ANDESITE_RULE = new BlockMatchRuleTest(Blocks.ANDESITE);
-    public static final RuleTest DIORITE_RULE = new BlockMatchRuleTest(Blocks.DIORITE);
-    public static final RuleTest GRANITE_RULE = new BlockMatchRuleTest(Blocks.GRANITE);
-    public static final RuleTest TUFF_RULE = new BlockMatchRuleTest(Blocks.TUFF);
-    public static final RuleTest CALCITE_RULE = new BlockMatchRuleTest(Blocks.CALCITE);
+    public static final BlockMatchTest ANDESITE_RULE = new BlockMatchTest(Blocks.ANDESITE);
+    public static final BlockMatchTest DIORITE_RULE = new BlockMatchTest(Blocks.DIORITE);
+    public static final BlockMatchTest GRANITE_RULE = new BlockMatchTest(Blocks.GRANITE);
+    public static final BlockMatchTest TUFF_RULE = new BlockMatchTest(Blocks.TUFF);
+    public static final BlockMatchTest CALCITE_RULE = new BlockMatchTest(Blocks.CALCITE);
 
-    public static final RuleTest BLACKSTONE_RULE = new BlockMatchRuleTest(Blocks.BLACKSTONE);
-    public static final RuleTest BASALT_RULE = new BlockMatchRuleTest(Blocks.BASALT);
+    public static final BlockMatchTest BLACKSTONE_RULE = new BlockMatchTest(Blocks.BLACKSTONE);
+    public static final BlockMatchTest BASALT_RULE = new BlockMatchTest(Blocks.BASALT);
 
-    public static List<OreFeatureConfig.Target> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
+    public static List<OreConfiguration.TargetBlockState> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
         return List.of(
-                OreFeatureConfig.createTarget(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).getDefaultState()),
-                OreFeatureConfig.createTarget(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).getDefaultState()),
-                OreFeatureConfig.createTarget(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).getDefaultState()),
-                OreFeatureConfig.createTarget(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).getDefaultState()),
-                OreFeatureConfig.createTarget(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).getDefaultState())
+                OreConfiguration.target(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).defaultBlockState()),
+                OreConfiguration.target(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).defaultBlockState()),
+                OreConfiguration.target(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).defaultBlockState()),
+                OreConfiguration.target(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).defaultBlockState()),
+                OreConfiguration.target(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).defaultBlockState())
         );
     }
 
-    public static List<OreFeatureConfig.Target> getNewNetherTargets(Function<NetherOreBlocks, Block> state) {
+    public static List<OreConfiguration.TargetBlockState> getNewNetherTargets(Function<NetherOreBlocks, Block> state) {
         return List.of(
-                OreFeatureConfig.createTarget(BLACKSTONE_RULE, state.apply(UniversalOresBlocks.BLACKSTONE_ORES).getDefaultState()),
-                OreFeatureConfig.createTarget(BASALT_RULE, state.apply(UniversalOresBlocks.BASALT_ORES).getDefaultState())
+                OreConfiguration.target(BLACKSTONE_RULE, state.apply(UniversalOresBlocks.BLACKSTONE_ORES).defaultBlockState()),
+                OreConfiguration.target(BASALT_RULE, state.apply(UniversalOresBlocks.BASALT_ORES).defaultBlockState())
         );
     }
 
     @Nullable
-    public static ImmutableList<OreFeatureConfig.Target> getNewTargets(List<OreFeatureConfig.Target> targets) {
-        List<OreFeatureConfig.Target> newTargets = null;
+    public static ImmutableList<OreConfiguration.TargetBlockState> getNewTargets(List<OreConfiguration.TargetBlockState> targets) {
+        List<OreConfiguration.TargetBlockState> newTargets = null;
         for (var target : targets) {
             newTargets = getNewTargetsByBlock(target.state.getBlock());
             if (newTargets != null) {
@@ -54,7 +53,7 @@ public class OreUtil {
             return null;
         }
 
-        var list = ImmutableList.<OreFeatureConfig.Target>builder()
+        var list = ImmutableList.<OreConfiguration.TargetBlockState>builder()
                 .addAll(newTargets)
                 .addAll(targets);
         // old ones need to be added after the new ones, otherwise the new ones will be ignored
@@ -63,7 +62,7 @@ public class OreUtil {
     }
 
     @Nullable
-    private static List<OreFeatureConfig.Target> getNewTargetsByBlock(Block block) {
+    private static List<OreConfiguration.TargetBlockState> getNewTargetsByBlock(Block block) {
         if (block == Blocks.COAL_ORE) {
             return getNewOverworldTargets(OverworldOreBlocks::coal);
         }
