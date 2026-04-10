@@ -2,37 +2,38 @@ package fr.hugman.universal_ores.block;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PillarBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.IntProvider;
+import org.jetbrains.annotations.NotNull;
 
-public class DropExperienceRotatedPillarBlock extends PillarBlock {
+public class DropExperienceRotatedPillarBlock extends RotatedPillarBlock {
     public static final MapCodec<DropExperienceRotatedPillarBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(block -> block.experienceDropped), createSettingsCodec())
+            instance -> instance.group(IntProviders.codec(0, 10).fieldOf("experience").forGetter(block -> block.experienceDropped), propertiesCodec())
                     .apply(instance, DropExperienceRotatedPillarBlock::new)
     );
 
     private final IntProvider experienceDropped;
 
-    @Override
-    public MapCodec<? extends DropExperienceRotatedPillarBlock> getCodec() {
+    @Override @NotNull
+    public MapCodec<? extends RotatedPillarBlock> codec() {
         return CODEC;
     }
 
-    public DropExperienceRotatedPillarBlock(IntProvider experienceDropped, Settings settings) {
+    public DropExperienceRotatedPillarBlock(IntProvider experienceDropped, Properties settings) {
         super(settings);
         this.experienceDropped = experienceDropped;
     }
 
-
     @Override
-    protected void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
-        super.onStacksDropped(state, world, pos, tool, dropExperience);
+    protected void spawnAfterBreak(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull ItemStack tool, boolean dropExperience) {
+        super.spawnAfterBreak(state, level, pos, tool, dropExperience);
         if (dropExperience) {
-            this.dropExperienceWhenMined(world, pos, tool, this.experienceDropped);
+            this.tryDropExperience(level, pos, tool, this.experienceDropped);
         }
     }
 }
