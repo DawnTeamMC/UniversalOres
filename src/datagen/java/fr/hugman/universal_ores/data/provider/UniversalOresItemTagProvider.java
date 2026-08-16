@@ -5,8 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.BlockItemTagId;
+import net.minecraft.tags.BlockItemTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,14 +19,18 @@ public class UniversalOresItemTagProvider extends FabricTagsProvider.ItemTagsPro
 
     @Override
     protected void addTags(@NotNull HolderLookup.Provider registries) {
-        copy(BlockTags.GOLD_ORES, ItemTags.GOLD_ORES);
-        copy(BlockTags.IRON_ORES, ItemTags.IRON_ORES);
-        copy(BlockTags.DIAMOND_ORES, ItemTags.DIAMOND_ORES);
-        copy(BlockTags.REDSTONE_ORES, ItemTags.REDSTONE_ORES);
-        copy(BlockTags.LAPIS_ORES, ItemTags.LAPIS_ORES);
-        copy(BlockTags.COAL_ORES, ItemTags.COAL_ORES);
-        copy(BlockTags.EMERALD_ORES, ItemTags.EMERALD_ORES);
-        copy(BlockTags.COPPER_ORES, ItemTags.COPPER_ORES);
+        copy(BlockItemTags.GOLD_ORES);
+        copy(BlockItemTags.IRON_ORES);
+        copy(BlockItemTags.DIAMOND_ORES);
+        copy(BlockItemTags.REDSTONE_ORES);
+        copy(BlockItemTags.LAPIS_ORES);
+        copy(BlockItemTags.COAL_ORES);
+        copy(BlockItemTags.EMERALD_ORES);
+        copy(BlockItemTags.COPPER_ORES);
         copy(ConventionalBlockTags.QUARTZ_ORES, ConventionalItemTags.QUARTZ_ORES);
+    }
+
+    private void copy(BlockItemTagId tag) {
+        copy(tag.block(), tag.item());
     }
 }
