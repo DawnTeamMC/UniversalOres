@@ -14,7 +14,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Download translations from Crowdin
         uses: crowdin/github-action@v2
@@ -62,7 +62,7 @@ jobs:
           changelog: ${{ github.event.release.body }}
           java: 25
           game-versions: |
-            >=26.1
+            >=26.2
 
           modrinth-featured: false
 
@@ -81,7 +81,7 @@ jobs:
           echo "${{ github.event.release.body }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Send Discord webhook
-        uses: Ilshidur/action-discord@0.3.2
+        uses: Ilshidur/action-discord@0.4.0
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_EMBEDS: |
