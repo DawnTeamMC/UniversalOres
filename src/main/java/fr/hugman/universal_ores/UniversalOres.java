@@ -1,7 +1,6 @@
 package fr.hugman.universal_ores;
 
 import com.google.common.reflect.Reflection;
-import fr.hugman.universal_ores.block.UniversalOresBlockTypes;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import fr.hugman.universal_ores.item.creative_tab.UniversalOresCreativeModeTabAdditions;
 import net.fabricmc.api.ModInitializer;
@@ -12,7 +11,6 @@ public class UniversalOres implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Reflection.initialize(UniversalOresBlockTypes.class);
         Reflection.initialize(UniversalOresBlocks.class);
         UniversalOresCreativeModeTabAdditions.appendItemGroups();
     }
