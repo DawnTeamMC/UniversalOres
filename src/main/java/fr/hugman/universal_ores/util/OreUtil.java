@@ -6,8 +6,8 @@ import fr.hugman.universal_ores.block.OverworldOreBlocks;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,28 +23,28 @@ public class OreUtil {
     public static final BlockMatchTest BLACKSTONE_RULE = new BlockMatchTest(Blocks.BLACKSTONE);
     public static final BlockMatchTest BASALT_RULE = new BlockMatchTest(Blocks.BASALT);
 
-    public static List<OreConfiguration.TargetBlockState> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
+    public static List<BlockReplacement> getNewOverworldTargets(Function<OverworldOreBlocks, Block> state) {
         return List.of(
-                OreConfiguration.target(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).defaultBlockState()),
-                OreConfiguration.target(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).defaultBlockState()),
-                OreConfiguration.target(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).defaultBlockState()),
-                OreConfiguration.target(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).defaultBlockState()),
-                OreConfiguration.target(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).defaultBlockState())
+                BlockReplacement.replace(ANDESITE_RULE, state.apply(UniversalOresBlocks.ANDESITE_ORES).defaultBlockState()),
+                BlockReplacement.replace(DIORITE_RULE, state.apply(UniversalOresBlocks.DIORITE_ORES).defaultBlockState()),
+                BlockReplacement.replace(GRANITE_RULE, state.apply(UniversalOresBlocks.GRANITE_ORES).defaultBlockState()),
+                BlockReplacement.replace(TUFF_RULE, state.apply(UniversalOresBlocks.TUFF_ORES).defaultBlockState()),
+                BlockReplacement.replace(CALCITE_RULE, state.apply(UniversalOresBlocks.CALCITE_ORES).defaultBlockState())
         );
     }
 
-    public static List<OreConfiguration.TargetBlockState> getNewNetherTargets(Function<NetherOreBlocks, Block> state) {
+    public static List<BlockReplacement> getNewNetherTargets(Function<NetherOreBlocks, Block> state) {
         return List.of(
-                OreConfiguration.target(BLACKSTONE_RULE, state.apply(UniversalOresBlocks.BLACKSTONE_ORES).defaultBlockState()),
-                OreConfiguration.target(BASALT_RULE, state.apply(UniversalOresBlocks.BASALT_ORES).defaultBlockState())
+                BlockReplacement.replace(BLACKSTONE_RULE, state.apply(UniversalOresBlocks.BLACKSTONE_ORES).defaultBlockState()),
+                BlockReplacement.replace(BASALT_RULE, state.apply(UniversalOresBlocks.BASALT_ORES).defaultBlockState())
         );
     }
 
     @Nullable
-    public static ImmutableList<OreConfiguration.TargetBlockState> getNewTargets(List<OreConfiguration.TargetBlockState> targets) {
-        List<OreConfiguration.TargetBlockState> newTargets = null;
+    public static ImmutableList<BlockReplacement> getNewTargets(List<BlockReplacement> targets) {
+        List<BlockReplacement> newTargets = null;
         for (var target : targets) {
-            newTargets = getNewTargetsByBlock(target.state.getBlock());
+            newTargets = getNewTargetsByBlock(target.state().getBlock());
             if (newTargets != null) {
                 break;
             }
@@ -53,7 +53,7 @@ public class OreUtil {
             return null;
         }
 
-        var list = ImmutableList.<OreConfiguration.TargetBlockState>builder()
+        var list = ImmutableList.<BlockReplacement>builder()
                 .addAll(newTargets)
                 .addAll(targets);
         // old ones need to be added after the new ones, otherwise the new ones will be ignored
@@ -62,7 +62,7 @@ public class OreUtil {
     }
 
     @Nullable
-    private static List<OreConfiguration.TargetBlockState> getNewTargetsByBlock(Block block) {
+    private static List<BlockReplacement> getNewTargetsByBlock(Block block) {
         if (block == Blocks.COAL_ORE) {
             return getNewOverworldTargets(OverworldOreBlocks::coal);
         }

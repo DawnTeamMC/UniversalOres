@@ -5,9 +5,11 @@ import fr.hugman.universal_ores.UniversalOres;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.Items;
@@ -28,8 +30,8 @@ public class UniversalOresRecipeGenerator extends FabricRecipeProvider {
     }
 
     @Override @NotNull
-    protected RecipeProvider createRecipeProvider(@NotNull HolderLookup.Provider registries, @NotNull RecipeOutput output) {
-        return new RecipeProvider(registries, output) {
+    protected RecipeProvider createRecipeProvider(@NotNull HolderLookup.Provider registries, @NotNull BootstrapContext<Recipe<?>> recipes, @NotNull BootstrapContext<Advancement> advancements) {
+        return new RecipeProvider(recipes, advancements) {
             @Override
             public void buildRecipes() {
                 offerOres(this, output, ImmutableList.copyOf(UniversalOresBlocks.COAL_ORES), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");

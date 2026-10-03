@@ -8,9 +8,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,8 +20,6 @@ public class UniversalOresBlockLootTableProvider extends FabricBlockLootSubProvi
 
     @Override
     public void generate() {
-        var enchantments = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-
         for (var block : UniversalOresBlocks.COAL_ORES) {
             this.add(block, b -> this.createOreDrop(b, Items.COAL));
         }
@@ -50,7 +47,7 @@ public class UniversalOresBlockLootTableProvider extends FabricBlockLootSubProvi
         for (var block : UniversalOresBlocks.NETHER_GOLD_ORES) {
             this.add(block, b -> this.createSilkTouchDispatchTable(b,
                     this.applyExplosionDecay(b, LootItem.lootTableItem(Items.GOLD_NUGGET)
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F)))
+                            .apply(SetItemCountFunction.setCount(ContextIntProviders.between(2, 6)))
                             .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))
                     )
             ));
