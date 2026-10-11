@@ -3,6 +3,9 @@ registries:
   fabric-maven:
     type: maven-repository
     url: https://maven.fabricmc.net/
+  neoforged-maven:
+    type: maven-repository
+    url: https://maven.neoforged.net/releases/
 
 updates:
   - package-ecosystem: "github-actions"
@@ -18,3 +21,4 @@ updates:
       interval: "weekly"
     registries:
       - fabric-maven
+      - neoforged-maven

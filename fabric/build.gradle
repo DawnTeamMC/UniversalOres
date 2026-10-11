@@ -1,0 +1,76 @@
+plugins {
+    id "net.fabricmc.fabric-loom"
+}
+
+evaluationDependsOn(':common')
+def common = project(':common')
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/universal_ores.accesswidener")
+
+    splitEnvironmentSourceSets()
+
+    mods {
+        "universal_ores" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
+    runs {
+        // Boots a server, runs the game tests and exits: a quick way to check that the mod loads
+        gameTestServer {
+            server()
+            name = "Game Test Server"
+            vmArg "-Dfabric-api.gametest"
+            runDir "build/gametest"
+        }
+    }
+}
+
+// Lets the IDE resolve the shared code; the classes themselves are compiled from source below
+dependencies {
+    compileOnly common.sourceSets.main.output
+    clientCompileOnly common.sourceSets.client.output
+}
+
+fabricApi {
+    configureDataGeneration() {
+        modId = "universal_ores-datagen"
+        createSourceSet = true
+        client = true
+        // Generated data is shared by every loader: the common project adds it to its resources
+        outputDirectory = common.file("src/main/generated")
+        addToResources = false
+    }
+}
+
+// Compile the shared sources into this jar
+tasks.named('compileJava', JavaCompile) {
+    source common.sourceSets.main.java
+}
+tasks.named('compileClientJava', JavaCompile) {
+    source common.sourceSets.client.java
+}
+processResources {
+    from common.sourceSets.main.resources
+
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+processClientResources {
+    from common.sourceSets.client.resources
+}
+sourcesJar {
+    from common.sourceSets.main.allSource
+    from common.sourceSets.client.allSource
+}

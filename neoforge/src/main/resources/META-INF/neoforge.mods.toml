@@ -1,0 +1,30 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "Polyform Shield 1.0.0"
+issueTrackerURL = "https://github.com/DawnTeamMC/UniversalOres/issues"
+
+[[mods]]
+modId = "universal_ores"
+version = "${version}"
+displayName = "Universal Ores"
+iconFile = "assets/universal_ores/textures/logo.png"
+authors = "Hugman"
+displayURL = "https://dawnteammc.github.io/universal_ores"
+description = '''Adds vanilla ore variants for andesite, diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should be.'''
+
+[[mixins]]
+config = "universal_ores.mixins.json"
+
+[[dependencies.universal_ores]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforge_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.universal_ores]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

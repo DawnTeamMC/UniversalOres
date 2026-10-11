@@ -18,8 +18,11 @@ diorite, granite, tuff, calcite, blackstone and basalt that generate naturally w
 ## 📦 Download
 We use [CurseForge](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric) and [Modrinth](https://modrinth.com/mod/universal_ores) to publish **stable builds** of Universal Ores for Minecraft.
 
-⚠ Universal Ores **requires** Fabric API to be
-installed: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
+Universal Ores is available for both **Fabric** and **NeoForge**.
+
+⚠ On Fabric, Universal Ores **requires** Fabric API to be installed: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
+
+On NeoForge, no other mod is required.
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).
