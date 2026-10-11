@@ -18,7 +18,7 @@
       "fr.hugman.universal_ores.fabric.UniversalOresFabric"
     ],
     "client": [
-      "fr.hugman.universal_ores.client.UniversalOresClient"
+      "fr.hugman.universal_ores.fabric.client.UniversalOresFabricClient"
     ]
   },
   "mixins": [
