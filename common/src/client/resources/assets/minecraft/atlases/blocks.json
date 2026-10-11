@@ -52,7 +52,7 @@
         "diamond": {
           "ore": "universal_ores:ore_overlay/diamond",
           "shadow": "universal_ores:ore_overlay/diamond_shadow",
-          "glow": "#77e7d1"
+          "glow_color": "#77e7d1"
         }
       }
     }

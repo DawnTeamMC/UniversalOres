@@ -2,24 +2,23 @@ package fr.hugman.universal_ores.client.texture.atlas.ore;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.ColorCode;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.ExtraCodecs;
 
-import java.awt.*;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public record OreTextures(
         Identifier ore,
         Optional<Identifier> shadow,
-        Optional<ColorCode> glowColor
+        Optional<Integer> glowColor
 ) {
     public static final Codec<OreTextures> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    Identifier.CODEC.fieldOf("ore").forGetter(source -> source.ore),
-                    Identifier.CODEC.optionalFieldOf("shadow").forGetter(source -> source.shadow),
-                    ColorCode.CODEC.optionalFieldOf("glow_color").forGetter(source -> source.glowColor)
+                    Identifier.CODEC.fieldOf("ore").forGetter(OreTextures::ore),
+                    Identifier.CODEC.optionalFieldOf("shadow").forGetter(OreTextures::shadow),
+                    ExtraCodecs.STRING_RGB_COLOR.optionalFieldOf("glow_color").forGetter(OreTextures::glowColor)
             ).apply(instance, OreTextures::new));
 
     /**
@@ -30,11 +29,13 @@ public record OreTextures(
             int height,
             int[] baseTexture,
             int[] overlay,
-            int[] overlayShadow
+            int @Nullable [] overlayShadow
     ) {
+        checkSize(width, height, overlay);
         if (overlayShadow == null) {
             return apply(width, height, baseTexture, overlay);
         }
+        checkSize(width, height, overlayShadow);
         // get the color palette of the base texture, ordered by lightness
         var baseColorLightnessMap = sortColorsByLightness(baseTexture);
         var shadowLightnessMap = sortColorsByLightness(overlayShadow);
@@ -48,11 +49,11 @@ public record OreTextures(
                 int basePixel = baseTexture[y * width + x];
                 int overlayPixel = overlay[y * width + x];
                 int shadowPixel = overlayShadow[y * width + x];
-                if (ColorHelper.getAlpha(shadowPixel) != 0) {
+                if (ARGB.alpha(shadowPixel) != 0) {
                     var i = shadowLightnessMap.indexOf(shadowPixel) / (float) shadowLightnessMap.size();
-                    int index = (int) Math.rint(i * baseColorLightnessMap.size());
+                    int index = Math.min((int) Math.rint(i * baseColorLightnessMap.size()), baseColorLightnessMap.size() - 1);
                     result[y * width + x] = baseColorLightnessMap.get(index);
-                } else if (ColorHelper.getAlpha(overlayPixel) != 0) {
+                } else if (ARGB.alpha(overlayPixel) != 0) {
                     result[y * width + x] = overlayPixel;
                 } else {
                     result[y * width + x] = basePixel;
@@ -69,12 +70,13 @@ public record OreTextures(
             int[] baseTexture,
             int[] overlay
     ) {
+        checkSize(width, height, overlay);
         int[] result = new int[width * height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 int basePixel = baseTexture[y * width + x];
                 int overlayPixel = overlay[y * width + x];
-                if (ColorHelper.getAlpha(overlayPixel) != 0) {
+                if (ARGB.alpha(overlayPixel) != 0) {
                     result[y * width + x] = overlayPixel;
                 } else {
                     result[y * width + x] = basePixel;
@@ -85,18 +87,18 @@ public record OreTextures(
         return result;
     }
 
-    public static final Comparator<Integer> LIGHTNESS_COMPARATOR = (a, b) -> {
-        float[] hslA = rgbToHSL(a);
-        float[] hslB = rgbToHSL(b);
-        return Float.compare(hslA[2], hslB[2]);
-    };
-
-    private static float[] rgbToHSL(int rgb) {
-        Color color = new Color(rgb);
-        float[] hsl = new float[3];
-        Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsl);
-        return hsl;
+    private static void checkSize(int width, int height, int[] pixels) {
+        if (pixels.length != width * height) {
+            throw new IllegalArgumentException("Overlay has " + pixels.length + " pixels but the texture is " + width + "x" + height);
+        }
     }
+
+    /**
+     * Orders colors by their HSB brightness.
+     */
+    public static final Comparator<Integer> LIGHTNESS_COMPARATOR = Comparator.comparingInt(
+            color -> Math.max(ARGB.red(color), Math.max(ARGB.green(color), ARGB.blue(color)))
+    );
 
     public static List<Integer> sortColorsByLightness(int[] colors) {
         var list = new ArrayList<>(Arrays.stream(colors).distinct().boxed().toList());
