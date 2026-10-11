@@ -1,71 +1,47 @@
 plugins {
-    id "net.fabricmc.fabric-loom" version "${loom_version}"
+    id "net.fabricmc.fabric-loom" version "${loom_version}" apply false
+    id "net.neoforged.moddev" version "${moddev_version}" apply false
 }
 
-group = "com.github.hugman"
+subprojects {
+    apply plugin: 'java-library'
 
-base {
-    archivesName = project.mod_id
-}
+    group = "com.github.hugman"
+    version = rootProject.version
 
-dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    base {
+        archivesName = "${mod_id}-${project.name}"
+    }
 
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabricmc.net/' } // Mixin, for the common project
+    }
 
-    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
-}
+    dependencies {
+        compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    }
 
-loom {
-    accessWidenerPath = file("src/main/resources/universal_ores.accesswidener")
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = "UTF-8"
+        it.options.release = 25
+    }
 
-    splitEnvironmentSourceSets()
+    java {
+        withSourcesJar()
 
-    mods {
-        "universal_ores" {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
+    }
+
+    tasks.withType(Jar).configureEach {
+        from(rootProject.file("LICENSE.md")) {
+            rename { "${it}_${mod_id}" }
         }
     }
 
-}
-
-fabricApi {
-    configureDataGeneration {
-        modId = "universal_ores-datagen"
-        createSourceSet = true
-        client = true
+    // for JitPack
+    configurations.configureEach {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    it.options.release = 25
-}
-
-java {
-    withSourcesJar()
-
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-// for JitPack
-configurations.configureEach {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

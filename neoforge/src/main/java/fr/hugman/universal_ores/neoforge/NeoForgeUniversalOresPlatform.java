@@ -1,0 +1,55 @@
+package fr.hugman.universal_ores.neoforge;
+
+import fr.hugman.universal_ores.platform.CreativeModeTabOutput;
+import fr.hugman.universal_ores.platform.UniversalOresPlatform;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+
+import java.util.*;
+import java.util.function.Consumer;
+
+/**
+ * Registrations that NeoForge delivers through events are kept here until those events fire.
+ */
+public class NeoForgeUniversalOresPlatform implements UniversalOresPlatform {
+    private final Map<ResourceKey<CreativeModeTab>, List<Consumer<CreativeModeTabOutput>>> creativeModeTabModifiers = new HashMap<>();
+
+    void subscribe(IEventBus modBus) {
+        modBus.addListener(BuildCreativeModeTabContentsEvent.class, event -> {
+            for (var modifier : this.creativeModeTabModifiers.getOrDefault(event.getTabKey(), List.of())) {
+                modifier.accept((anchor, items) -> {
+                    insertAfter(event, event.getParentEntries(), CreativeModeTab.TabVisibility.PARENT_TAB_ONLY, anchor, items);
+                    insertAfter(event, event.getSearchEntries(), CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY, anchor, items);
+                });
+            }
+        });
+    }
+
+    @Override
+    public void modifyCreativeModeTab(ResourceKey<CreativeModeTab> tab, Consumer<CreativeModeTabOutput> modifier) {
+        this.creativeModeTabModifiers.computeIfAbsent(tab, key -> new ArrayList<>()).add(modifier);
+    }
+
+    /**
+     * NeoForge's {@code insertAfter} throws when the anchor is missing or the entry is already there, so both are checked first.
+     */
+    private static void insertAfter(BuildCreativeModeTabContentsEvent event, SequencedSet<ItemStack> entries, CreativeModeTab.TabVisibility visibility, ItemLike anchor, ItemLike... items) {
+        ItemStack previous = new ItemStack(anchor);
+        for (ItemLike item : items) {
+            ItemStack stack = new ItemStack(item);
+            if (entries.contains(stack)) {
+                continue;
+            }
+            if (entries.contains(previous)) {
+                event.insertAfter(previous, stack, visibility);
+            } else {
+                event.accept(stack, visibility);
+            }
+            previous = stack;
+        }
+    }
+}
