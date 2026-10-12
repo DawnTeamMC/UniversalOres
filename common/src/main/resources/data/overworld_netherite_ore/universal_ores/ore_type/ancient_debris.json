@@ -1,0 +1,6 @@
+{
+  "block": "overworld_netherite_ore:ancient_debris_ore",
+  "host": "minecraft:stone",
+  "category": "overworld",
+  "texture": "overworld_netherite_ore:block/netheriteore"
+}
