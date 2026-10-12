@@ -17,10 +17,16 @@ sourceSets {
         compileClasspath += main.output
         runtimeClasspath += main.output
     }
+    // Checks the generated ore textures against vanilla's and the former hand-made ones
+    test {
+        compileClasspath += main.output + client.output
+        runtimeClasspath += main.output + client.output
+    }
 }
 
 configurations {
     clientCompileOnly.extendsFrom compileOnly
+    testCompileOnly.extendsFrom compileOnly
 }
 
 neoForge {
@@ -28,6 +34,7 @@ neoForge {
     // Same access changes as the Fabric access widener
     accessTransformers.from(project(':neoforge').file('src/main/resources/META-INF/accesstransformer.cfg'))
     addModdingDependenciesTo(sourceSets.client)
+    addModdingDependenciesTo(sourceSets.test)
 }
 
 dependencies {
@@ -35,6 +42,27 @@ dependencies {
     compileOnly "net.fabricmc:sponge-mixin:${mixin_version}"
     compileOnly "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
     compileOnly "org.jetbrains:annotations:26.0.2"
+
+    testImplementation platform("org.junit:junit-bom:5.12.2")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+}
+
+// Draws the ore variants of every stone and ore type found in the given mods, without starting the game:
+// ./gradlew :common:previewOreTextures -Pmods="path/to/mod.jar;path/to/other.jar" -Pout=build/preview.png
+tasks.register('previewOreTextures', JavaExec) {
+    group = 'universal ores'
+    description = 'Draws the ore variants that Universal Ores would generate for the given mods'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'fr.hugman.universal_ores.client.texture.OreTexturePreview'
+    args = [
+            project.findProperty('out') ?: layout.buildDirectory.file('ore_preview.png').get().asFile.path,
+            project.findProperty('mods') ?: ''
+    ]
 }
 
 // Nothing is shipped from here

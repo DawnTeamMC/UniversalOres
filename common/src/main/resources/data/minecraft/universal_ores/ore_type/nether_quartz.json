@@ -1,0 +1,6 @@
+{
+  "block": "minecraft:nether_quartz_ore",
+  "host": "minecraft:netherrack",
+  "category": "nether",
+  "short_name": "quartz"
+}

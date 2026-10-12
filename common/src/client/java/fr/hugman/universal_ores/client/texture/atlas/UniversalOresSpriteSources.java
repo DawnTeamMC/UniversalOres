@@ -9,6 +9,6 @@ import java.util.function.BiConsumer;
 
 public class UniversalOresSpriteSources {
     public static void register(BiConsumer<Identifier, MapCodec<? extends SpriteSource>> registrar) {
-        registrar.accept(UniversalOres.id("ore_overlay"), OreOverlaySpriteSource.MAP_CODEC);
+        registrar.accept(UniversalOres.id("ore_variants"), OreVariantSpriteSource.MAP_CODEC);
     }
 }
