@@ -19,6 +19,7 @@ import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagLoader;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -57,14 +58,18 @@ public final class OreVariantData {
                     continue;
                 }
                 Identifier id = lootTable.get().identifier();
-                output.accept(id.withPath(path -> Registries.elementsDirPath(Registries.LOOT_TABLE) + "/" + path + ".json"), lootTable(variant, id));
+                output.accept(id.withPath(path -> Registries.elementsDirPath(Registries.LOOT_TABLE) + "/" + path + ".json"), lootTable(variant));
                 count++;
             }
             LOGGER.info("Generated the loot tables of {} ore variants", count);
         });
     }
 
-    private static JsonElement lootTable(RegisteredOreVariant variant, Identifier id) {
+    /**
+     * The original ore's loot table, with the original ore item (dropped with Silk Touch) swapped for the variant.
+     */
+    public static JsonElement lootTable(RegisteredOreVariant variant) {
+        Identifier id = variant.block().getLootTable().orElseThrow().identifier();
         JsonObject swap = new JsonObject();
         swap.addProperty("function", "minecraft:set_item");
         swap.addProperty("item", variant.variant().id().toString());
@@ -139,52 +144,65 @@ public final class OreVariantData {
 
     /**
      * Copies the cooking recipes of the original ores for their variants, unless they already accept them.
+     * A copy is named {@code universal_ores:<namespace>/<path>} after its original. If that copy already exists
+     * (like the generated ones for vanilla ores), the variants it lacks are added to it.
      *
-     * @return the recipes, followed by the copies
+     * @return the recipes, with the copies
      */
     public static Iterable<RecipeHolder<?>> withCookingRecipes(Iterable<RecipeHolder<?>> recipes, HolderLookup.Provider registries) {
+        return withCookingRecipes(recipes, registries, OreVariantRegistrar.registered());
+    }
+
+    /**
+     * @param oreVariants the variants to copy recipes for
+     */
+    public static List<RecipeHolder<?>> withCookingRecipes(Iterable<RecipeHolder<?>> recipes, HolderLookup.Provider registries, Collection<RegisteredOreVariant> oreVariants) {
+        Map<Identifier, RecipeHolder<?>> result = new LinkedHashMap<>();
+        recipes.forEach(holder -> result.put(holder.id().identifier(), holder));
         Map<Item, List<Item>> variantsByOre = new LinkedHashMap<>();
-        for (RegisteredOreVariant variant : OreVariantRegistrar.registered()) {
+        for (RegisteredOreVariant variant : oreVariants) {
             variantsByOre.computeIfAbsent(variant.ore().asItem(), item -> new ArrayList<>()).add(variant.block().asItem());
         }
-        if (variantsByOre.isEmpty()) {
-            return recipes;
-        }
         DynamicOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
-        Set<Identifier> ids = new HashSet<>();
-        recipes.forEach(holder -> ids.add(holder.id().identifier()));
-        List<RecipeHolder<?>> result = new ArrayList<>();
-        List<RecipeHolder<?>> copies = new ArrayList<>();
-        for (RecipeHolder<?> holder : recipes) {
-            result.add(holder);
-            if (!(holder.value() instanceof AbstractCookingRecipe cooking)) {
+        int copied = 0;
+        for (RecipeHolder<?> holder : List.copyOf(result.values())) {
+            Identifier id = holder.id().identifier();
+            if (id.getNamespace().equals(UniversalOres.MOD_ID) || !(holder.value() instanceof AbstractCookingRecipe cooking)) {
                 continue;
             }
+            Identifier copyId = UniversalOres.id(id.getNamespace() + "/" + id.getPath());
+            Ingredient existing = result.get(copyId) != null && result.get(copyId).value() instanceof AbstractCookingRecipe copy ? copy.input() : null;
             // Item stacks can't be made yet: item components are bound after recipes are read
-            List<Item> variants = new ArrayList<>();
-            variantsByOre.forEach((ore, oreVariants) -> {
+            List<Item> missing = new ArrayList<>();
+            variantsByOre.forEach((ore, variants) -> {
                 if (cooking.input().acceptsItem(ore.builtInRegistryHolder())) {
-                    oreVariants.stream().filter(variant -> !cooking.input().acceptsItem(variant.builtInRegistryHolder())).forEach(variants::add);
+                    variants.stream()
+                            .filter(variant -> !cooking.input().acceptsItem(variant.builtInRegistryHolder()))
+                            .filter(variant -> existing == null || !existing.acceptsItem(variant.builtInRegistryHolder()))
+                            .forEach(missing::add);
                 }
             });
-            Identifier id = holder.id().identifier();
-            Identifier copyId = UniversalOres.id(id.getNamespace() + "/" + id.getPath());
-            if (variants.isEmpty() || ids.contains(copyId)) {
+            if (missing.isEmpty()) {
                 continue;
             }
             JsonArray ingredient = new JsonArray();
-            variants.forEach(variant -> ingredient.add(BuiltInRegistries.ITEM.getKey(variant).toString()));
-            Recipe.CODEC.encodeStart(ops, holder.value())
+            if (existing != null) {
+                existing.items().forEach(item -> ingredient.add(item.unwrapKey().orElseThrow().identifier().toString()));
+            }
+            missing.forEach(variant -> ingredient.add(BuiltInRegistries.ITEM.getKey(variant).toString()));
+            var copy = Recipe.CODEC.encodeStart(ops, holder.value())
                     .map(json -> {
                         json.getAsJsonObject().add("ingredient", ingredient);
                         return json;
                     })
-                    .flatMap(json -> Recipe.CODEC.parse(ops, json))
-                    .ifSuccess(copy -> copies.add(new RecipeHolder<>(ResourceKey.create(Registries.RECIPE, copyId), copy)))
-                    .ifError(error -> LOGGER.warn("Couldn't copy recipe {} for the variants of its ore: {}", id, error.message()));
+                    .flatMap(json -> Recipe.CODEC.parse(ops, json));
+            copy.ifError(error -> LOGGER.warn("Couldn't copy recipe {} for the variants of its ore: {}", id, error.message()));
+            if (copy.isSuccess()) {
+                result.put(copyId, new RecipeHolder<>(ResourceKey.create(Registries.RECIPE, copyId), copy.getOrThrow()));
+                copied++;
+            }
         }
-        result.addAll(copies);
-        LOGGER.info("Copied {} cooking recipes for ore variants", copies.size());
-        return result;
+        LOGGER.info("Copied {} cooking recipes for ore variants", copied);
+        return new ArrayList<>(result.values());
     }
 }
