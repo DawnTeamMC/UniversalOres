@@ -12,7 +12,7 @@ package fr.hugman.universal_ores.client.texture;
  * @param haloRadius        how far from the ore (in pixels) the halo is looked for
  * @param rampExtension     how many lightness steps beyond a stone's colors still count as that stone
  * @param oreMinDistance    how far (OKLab) from the stone's colors an ore pixel must be
- * @param oreMinChroma      how much more saturated than the stone an ore pixel must be, unless out of its lightness range
+ * @param oreMinChroma      how far from the stone's hue (OKLab a/b distance) an ore pixel must be, unless out of its lightness range
  * @param oreFillNeighbors  a changed pixel with at least this many ore neighbors is ore too
  * @param contrastThreshold dark grey ore pixels are darkened until they are this much darker than the new stone
  * @param contrastStrength  how much of that darkening is applied

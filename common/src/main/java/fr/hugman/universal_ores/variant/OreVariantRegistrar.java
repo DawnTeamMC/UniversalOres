@@ -23,9 +23,8 @@ import java.util.*;
 /**
  * Registers the block and item of every ore variant whose stone and original ore exist.
  * <p>
- * Mods register their blocks in no particular order, so each variant is registered as soon as both of its blocks
- * are: the loaders call {@link #registerAvailable()} once every mod they know of has registered its blocks, and
- * {@link #onBlockRegistered(Identifier)} for blocks registered later on.
+ * Mods register their blocks in no particular order, so the loaders call {@link #registerAvailable()} once every
+ * mod has registered its blocks, just before the registries are frozen.
  * <p>
  * A variant behaves like its original ore (hardness, drops, experience, light, random ticks) and looks and sounds
  * like its stone. Its ID only depends on the two blocks, never on the loading order.
@@ -33,29 +32,15 @@ import java.util.*;
 public final class OreVariantRegistrar {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Map<Identifier, RegisteredOreVariant> REGISTERED = new LinkedHashMap<>();
-    private static final Map<Identifier, List<OreVariant>> WAITING = new HashMap<>();
-    private static boolean waitingFilled = false;
 
     private OreVariantRegistrar() {
     }
 
     public static synchronized void registerAvailable() {
-        fillWaiting();
         for (OreVariant variant : OreVariants.all()) {
             tryRegister(variant);
         }
-    }
-
-    public static synchronized void onBlockRegistered(Identifier id) {
-        if (!waitingFilled) {
-            return;
-        }
-        List<OreVariant> waiting = WAITING.get(id);
-        if (waiting != null) {
-            for (OreVariant variant : List.copyOf(waiting)) {
-                tryRegister(variant);
-            }
-        }
+        LOGGER.info("Registered {} ore variants", REGISTERED.size());
     }
 
     /**
@@ -67,17 +52,6 @@ public final class OreVariantRegistrar {
 
     public static Optional<RegisteredOreVariant> get(Identifier id) {
         return Optional.ofNullable(REGISTERED.get(id));
-    }
-
-    private static void fillWaiting() {
-        if (waitingFilled) {
-            return;
-        }
-        waitingFilled = true;
-        for (OreVariant variant : OreVariants.all()) {
-            WAITING.computeIfAbsent(variant.stoneType().block(), id -> new ArrayList<>()).add(variant);
-            WAITING.computeIfAbsent(variant.oreType().block(), id -> new ArrayList<>()).add(variant);
-        }
     }
 
     private static void tryRegister(OreVariant variant) {
@@ -94,6 +68,11 @@ public final class OreVariantRegistrar {
             LOGGER.warn("Ore variant {} is already registered by something else", variant.id());
             return;
         }
+        Optional<Identifier> existing = existingVariant(variant);
+        if (existing.isPresent()) {
+            LOGGER.debug("Not registering ore variant {}: {} already adds it", variant.id(), existing.get());
+            return;
+        }
 
         ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, variant.id());
         Block block = createBlock(variant, stone.get(), ore.get(), host.orElse(Blocks.STONE), blockKey);
@@ -103,7 +82,22 @@ public final class OreVariantRegistrar {
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, variant.id());
         Registry.register(BuiltInRegistries.ITEM, itemKey, new BlockItem(block, new Item.Properties().setId(itemKey).useBlockDescriptionPrefix()));
 
-        WAITING.values().forEach(list -> list.remove(variant));
+    }
+
+    /**
+     * Mods often add some variants of their own ores, or of vanilla ores in their own stones, named
+     * {@code <stone>_<ore>} (like Nature's Spirit's {@code chert_coal_ore} or Mythic Metals' {@code calcite_kyber_ore}).
+     * Those aren't added a second time.
+     */
+    private static Optional<Identifier> existingVariant(OreVariant variant) {
+        String path = variant.stoneType().block().getPath() + "_" + variant.oreType().block().getPath();
+        for (String namespace : List.of(variant.stoneType().block().getNamespace(), variant.oreType().block().getNamespace())) {
+            Identifier id = Identifier.tryBuild(namespace, path);
+            if (id != null && !namespace.equals(Identifier.DEFAULT_NAMESPACE) && BuiltInRegistries.BLOCK.containsKey(id)) {
+                return Optional.of(id);
+            }
+        }
+        return Optional.empty();
     }
 
     private static Block createBlock(OreVariant variant, Block stone, Block ore, Block host, ResourceKey<Block> key) {

@@ -76,7 +76,7 @@ public final class OreTexturePreview {
                 images.add(stone);
                 for (Identifier oreId : oreIds) {
                     OreVariant variant = variants.get(OreVariant.idOf(stoneEntry.getValue(), ores.get(oreId)));
-                    if (variant == null) {
+                    if (variant == null || providedByMod(roots, variant)) {
                         images.add(null);
                         continue;
                     }
@@ -104,6 +104,22 @@ public final class OreTexturePreview {
         graphics.dispose();
         TestImages.write(combined, output);
         System.out.println("Wrote " + output.toAbsolutePath());
+    }
+
+    /**
+     * Like the game does, skips the variants a mod already adds itself, named {@code <stone>_<ore>}.
+     */
+    private static boolean providedByMod(List<Path> roots, OreVariant variant) {
+        String path = variant.stoneType().block().getPath() + "_" + variant.oreType().block().getPath();
+        for (String namespace : List.of(variant.stoneType().block().getNamespace(), variant.oreType().block().getNamespace())) {
+            for (Path root : roots) {
+                if (!namespace.equals("minecraft") && Files.isRegularFile(root.resolve("assets/" + namespace + "/blockstates/" + path + ".json"))) {
+                    System.out.println(variant.id() + " is already added as " + namespace + ":" + path);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private static Optional<OreTemplate> template(List<Path> roots, OreType ore) {
