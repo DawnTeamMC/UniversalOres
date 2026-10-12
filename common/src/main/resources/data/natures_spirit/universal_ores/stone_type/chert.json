@@ -1,0 +1,8 @@
+{
+  "block": "natures_spirit:chert",
+  "category": "overworld",
+  "textures": {
+    "side": "natures_spirit:block/chert",
+    "end": "natures_spirit:block/chert_top"
+  }
+}

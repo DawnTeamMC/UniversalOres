@@ -1,0 +1,6 @@
+{
+  "block": "overworldquartzore:quartz_ore",
+  "host": "minecraft:stone",
+  "category": "overworld",
+  "texture": "overworldquartzore:block/quartzorenew"
+}
