@@ -25,9 +25,18 @@ loom {
     }
 }
 
+// Data generation, in src/datagen: ./gradlew :fabric:runDatagen
 // Game tests, in src/gametest: ./gradlew :fabric:runGameTest (also part of check), and
 // ./gradlew :fabric:runClientGameTest, which opens the game and takes a screenshot of every ore variant
 fabricApi {
+    configureDataGeneration() {
+        modId = "universal_ores-datagen"
+        createSourceSet = true
+        client = true
+        // Generated data is shared by every loader: the common project adds it to its resources
+        outputDirectory = common.file("src/main/generated")
+        addToResources = false
+    }
     configureTests {
         createSourceSet = true
         modId = "universal_ores-gametest"
