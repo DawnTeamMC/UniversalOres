@@ -4,6 +4,7 @@ import com.google.common.reflect.Reflection;
 import fr.hugman.universal_ores.block.UniversalOresBlockTypes;
 import fr.hugman.universal_ores.block.UniversalOresBlocks;
 import fr.hugman.universal_ores.item.creative_tab.UniversalOresCreativeModeTabAdditions;
+import fr.hugman.universal_ores.variant.OreVariants;
 import net.minecraft.resources.Identifier;
 
 public class UniversalOres {
@@ -12,6 +13,7 @@ public class UniversalOres {
     private static boolean initialized = false;
 
     public static void init() {
+        OreVariants.load();
         Reflection.initialize(UniversalOresBlockTypes.class);
         Reflection.initialize(UniversalOresBlocks.class);
         UniversalOresCreativeModeTabAdditions.appendItemGroups();
