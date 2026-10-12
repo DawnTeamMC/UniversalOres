@@ -1,7 +1,0 @@
-{
-  "block": "stonier_stone:marble_stone",
-  "category": "overworld",
-  "textures": {
-    "all": "stonier_stone:block/marble_stone_back"
-  }
-}

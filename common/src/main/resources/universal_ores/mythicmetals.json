@@ -1,0 +1,26 @@
+{
+  "ores": {
+    "mythicmetals:adamantite_ore": "minecraft:stone",
+    "mythicmetals:aquarium_ore": "minecraft:stone",
+    "mythicmetals:banglum_ore": "minecraft:stone",
+    "mythicmetals:carmot_ore": "minecraft:stone",
+    "mythicmetals:kyber_ore": "minecraft:stone",
+    "mythicmetals:manganese_ore": "minecraft:stone",
+    "mythicmetals:morkite_ore": "minecraft:stone",
+    "mythicmetals:mythril_ore": "minecraft:stone",
+    "mythicmetals:orichalcum_ore": "minecraft:stone",
+    "mythicmetals:osmium_ore": "minecraft:stone",
+    "mythicmetals:platinum_ore": "minecraft:stone",
+    "mythicmetals:prometheum_ore": "minecraft:stone",
+    "mythicmetals:quadrillum_ore": "minecraft:stone",
+    "mythicmetals:runite_ore": "minecraft:stone",
+    "mythicmetals:silver_ore": "minecraft:stone",
+    "mythicmetals:starrite_ore": "minecraft:stone",
+    "mythicmetals:tin_ore": "minecraft:stone",
+    "mythicmetals:unobtainium_ore": "minecraft:stone",
+    "mythicmetals:midas_gold_ore": "minecraft:netherrack",
+    "mythicmetals:nether_banglum_ore": "minecraft:netherrack",
+    "mythicmetals:palladium_ore": "minecraft:netherrack",
+    "mythicmetals:stormyx_ore": "minecraft:netherrack"
+  }
+}

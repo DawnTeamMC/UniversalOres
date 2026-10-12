@@ -1,12 +1,12 @@
 package fr.hugman.universal_ores.platform;
 
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.ServiceLoader;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -24,16 +24,9 @@ public interface UniversalOresPlatform {
     Path configDir();
 
     /**
-     * Visits the JSON files found in every mod (including Minecraft) under {@code data/<namespace>/<directory>/},
-     * before data packs are loaded. The visitor gets {@code <namespace>:<path inside the directory, without .json>}.
+     * Visits the JSON files found in the {@code <directory>/} folder of every mod, before data packs are loaded.
+     *
+     * @param visitor gets where the file comes from (for error messages) and its content, which it closes
      */
-    void forEachModDataFile(String directory, DataFileVisitor visitor);
-
-    @FunctionalInterface
-    interface DataFileVisitor {
-        /**
-         * @param stream closed by the visitor
-         */
-        void visit(Identifier id, InputStream stream);
-    }
+    void forEachModFile(String directory, BiConsumer<String, InputStream> visitor);
 }

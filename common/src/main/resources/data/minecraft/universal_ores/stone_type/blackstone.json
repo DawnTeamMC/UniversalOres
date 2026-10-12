@@ -1,7 +1,0 @@
-{
-  "block": "minecraft:blackstone",
-  "category": "nether",
-  "textures": {
-    "all": "minecraft:block/blackstone_top"
-  }
-}

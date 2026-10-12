@@ -1,0 +1,12 @@
+{
+  "ores": {
+    "nether_ores_reborn:coal_ore": "minecraft:netherrack",
+    "nether_ores_reborn:copper_ore": "minecraft:netherrack",
+    "nether_ores_reborn:diamond_ore": "minecraft:netherrack",
+    "nether_ores_reborn:emerald_ore": "minecraft:netherrack",
+    "nether_ores_reborn:gold_ore": "minecraft:netherrack",
+    "nether_ores_reborn:iron_ore": "minecraft:netherrack",
+    "nether_ores_reborn:lapis_ore": "minecraft:netherrack",
+    "nether_ores_reborn:redstone_ore": "minecraft:netherrack"
+  }
+}

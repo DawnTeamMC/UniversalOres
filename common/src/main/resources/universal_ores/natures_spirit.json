@@ -1,0 +1,12 @@
+{
+  "stones": {
+    "natures_spirit:chert": {
+      "ores_of": "minecraft:stone",
+      "texture": {
+        "side": "natures_spirit:block/chert",
+        "end": "natures_spirit:block/chert_top"
+      }
+    },
+    "natures_spirit:travertine": "minecraft:stone"
+  }
+}
