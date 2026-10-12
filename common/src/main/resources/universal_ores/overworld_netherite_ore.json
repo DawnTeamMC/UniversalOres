@@ -1,0 +1,8 @@
+{
+  "ores": {
+    "overworld_netherite_ore:ancient_debris_ore": {
+      "in": "minecraft:stone",
+      "texture": "overworld_netherite_ore:block/netheriteore"
+    }
+  }
+}

@@ -53,7 +53,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
         Map<Identifier, Supplier<Optional<OreTemplate>>> templates = new HashMap<>();
         for (RegisteredOreVariant registered : OreVariantRegistrar.registered()) {
             OreVariant variant = registered.variant();
-            var template = templates.computeIfAbsent(variant.oreTypeId(), id -> Suppliers.memoize(() -> loadTemplate(resourceManager, variant.oreTypeId(), variant.oreType(), settings)));
+            var template = templates.computeIfAbsent(variant.oreType().block(), id -> Suppliers.memoize(() -> loadTemplate(resourceManager, variant.oreType(), settings)));
             for (OreVariantTextures.Face face : OreVariantTextures.faces(registered)) {
                 if (OreVariantTextures.exists(resourceManager, face.sprite())) {
                     continue;
@@ -73,16 +73,17 @@ public record OreVariantSpriteSource() implements SpriteSource {
         return MAP_CODEC;
     }
 
-    private static Optional<OreTemplate> loadTemplate(ResourceManager resourceManager, Identifier id, OreType type, OreTextureSettings settings) {
+    private static Optional<OreTemplate> loadTemplate(ResourceManager resourceManager, OreType type, OreTextureSettings settings) {
+        Identifier id = type.block();
         try {
             Image ore = Image.read(resourceManager, type.textureOrDefault());
             if (ore == null) {
-                LOGGER.error("Can't draw the variants of ore type {}: its texture {} is missing", id, type.textureOrDefault());
+                LOGGER.error("Can't draw the variants of {}: its texture {} is missing", id, type.textureOrDefault());
                 return Optional.empty();
             }
             Image host = Image.read(resourceManager, type.hostTextureOrDefault());
             if (host == null) {
-                LOGGER.warn("The host texture {} of ore type {} is missing, so its whole texture is drawn over other stones", type.hostTextureOrDefault(), id);
+                LOGGER.warn("The texture {} of the stone {} is found in is missing, so its whole texture is drawn over other stones", type.hostTextureOrDefault(), id);
                 return Optional.of(OreTemplate.fromOverlay(ore.width, ore.height, ore.pixels, settings));
             }
             host = host.scaledTo(ore.width, ore.height);
@@ -92,7 +93,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
             Image haloHint = Image.read(resourceManager, hint.withSuffix("_halo"));
             return Optional.of(OreTemplate.extract(ore.width, ore.height, ore.pixels, host.pixels, mask(oreHint, ore), mask(haloHint, ore), settings));
         } catch (IOException | IllegalArgumentException e) {
-            LOGGER.error("Can't draw the variants of ore type {}", id, e);
+            LOGGER.error("Can't draw the variants of {}", id, e);
             return Optional.empty();
         }
     }

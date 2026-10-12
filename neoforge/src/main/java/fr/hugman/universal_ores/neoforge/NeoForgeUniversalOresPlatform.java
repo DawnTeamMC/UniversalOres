@@ -2,9 +2,7 @@ package fr.hugman.universal_ores.neoforge;
 
 import com.mojang.logging.LogUtils;
 import fr.hugman.universal_ores.platform.CreativeModeTabOutput;
-import fr.hugman.universal_ores.platform.DataFiles;
 import fr.hugman.universal_ores.platform.UniversalOresPlatform;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -18,8 +16,10 @@ import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -52,19 +52,21 @@ public class NeoForgeUniversalOresPlatform implements UniversalOresPlatform {
     }
 
     @Override
-    public void forEachModDataFile(String directory, DataFileVisitor visitor) {
+    public void forEachModFile(String directory, BiConsumer<String, InputStream> visitor) {
         for (IModFileInfo modFile : ModList.get().getModFiles()) {
-            modFile.getFile().getContents().visitContent("data", (relativePath, resource) -> {
-                Identifier id = DataFiles.idOf(relativePath, directory);
-                if (id == null) {
+            // Read while visiting: the resources can't be used afterwards
+            Map<String, byte[]> files = new TreeMap<>();
+            modFile.getFile().getContents().visitContent(directory, (relativePath, resource) -> {
+                if (!relativePath.endsWith(".json")) {
                     return;
                 }
                 try {
-                    visitor.visit(id, new ByteArrayInputStream(resource.readAllBytes()));
+                    files.put(relativePath, resource.readAllBytes());
                 } catch (IOException e) {
                     LOGGER.error("Couldn't read {} in {}", relativePath, modFile.getFile().getFileName(), e);
                 }
             });
+            files.forEach((path, bytes) -> visitor.accept(modFile.getFile().getFileName() + ":" + path, new ByteArrayInputStream(bytes)));
         }
     }
 
