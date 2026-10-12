@@ -193,15 +193,14 @@ public final class OreTemplate {
     }
 
     /**
-     * Tells the ore apart from its halo by color: ore pixels are far from the stone's own colors, either more
-     * saturated or beyond its lightness range. Pixels mostly surrounded by ore are counted as ore too.
+     * Tells the ore apart from its halo by color: ore pixels are far from the stone's own colors, either of another
+     * hue or beyond its lightness range. Pixels mostly surrounded by ore are counted as ore too.
      */
     private static boolean[] detectOre(int width, int height, int[] pixels, boolean[] changed, Palette host, OreTextureSettings settings) {
         int size = width * height;
         float step = host.meanStep();
         float lowest = host.darkest() - settings.rampExtension() * step;
         float highest = host.lightest() + settings.rampExtension() * step;
-        float hostChroma = host.meanChroma();
 
         boolean[] ore = new boolean[size];
         for (int i = 0; i < size; i++) {
@@ -210,7 +209,9 @@ public final class OreTemplate {
             }
             float[] lab = OkLab.fromArgb(pixels[i]);
             boolean outside = lab[OkLab.L] < lowest || lab[OkLab.L] > highest;
-            boolean colorful = OkLab.chroma(lab) - hostChroma > settings.oreMinChroma();
+            // A different hue than the stone at that lightness: more saturated on grey stone, or grey on red netherrack
+            float[] hostAb = host.abAt(lab[OkLab.L]);
+            boolean colorful = Math.hypot(lab[OkLab.A] - hostAb[0], lab[OkLab.B] - hostAb[1]) > settings.oreMinChroma();
             ore[i] = (outside || colorful) && host.distanceToRamp(lab, settings.rampExtension()) > settings.oreMinDistance();
         }
         for (int pass = 0; pass < 2; pass++) {

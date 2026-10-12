@@ -125,14 +125,6 @@ public final class Palette {
         return this.total == 0 ? 0.5F : (float) (sum / this.total);
     }
 
-    public float meanChroma() {
-        double sum = 0;
-        for (int i = 0; i < this.colors.length; i++) {
-            sum += (double) OkLab.chroma(this.labs[i]) * this.counts[i];
-        }
-        return this.total == 0 ? 0 : (float) (sum / this.total);
-    }
-
     /**
      * The mean lightness gap between two successive colors.
      */
