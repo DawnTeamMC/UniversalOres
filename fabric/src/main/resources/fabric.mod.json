@@ -22,7 +22,8 @@
     ]
   },
   "mixins": [
-    "universal_ores.mixins.json"
+    "universal_ores.mixins.json",
+    "universal_ores.fabric.mixins.json"
   ],
   "accessWidener": "universal_ores.accesswidener",
   "depends": {

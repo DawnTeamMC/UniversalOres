@@ -4,7 +4,13 @@
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "OreConfigurationMixin",
+    "RecipeManagerMixin",
+    "TagEntryAccessor",
+    "TagLoaderMixin",
     "VeinTypeMixin"
+  ],
+  "client": [
+    "client.ClientLanguageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

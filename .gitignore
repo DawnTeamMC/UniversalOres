@@ -31,7 +31,6 @@ bin/
 # fabric
 
 run/
-common/src/main/generated/
 # written by the common tests, which load Minecraft's logging configuration
 common/logs/
 

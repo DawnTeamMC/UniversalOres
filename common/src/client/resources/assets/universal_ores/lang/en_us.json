@@ -1,6 +1,10 @@
 {
 	"modmenu.descriptionTranslation.universal_ores": "Adds ores variants for andesite, diorite, granite, tuff, calcite, blackstone and basalt.",
 
+	"pack.universal_ores.generated.title": "Universal Ores",
+	"pack.universal_ores.generated.description": "Ore variants for the installed mods",
+	"block.universal_ores.ore_variant": "%1$s %2$s",
+
 	"block.universal_ores.andesite_coal_ore": "Andesite Coal Ore",
 	"block.universal_ores.andesite_iron_ore": "Andesite Iron Ore",
 	"block.universal_ores.andesite_gold_ore": "Andesite Gold Ore",

@@ -23,15 +23,34 @@ loom {
             sourceSet sourceSets.client
         }
     }
+}
 
-    runs {
-        // Boots a server, runs the game tests and exits: a quick way to check that the mod loads
-        gameTestServer {
-            server()
-            name = "Game Test Server"
-            vmArg "-Dfabric-api.gametest"
-            runDir "build/gametest"
-        }
+// Game tests, in src/gametest: ./gradlew :fabric:runGameTest (also part of check), and
+// ./gradlew :fabric:runClientGameTest, which opens the game and takes a screenshot of every ore variant
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "universal_ores-gametest"
+        enableGameTests = true
+        enableClientGameTests = true
+        eula = true
+    }
+}
+
+// Mods Universal Ores has compatibility with, to try them in development: ./gradlew :fabric:runClient -PcompatMods
+// Their versions are Modrinth version IDs, for this Minecraft version.
+repositories {
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+dependencies {
+    if (project.hasProperty('compatMods')) {
+        localRuntime "maven.modrinth:promenade:ldF03LkA" // Promenade 5.6.0
+        localRuntime "maven.modrinth:terralith:OxfI2n80" // Terralith 2.6.4
+        localRuntime "maven.modrinth:lithostitched:sGGUpIGT" // Lithostitched 1.8.0, needed by Terralith
     }
 }
 
@@ -39,17 +58,6 @@ loom {
 dependencies {
     compileOnly common.sourceSets.main.output
     clientCompileOnly common.sourceSets.client.output
-}
-
-fabricApi {
-    configureDataGeneration() {
-        modId = "universal_ores-datagen"
-        createSourceSet = true
-        client = true
-        // Generated data is shared by every loader: the common project adds it to its resources
-        outputDirectory = common.file("src/main/generated")
-        addToResources = false
-    }
 }
 
 // Compile the shared sources into this jar

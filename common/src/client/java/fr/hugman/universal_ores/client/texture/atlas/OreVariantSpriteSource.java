@@ -11,12 +11,12 @@ import fr.hugman.universal_ores.client.texture.OreTextureSettings;
 import fr.hugman.universal_ores.client.texture.OreVariantTextures;
 import fr.hugman.universal_ores.variant.OreType;
 import fr.hugman.universal_ores.variant.OreVariant;
-import fr.hugman.universal_ores.variant.OreVariants;
+import fr.hugman.universal_ores.variant.OreVariantRegistrar;
+import fr.hugman.universal_ores.variant.RegisteredOreVariant;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.atlas.SpriteResourceLoader;
 import net.minecraft.client.renderer.texture.atlas.SpriteSource;
 import net.minecraft.client.resources.metadata.animation.FrameSize;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -51,12 +51,10 @@ public record OreVariantSpriteSource() implements SpriteSource {
     public void run(@NotNull ResourceManager resourceManager, @NotNull Output output) {
         OreTextureSettings settings = OreTextureSettings.DEFAULT;
         Map<Identifier, Supplier<Optional<OreTemplate>>> templates = new HashMap<>();
-        for (OreVariant variant : OreVariants.all()) {
-            if (!BuiltInRegistries.BLOCK.containsKey(variant.id())) {
-                continue;
-            }
+        for (RegisteredOreVariant registered : OreVariantRegistrar.registered()) {
+            OreVariant variant = registered.variant();
             var template = templates.computeIfAbsent(variant.oreTypeId(), id -> Suppliers.memoize(() -> loadTemplate(resourceManager, variant.oreTypeId(), variant.oreType(), settings)));
-            for (OreVariantTextures.Face face : OreVariantTextures.faces(resourceManager, variant)) {
+            for (OreVariantTextures.Face face : OreVariantTextures.faces(registered)) {
                 if (OreVariantTextures.exists(resourceManager, face.sprite())) {
                     continue;
                 }

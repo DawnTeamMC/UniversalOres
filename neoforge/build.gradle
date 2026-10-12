@@ -29,7 +29,22 @@ neoForge {
     }
 }
 
+// Mods Universal Ores has compatibility with, to try them in development: ./gradlew :neoforge:runClient -PcompatMods
+// Their versions are Modrinth version IDs, for this Minecraft version.
+repositories {
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+
 dependencies {
+    if (project.hasProperty('compatMods')) {
+        runtimeOnly "maven.modrinth:terralith:lqrGyTjO" // Terralith 2.6.4
+        runtimeOnly "maven.modrinth:lithostitched:UPpXQQpg" // Lithostitched 1.8.0, needed by Terralith
+    }
+
     // Lets the IDE resolve the shared code; the classes themselves are compiled from source below
     compileOnly common.sourceSets.main.output
     compileOnly common.sourceSets.client.output
