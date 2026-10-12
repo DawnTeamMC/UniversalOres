@@ -6,12 +6,6 @@ plugins {
 }
 
 sourceSets {
-    main {
-        resources {
-            srcDir 'src/main/generated'
-            exclude '.cache/**'
-        }
-    }
     // Client-only code, kept apart so it can't leak into the common (server-safe) code
     client {
         compileClasspath += main.output

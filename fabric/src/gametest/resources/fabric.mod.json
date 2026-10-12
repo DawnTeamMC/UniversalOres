@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "universal_ores-gametest",
+  "version": "1.0.0",
+  "name": "Universal Ores Game Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "fr.hugman.universal_ores.gametest.OreVariantGameTests"
+    ],
+    "fabric-client-gametest": [
+      "fr.hugman.universal_ores.gametest.OreVariantClientGameTest"
+    ]
+  },
+  "depends": {
+    "universal_ores": "*"
+  }
+}
