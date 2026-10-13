@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.fabricmc.fabric.api.client.gametest.v1.screenshot.TestScreenshotOptions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.AtlasIds;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
@@ -16,6 +18,8 @@ import java.util.*;
 /**
  * Builds a wall of every registered ore variant (one row per stone, sorted like their blocks are registered) and
  * takes a screenshot of it, then checks that every variant has a name.
+ * <p>
+ * This test mod animates the emerald ore and calcite textures, to check that their variants are animated too.
  */
 public class OreVariantClientGameTest implements FabricClientGameTest {
     private static final int WALL_Y = 200;
@@ -62,6 +66,19 @@ public class OreVariantClientGameTest implements FabricClientGameTest {
                     .toList());
             if (!unnamed.isEmpty()) {
                 throw new AssertionError("Ore variants without a name: " + unnamed);
+            }
+
+            Map<String, Boolean> animated = context.computeOnClient(minecraft -> {
+                var blocks = minecraft.getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS);
+                Map<String, Boolean> result = new LinkedHashMap<>();
+                for (String sprite : List.of("granite_emerald_ore", "calcite_coal_ore", "calcite_emerald_ore", "granite_coal_ore")) {
+                    result.put(sprite, blocks.getSprite(Identifier.fromNamespaceAndPath("universal_ores", "block/" + sprite)).contents().isAnimated());
+                }
+                return result;
+            });
+            Map<String, Boolean> expected = Map.of("granite_emerald_ore", true, "calcite_coal_ore", true, "calcite_emerald_ore", true, "granite_coal_ore", false);
+            if (!animated.equals(expected)) {
+                throw new AssertionError("Expected the variants of animated ores and stones to be animated, and only them: " + animated);
             }
         }
     }
