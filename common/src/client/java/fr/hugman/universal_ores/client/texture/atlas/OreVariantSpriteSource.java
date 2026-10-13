@@ -9,7 +9,10 @@ import fr.hugman.universal_ores.client.texture.OreTemplate;
 import fr.hugman.universal_ores.client.texture.OreTextureGenerator;
 import fr.hugman.universal_ores.client.texture.OreTextureSettings;
 import fr.hugman.universal_ores.client.texture.OreVariantTextures;
+import fr.hugman.universal_ores.client.texture.PbrMap;
+import fr.hugman.universal_ores.client.texture.Png;
 import fr.hugman.universal_ores.client.texture.TextureFrames;
+import fr.hugman.universal_ores.pack.GeneratedPacks;
 import fr.hugman.universal_ores.variant.OreType;
 import fr.hugman.universal_ores.variant.OreVariant;
 import fr.hugman.universal_ores.variant.OreVariantRegistrar;
@@ -20,6 +23,7 @@ import net.minecraft.client.renderer.texture.atlas.SpriteSource;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
 import net.minecraft.client.resources.metadata.animation.FrameSize;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +46,11 @@ import java.util.function.Supplier;
  * Animated ores give animated variants, with a frame drawn from each frame of the ore. Otherwise, animated stones give
  * animated variants.
  * <p>
+ * When a PBR resource pack gives the ore or the stone {@linkplain PbrMap normal or specular maps}, the variant gets
+ * them too, put together the same way, for shaders. They are served by the generated resource pack, where shader mods
+ * like Iris look for them ({@code <texture>_n.png} and {@code <texture>_s.png}). Only the first frame of animated
+ * textures is used for them.
+ * <p>
  * Set the {@code universal_ores.dumpTextures} system property to a folder to save every generated texture there.
  */
 public record OreVariantSpriteSource() implements SpriteSource {
@@ -53,6 +62,8 @@ public record OreVariantSpriteSource() implements SpriteSource {
     @Override
     public void run(@NotNull ResourceManager resourceManager, @NotNull Output output) {
         OreTextureSettings settings = OreTextureSettings.DEFAULT;
+        // The maps of the previous resources are gone
+        GeneratedPacks.removeLiveFiles(PackType.CLIENT_RESOURCES, path -> path.getNamespace().equals(UniversalOres.MOD_ID) && path.getPath().startsWith("textures/"));
         Map<Identifier, Supplier<Optional<OreFrames>>> templates = new HashMap<>();
         for (RegisteredOreVariant registered : OreVariantRegistrar.registered()) {
             OreVariant variant = registered.variant();
@@ -66,7 +77,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
                     LOGGER.warn("Can't draw {}: its stone texture {} is missing", face.sprite(), face.stone());
                     continue;
                 }
-                output.add(face.sprite(), new Loader(face.sprite(), stone.get(), template, settings));
+                output.add(face.sprite(), new Loader(face.sprite(), face.stone(), stone.get(), resourceManager, template, settings));
             }
         }
     }
@@ -86,12 +97,19 @@ public record OreVariantSpriteSource() implements SpriteSource {
             }
             Optional<AnimationMetadataSection> animation = ore.isAnimated() ? ore.animation() : Optional.empty();
             List<int[]> frames = ore.isAnimated() ? ore.frames() : List.of(ore.firstFrame());
+            Map<PbrMap, int[]> maps = new EnumMap<>(PbrMap.class);
+            for (PbrMap map : PbrMap.values()) {
+                Texture texture = Texture.read(resourceManager, type.textureOrDefault().withSuffix(map.suffix()));
+                if (texture != null) {
+                    maps.put(map, texture.firstFrameScaledTo(ore.width(), ore.height()));
+                }
+            }
             List<OreTemplate> templates = new ArrayList<>();
             Texture host = Texture.read(resourceManager, type.hostTextureOrDefault());
             if (host == null) {
                 LOGGER.warn("The texture {} of the stone {} is found in is missing, so its whole texture is drawn over other stones", type.hostTextureOrDefault(), id);
                 frames.forEach(frame -> templates.add(OreTemplate.fromOverlay(ore.width(), ore.height(), frame, settings)));
-                return Optional.of(new OreFrames(templates, animation));
+                return Optional.of(new OreFrames(templates, animation, maps));
             }
             int[] hostPixels = host.firstFrameScaledTo(ore.width(), ore.height());
 
@@ -101,7 +119,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
             for (int[] frame : frames) {
                 templates.add(OreTemplate.extract(ore.width(), ore.height(), frame, hostPixels, oreHint, haloHint, settings));
             }
-            return Optional.of(new OreFrames(templates, animation));
+            return Optional.of(new OreFrames(templates, animation, maps));
         } catch (IOException | IllegalArgumentException e) {
             LOGGER.error("Can't draw the variants of {}", id, e);
             return Optional.empty();
@@ -121,12 +139,16 @@ public record OreVariantSpriteSource() implements SpriteSource {
     }
 
     /**
-     * The templates of an ore: one per frame of its texture when it is animated.
+     * The templates of an ore: one per frame of its texture when it is animated. With the PBR maps of its texture, at
+     * the size of its templates.
      */
-    private record OreFrames(List<OreTemplate> templates, Optional<AnimationMetadataSection> animation) {
+    private record OreFrames(List<OreTemplate> templates, Optional<AnimationMetadataSection> animation, Map<PbrMap, int[]> maps) {
     }
 
-    private record Loader(Identifier sprite, Resource stone, Supplier<Optional<OreFrames>> template, OreTextureSettings settings) implements SpriteSource.DiscardableLoader {
+    /**
+     * @param stoneTexture the stone texture the variant is drawn on, from {@code stone}
+     */
+    private record Loader(Identifier sprite, Identifier stoneTexture, Resource stone, ResourceManager resourceManager, Supplier<Optional<OreFrames>> template, OreTextureSettings settings) implements SpriteSource.DiscardableLoader {
         @Override
         public @Nullable SpriteContents get(@NotNull SpriteResourceLoader loader) {
             Optional<OreFrames> ore = this.template.get();
@@ -156,7 +178,8 @@ public record OreVariantSpriteSource() implements SpriteSource {
                 for (int i = 0; i < pixels.length; i++) {
                     image.setPixel(i % stone.width(), i / stone.width(), pixels[i]);
                 }
-                dump(image);
+                dump(image, this.sprite);
+                this.writeMaps(ore.get(), stone);
                 // The frames are now stacked, at the size of the stone's
                 Optional<AnimationMetadataSection> metadata = animation.map(section -> new AnimationMetadataSection(section.frames(), Optional.of(stone.width()), Optional.of(stone.height()), section.defaultFrameTime(), section.interpolatedFrames()));
                 return new SpriteContents(this.sprite, new FrameSize(stone.width(), stone.height()), image, metadata, List.of(), Optional.empty());
@@ -166,18 +189,54 @@ public record OreVariantSpriteSource() implements SpriteSource {
             }
         }
 
-        private void dump(NativeImage image) {
-            String folder = System.getProperty(DUMP_PROPERTY);
-            if (folder == null) {
+        /**
+         * Writes the PBR maps of the variant, for the maps the ore or the stone has.
+         */
+        private void writeMaps(OreFrames ore, Texture stone) throws IOException {
+            for (PbrMap map : PbrMap.values()) {
+                int[] oreMap = ore.maps().get(map);
+                Texture stoneMapTexture = Texture.read(this.resourceManager, this.stoneTexture.withSuffix(map.suffix()));
+                int[] stoneMap = stoneMapTexture == null ? null : stoneMapTexture.firstFrameScaledTo(stone.width(), stone.height());
+                if (oreMap == null && stoneMap == null) {
+                    continue;
+                }
+                int[] pixels = map.compose(ore.templates().getFirst(), stone.width(), stone.height(), oreMap, stoneMap);
+                Identifier sprite = this.sprite.withSuffix(map.suffix());
+                byte[] png = Png.encode(stone.width(), stone.height(), pixels);
+                GeneratedPacks.putLiveFile(PackType.CLIENT_RESOURCES, TEXTURE_ID_CONVERTER.idToFile(sprite), png);
+                dump(png, sprite);
+            }
+        }
+
+        private static void dump(NativeImage image, Identifier sprite) {
+            Path file = dumpFile(sprite);
+            if (file == null) {
                 return;
             }
-            Path file = Path.of(folder).resolve(this.sprite.getNamespace()).resolve(this.sprite.getPath() + ".png");
             try {
                 Files.createDirectories(file.getParent());
                 image.writeToFile(file);
             } catch (IOException e) {
-                LOGGER.warn("Couldn't save {} to {}", this.sprite, file, e);
+                LOGGER.warn("Couldn't save {} to {}", sprite, file, e);
             }
+        }
+
+        private static void dump(byte[] png, Identifier sprite) {
+            Path file = dumpFile(sprite);
+            if (file == null) {
+                return;
+            }
+            try {
+                Files.createDirectories(file.getParent());
+                Files.write(file, png);
+            } catch (IOException e) {
+                LOGGER.warn("Couldn't save {} to {}", sprite, file, e);
+            }
+        }
+
+        private static @Nullable Path dumpFile(Identifier sprite) {
+            String folder = System.getProperty(DUMP_PROPERTY);
+            return folder == null ? null : Path.of(folder).resolve(sprite.getNamespace()).resolve(sprite.getPath() + ".png");
         }
     }
 

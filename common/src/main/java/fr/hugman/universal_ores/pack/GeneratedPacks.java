@@ -2,6 +2,7 @@ package fr.hugman.universal_ores.pack;
 
 import fr.hugman.universal_ores.UniversalOres;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackSelectionConfig;
@@ -13,17 +14,26 @@ import net.minecraft.server.packs.repository.RepositorySource;
 import net.minecraft.world.flag.FeatureFlagSet;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * The resource pack and the data pack that Universal Ores writes at runtime: the models, loot tables and so on of
  * the ore variants, which depend on the mods that are installed.
  * <p>
- * Their files are regular vanilla JSON files, so any resource pack or data pack can still replace them.
+ * Their files are regular vanilla files, so any resource pack or data pack can still replace them.
  * The packs sit below every other pack and can't be turned off.
+ * <p>
+ * Most files are written by generators when a pack is opened. Files that depend on the other packs (like textures
+ * drawn from theirs) are written later in the resource reload, as live files.
  */
 public final class GeneratedPacks {
     private static final Map<PackType, List<Consumer<GeneratedPackResources.Output>>> GENERATORS = new EnumMap<>(PackType.class);
+    private static final Map<PackType, Map<Identifier, byte[]>> LIVE_FILES = new EnumMap<>(Map.of(
+            PackType.CLIENT_RESOURCES, new ConcurrentHashMap<>(),
+            PackType.SERVER_DATA, new ConcurrentHashMap<>()
+    ));
 
     private GeneratedPacks() {
     }
@@ -37,6 +47,26 @@ public final class GeneratedPacks {
      */
     public static synchronized void addGenerator(PackType type, Consumer<GeneratedPackResources.Output> generator) {
         GENERATORS.computeIfAbsent(type, t -> new ArrayList<>()).add(generator);
+    }
+
+    /**
+     * Adds or replaces a live file: it can be read from the pack as soon as it is written, even once the pack is open.
+     *
+     * @param path the file's location inside its namespace, with its extension (e.g. {@code mod:textures/block/x.png})
+     */
+    public static void putLiveFile(PackType type, Identifier path, byte[] bytes) {
+        LIVE_FILES.get(type).put(path, bytes);
+    }
+
+    /**
+     * Removes the live files matching a filter, like the ones written by the previous resource reload.
+     */
+    public static void removeLiveFiles(PackType type, Predicate<Identifier> filter) {
+        LIVE_FILES.get(type).keySet().removeIf(filter);
+    }
+
+    static Map<Identifier, byte[]> liveFiles(PackType type) {
+        return LIVE_FILES.get(type);
     }
 
     /**

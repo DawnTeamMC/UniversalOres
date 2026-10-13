@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.logging.LogUtils;
+import fr.hugman.universal_ores.UniversalOres;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
@@ -23,7 +24,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * A pack whose files are written in memory by generators, the first time one of them is asked for.
+ * A pack whose files are written in memory by generators, the first time one of them is asked for, along with the
+ * live files of {@link GeneratedPacks}.
  */
 public final class GeneratedPackResources implements PackResources {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -72,7 +74,11 @@ public final class GeneratedPackResources implements PackResources {
             return null;
         }
         byte[] bytes = this.files.get().get(location);
-        return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
+        if (bytes == null) {
+            bytes = GeneratedPacks.liveFiles(type).get(location);
+        }
+        byte[] found = bytes;
+        return found == null ? null : () -> new ByteArrayInputStream(found);
     }
 
     @Override
@@ -81,7 +87,9 @@ public final class GeneratedPackResources implements PackResources {
             return;
         }
         String prefix = directory + "/";
-        this.files.get().forEach((path, bytes) -> {
+        Map<Identifier, byte[]> files = new TreeMap<>(GeneratedPacks.liveFiles(type));
+        files.putAll(this.files.get());
+        files.forEach((path, bytes) -> {
             if (path.getNamespace().equals(namespace) && path.getPath().startsWith(prefix)) {
                 output.accept(path, () -> new ByteArrayInputStream(bytes));
             }
@@ -95,6 +103,8 @@ public final class GeneratedPackResources implements PackResources {
         }
         Set<String> namespaces = new HashSet<>();
         this.files.get().keySet().forEach(path -> namespaces.add(path.getNamespace()));
+        // Live files may not be written yet: they belong to Universal Ores
+        namespaces.add(UniversalOres.MOD_ID);
         return namespaces;
     }
 

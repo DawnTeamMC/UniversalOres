@@ -44,6 +44,11 @@ dependencies {
         runtimeOnly "maven.modrinth:terralith:lqrGyTjO" // Terralith 2.6.4
         runtimeOnly "maven.modrinth:lithostitched:UPpXQQpg" // Lithostitched 1.8.0, needed by Terralith
     }
+    // Shader mods, to try the PBR maps of the variants: ./gradlew :neoforge:runClient -Pshaders
+    if (project.hasProperty('shaders')) {
+        runtimeOnly "maven.modrinth:sodium:DmnNKsfS" // Sodium 0.9.2
+        runtimeOnly "maven.modrinth:iris:k55HdONq" // Iris 1.11.4
+    }
 
     // Lets the IDE resolve the shared code; the classes themselves are compiled from source below
     compileOnly common.sourceSets.main.output
