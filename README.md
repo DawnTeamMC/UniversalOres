@@ -13,7 +13,7 @@
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
 diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
 
-**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores).**
+**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores), or [explore the wiki »](https://dawnteammc.github.io/universal_ores/wiki)**
 
 ## 📦 Download
 We use [CurseForge](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric) and [Modrinth](https://modrinth.com/mod/universal_ores) to publish **stable builds** of Universal Ores for Minecraft.
@@ -28,37 +28,20 @@ On NeoForge, no other mod is required.
 
 Universal Ores makes a variant of every ore it knows of in every stone it knows of, with its own texture, drops, tags, recipes and world generation, all copied from the original ore when the game starts.
 
-Stones and ores are listed in JSON files, which are read when the game starts:
-- **Mods** can ship any number of them in a `universal_ores/` folder at the root of their jar. No code or dependency is needed: entries for blocks that aren't there are simply ignored.
-- **Modpacks** can put them in `config/universal_ores/`. These files are read last, in alphabetical order, so they can change or remove anything.
+Any mod or modpack can add its stones and ores with a small JSON file, without code or dependency:
 
 ```json
 {
   "stones": {
-    "mymod:marble": "minecraft:stone",
-    "mymod:dark_marble": {
-      "ores_of": "minecraft:stone",
-      "except": ["minecraft:coal_ore"],
-      "strength": 1.5,
-      "texture": "mymod:block/dark_marble_side"
-    },
-    "minecraft:calcite": false
+    "mymod:marble": "minecraft:stone"
   },
   "ores": {
-    "mymod:tin_ore": "minecraft:stone",
-    "mymod:nether_tin_ore": {
-      "in": "minecraft:netherrack",
-      "texture": "mymod:block/nether_tin_ore"
-    }
+    "mymod:tin_ore": "minecraft:stone"
   }
 }
 ```
 
-- A **stone** gets the ores found in the stones it gets the ores of (`ores_of`, one stone or a list). With `only` or `except`, it only gets some of them. `strength` sets the hardness of its ores, and `texture` the texture they are drawn on (or `{"side": ..., "end": ...}` for pillars like basalt).
-- An **ore** is found in the stone given by `in`. `texture` is its texture, if it isn't `<namespace>:block/<path>`.
-- `false` removes a stone or an ore listed by an earlier file.
-
-Variants that a mod already adds itself, named `<stone>_<ore>` (like `mymod:marble_tin_ore`), aren't added twice. A resource pack can replace any generated texture by providing `universal_ores:textures/block/<variant>.png`.
+Mods put it in a `universal_ores/` folder at the root of their jar, modpacks in `config/universal_ores/`. The [wiki](https://dawnteammc.github.io/universal_ores/wiki) explains [the whole format](https://moddedmc.wiki/project/universal-ores/docs/adding_stones_and_ores) and [how the textures are drawn](https://moddedmc.wiki/project/universal-ores/docs/textures).
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).

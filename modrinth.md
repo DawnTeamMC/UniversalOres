@@ -8,7 +8,7 @@
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
 diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
 
-**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores).**
+**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores), or [explore the wiki »](https://dawnteammc.github.io/universal_ores/wiki)**
 
 ## 📦 Download
 
@@ -17,6 +17,10 @@ Universal Ores is available for both **Fabric** and **NeoForge**.
 ⚠ On Fabric, Universal Ores **requires** Fabric API to be installed: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
 
 On NeoForge, no other mod is required.
+
+## 🧩 Compatibility
+
+Universal Ores also makes variants for the stones and ores of other mods. Any mod or modpack can add its own with a small file: see [the wiki](https://moddedmc.wiki/project/universal-ores/docs/adding_stones_and_ores).
 
 ## ❤️ Support
 [![Patreon supporters](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DHugman%26type%3Dpatrons&style=flat-square)](https://patreon.com/Hugman)

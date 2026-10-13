@@ -1,0 +1,8 @@
+{
+  "id": "universal-ores",
+  "modid": "universal_ores",
+  "platforms": {
+    "modrinth": "universal_ores",
+    "curseforge": "universal-ores-fabric"
+  }
+}

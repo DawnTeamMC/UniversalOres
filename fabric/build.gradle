@@ -10,6 +10,9 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // For the Wiki Export runs. Version list: https://maven.su5ed.dev/#/releases/org/sinytra/wiki-exporter-fabric
+    //runtimeOnly "org.sinytra:wiki-exporter-fabric:2.2.1+1.21.11"
 }
 
 loom {
@@ -21,6 +24,22 @@ loom {
         "universal_ores" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
+        }
+    }
+
+    // Renders the blocks and items of the mod for the wiki, with the wiki exporter below
+    runs {
+        exportClient {
+            client()
+            name = "Wiki Export Client"
+            property "wiki_exporter.enabled", "true"
+            property "wiki_exporter.config.path", "${rootDir}/wiki_exporter_config.json"
+        }
+        exportServer {
+            server()
+            name = "Wiki Export Server"
+            property "wiki_exporter.enabled", "true"
+            property "wiki_exporter.config.path", "${rootDir}/wiki_exporter_config.json"
         }
     }
 }
