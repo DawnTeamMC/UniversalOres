@@ -183,6 +183,17 @@ public final class Palette {
     }
 
     /**
+     * How far (OKLab) a color is from the closest color of the texture.
+     */
+    public float distanceToClosest(float[] lab) {
+        float best = Float.MAX_VALUE;
+        for (float[] color : this.labs) {
+            best = Math.min(best, OkLab.distance(lab, color));
+        }
+        return best;
+    }
+
+    /**
      * How far a color is from the texture's lightness ramp: the polyline joining its colors from darkest to lightest,
      * stretched by {@code extension} steps at both ends.
      */

@@ -100,6 +100,39 @@ final class TestImages {
     }
 
     /**
+     * Mean OKLab distance between a generated ore texture and its reference, in hundredths, over the ore and its
+     * surroundings only (the pixels next to the ore, and those the reference changed), so that the untouched stone
+     * doesn't dilute it. The area doesn't depend on the generated texture, so that generators can be compared.
+     */
+    static double oreDistance(Image generated, Image reference, Image stone, OreTemplate template) {
+        double sum = 0;
+        int count = 0;
+        for (int y = 0; y < generated.height; y++) {
+            for (int x = 0; x < generated.width; x++) {
+                int i = y * generated.width + x;
+                if (reference.pixels[i] != stone.pixels[i] || isNearOre(template, x * template.width() / generated.width, y * template.height() / generated.height)) {
+                    sum += OkLab.distance(OkLab.fromArgb(generated.pixels[i]), OkLab.fromArgb(reference.pixels[i]));
+                    count++;
+                }
+            }
+        }
+        return count == 0 ? 0 : 100 * sum / count;
+    }
+
+    private static boolean isNearOre(OreTemplate template, int x, int y) {
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                int nx = x + dx;
+                int ny = y + dy;
+                if (nx >= 0 && ny >= 0 && nx < template.width() && ny < template.height() && template.ore(ny * template.width() + nx) != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * A labelled grid of textures, scaled up without smoothing.
      */
     static BufferedImage sheet(List<String> columnLabels, List<Row> rows, int scale) {
@@ -139,6 +172,12 @@ final class TestImages {
     }
 
     record Row(String label, List<Image> images) {
+    }
+
+    static void write(Image image, Path file) {
+        BufferedImage buffered = new BufferedImage(image.width(), image.height(), BufferedImage.TYPE_INT_ARGB);
+        buffered.setRGB(0, 0, image.width(), image.height(), image.pixels(), 0, image.width());
+        write(buffered, file);
     }
 
     static void write(BufferedImage image, Path file) {
