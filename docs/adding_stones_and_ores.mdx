@@ -1,0 +1,147 @@
+---
+title: Adding stones and ores
+---
+
+Universal Ores makes a variant of **every ore it knows of in every stone it knows of**. The stones and ores it knows of are listed in small JSON files, which any mod or modpack can add to.
+
+No code is needed, and no dependency on Universal Ores: a mod can ship its file whether Universal Ores is installed or not, and entries for blocks that aren't in the game are simply skipped.
+
+## Where the files go
+
+### In a mod
+
+Put any number of JSON files in a `universal_ores` folder at the root of your mod's jar. In a usual project, that's:
+
+```
+src/main/resources/universal_ores/mymod.json
+```
+
+### In a modpack
+
+Put them in the `config/universal_ores` folder of the game (or of the server). These files are read **after** the files of every mod, in alphabetical order, so they can add, change or remove anything.
+
+<Callout variant="warning">
+    The files are read once, when the game starts, because blocks can't be added to a game that is already running. Restart the game (or the server) after changing them. For the same reason, they can't come from a data pack.
+</Callout>
+
+## The format
+
+```json title="universal_ores/mymod.json"
+{
+  "stones": {
+    "mymod:marble": "minecraft:stone",
+    "mymod:dark_marble": {
+      "ores_of": "minecraft:stone",
+      "except": ["minecraft:coal_ore"],
+      "strength": 1.5,
+      "texture": "mymod:block/dark_marble_side"
+    },
+    "mymod:hot_basalt": {
+      "ores_of": "minecraft:netherrack",
+      "texture": { "side": "mymod:block/hot_basalt_side", "end": "mymod:block/hot_basalt_top" }
+    }
+  },
+  "ores": {
+    "mymod:tin_ore": "minecraft:stone",
+    "mymod:nether_tin_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "mymod:block/nether_tin_ore_side"
+    }
+  }
+}
+```
+
+### Stones
+
+Under `"stones"`, each key is a stone block. Its value is either the stone (or list of stones) whose ores it gets, or an object:
+
+- `ores_of` (**required**): the stone, or list of stones, whose ores it gets. Every ore found in one of them gets a variant in this stone.
+- `only`: if set, only these ores (a list of ore blocks) get a variant in this stone.
+- `except`: these ores (a list of ore blocks) don't get a variant in this stone.
+- `strength`: the hardness and blast resistance of the ores in this stone. By default, they are the ones of the original ores, like vanilla does for most deepslate ores.
+- `texture`: the texture the ores are drawn on. By default, it's the texture named after the block (`mymod:block/marble` for `mymod:marble`). For pillar-like stones such as basalt, use `{"side": ..., "end": ...}`; by default, they are `mymod:block/<path>_side` and `mymod:block/<path>_top`.
+
+### Ores
+
+Under `"ores"`, each key is an ore block. Its value is either the stone it is found in, or an object:
+
+- `in` (**required**): the stone the ore is found in.
+- `texture`: the texture of the ore. By default, it's the texture named after the block (`mymod:block/tin_ore` for `mymod:tin_ore`).
+- `host_texture`: the texture of the stone the ore texture was drawn on. By default, it's the texture of the `in` block. Set it when your ore was drawn on another texture, like an ore drawn on the top of blackstone.
+
+### Removing a stone or an ore
+
+Set it to `false`, and it is removed, whichever file added it before. This is how a modpack can remove the calcite variants of Universal Ores, or the emerald variants:
+
+```json title="config/universal_ores/tweaks.json"
+{
+  "stones": {
+    "minecraft:calcite": false
+  },
+  "ores": {
+    "minecraft:emerald_ore": false
+  }
+}
+```
+
+<Callout variant="danger">
+    Removing a stone or an ore from an existing world removes its variants from the game: the variant blocks already placed in that world disappear the next time it is loaded.
+</Callout>
+
+## How stones and ores are matched
+
+An ore says **which stone it is found in**, and a stone says **whose ores it gets**. That's all Universal Ores needs to pair them, so mods never have to know about each other:
+
+- a mod adding _tin ore_ found in stone says `"mymod:tin_ore": "minecraft:stone"`;
+- another mod adding _marble_ says `"othermod:marble": "minecraft:stone"`;
+- with both mods installed, there is marble tin ore, along with marble coal ore, granite tin ore, and so on.
+
+Universal Ores comes with the files of vanilla Minecraft (andesite, diorite, granite, tuff and calcite get the ores of stone; blackstone and basalt get the ores of netherrack) and of a few mods. If a mod and Universal Ores both describe the same block, either one may be used; a modpack file always wins.
+
+## What a variant gets from its ore
+
+Everything is copied from the original ore when the game starts, so a variant behaves like its ore, even when a data pack changes the ore:
+
+- **Behavior**: hardness, blast resistance (unless the stone sets a `strength`), the right tool, experience drops, and anything the ore block does, like redstone ore lighting up.
+- **Look and sound**: the texture is generated from the ore's own texture (see the [textures page]($textures)), the map color and note block instrument are the stone's, and the sound is the ore's when it has its own, the stone's otherwise.
+- **Drops**: the ore's loot table, with the ore itself (dropped with Silk Touch) replaced by the variant.
+- **Tags**: the variant is added to every block and item tag that lists the ore (except the `c:ores_in_ground/...` tags, since it is in another stone).
+- **Recipes**: every smelting, blasting... recipe of the ore gets a copy for its variants.
+- **World generation**: wherever the ore generates, its variant generates instead if the stone it would replace is a stone that has a variant.
+- **Name**: the names of the stone and of the ore, like _Marble Tin Ore_.
+- **Creative inventory**: in the _Natural Blocks_ tab, right after the ore (or after its deepslate version, if it has one).
+
+## IDs and names
+
+The variants of vanilla ores in vanilla stones are named like `universal_ores:granite_coal_ore`. Any other variant is named after both blocks, with their namespaces, so that two mods can never clash:
+
+```
+universal_ores:<stone namespace>/<stone>/<ore namespace>/<ore>
+universal_ores:promenade/blunite/minecraft/coal_ore
+```
+
+These IDs only depend on the stone and the ore, so adding or removing other mods never changes them.
+
+Names are made from the names of the stone and of the ore: _Blunite_ and _Coal Ore_ make _Blunite Coal Ore_. Each language sets how they combine with the `block.universal_ores.ore_variant` key (`%1$s %2$s` in English, `%1$s` being the stone and `%2$s` the ore). A resource pack can also give a variant its own name, with its own key: `block.universal_ores.promenade.blunite.minecraft.coal_ore` for the variant above.
+
+## Variants a mod adds itself
+
+If a mod already adds a variant itself, named `<stone>_<ore>` in the namespace of the stone or of the ore (like `mymod:marble_tin_ore`), Universal Ores doesn't add it again. Hand-made variants of a mod are kept as they are.
+
+## Data packs and resource packs
+
+The data and assets of the variants are generated in packs at the bottom of the pack lists, so data packs and resource packs can change them like they change vanilla ones:
+
+- **Loot tables**: `data/universal_ores/loot_table/blocks/<variant>.json`, like `data/universal_ores/loot_table/blocks/promenade/blunite/minecraft/coal_ore.json`.
+- **Tags**: variants are added to and removed from tags like any block.
+- **Textures**: a texture at `assets/universal_ores/textures/block/<variant>.png` is used instead of the generated one (with `_side` and `_top` for pillar stones). See the [textures page]($textures) for the other ways to tweak the generated textures.
+
+## Checking your files
+
+- When the game starts, Universal Ores logs how many variants it registered (`Registered 44 ore variants`), and every mistake in a file (`Universal Ores file mymod:universal_ores/mymod.json: ...`) without stopping at it.
+- Start the game with `-Duniversal_ores.dumpTextures=<folder>` to save every generated texture in that folder.
+
+## Limits
+
+- World generation follows the ores placed by `minecraft:ore` and `minecraft:scattered_ore` features, like every ore of vanilla Minecraft. An ore placed by a custom feature gets its variants, but they don't generate in the world by themselves.
+- Stones and ores must be blocks registered by a mod: the files can't create new stones or ores.

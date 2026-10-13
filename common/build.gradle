@@ -65,6 +65,15 @@ tasks.register('previewOreTextures', JavaExec) {
     ]
 }
 
+// ./gradlew :common:wikiImages
+tasks.register('wikiImages', JavaExec) {
+    group = 'universal ores'
+    description = 'Draws the images of the wiki page about textures'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'fr.hugman.universal_ores.client.texture.WikiImages'
+    args = [rootProject.file('docs/.assets/universal_ores/wiki/textures').path]
+}
+
 // Nothing is shipped from here
 tasks.withType(Jar).configureEach {
     enabled = false

@@ -211,12 +211,16 @@ class OreTextureGeneratorTest {
      * @param hints whether to use the hand-drawn masks of Universal Ores, instead of finding the ore
      */
     static OreTemplate template(String ore, String host, boolean hints) {
+        return template(ore, host, hints, SETTINGS);
+    }
+
+    static OreTemplate template(String ore, String host, boolean hints, OreTextureSettings settings) {
         Image oreTexture = vanilla(ore);
         Image hostTexture = vanilla(host).scaledTo(oreTexture.width(), oreTexture.height());
         String hint = "/assets/universal_ores/textures/ore_hint/minecraft/" + ore;
         boolean[] oreHint = hints ? optionalMask(hint + ".png") : null;
         boolean[] haloHint = hints ? optionalMask(hint + "_halo.png") : null;
-        return OreTemplate.extract(oreTexture.width(), oreTexture.height(), oreTexture.pixels(), hostTexture.pixels(), oreHint, haloHint, SETTINGS);
+        return OreTemplate.extract(oreTexture.width(), oreTexture.height(), oreTexture.pixels(), hostTexture.pixels(), oreHint, haloHint, settings);
     }
 
     static Image generate(OreTemplate template, Image stone) {
