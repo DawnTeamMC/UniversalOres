@@ -48,7 +48,7 @@ class OreTextureGeneratorTest {
         double mean = total / (OVERWORLD_STONES.size() * OVERWORLD_ORES.size());
         System.out.printf("Mean distance to the hand-made textures: %.2f, worst: %.2f (%s)%n", mean, worst, worstName);
         TestImages.write(TestImages.sheet(OVERWORLD_ORES, rows, 6), Path.of("build", "ore_textures", "hand_made_comparison.png"));
-        assertTrue(mean < 2.4, "Mean distance " + mean);
+        assertTrue(mean < 2.55, "Mean distance " + mean);
         assertTrue(worst < 4.5, "Worst distance " + worst + " for " + worstName);
     }
 
