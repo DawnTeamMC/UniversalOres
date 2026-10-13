@@ -1,5 +1,7 @@
 package fr.hugman.universal_ores.gametest;
 
+import com.mojang.blaze3d.platform.NativeImage;
+import fr.hugman.universal_ores.client.texture.PbrMap;
 import fr.hugman.universal_ores.variant.OreVariantRegistrar;
 import fr.hugman.universal_ores.variant.RegisteredOreVariant;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
@@ -10,16 +12,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.*;
 
 /**
  * Builds a wall of every registered ore variant (one row per stone, sorted like their blocks are registered) and
  * takes a screenshot of it, then checks that every variant has a name.
  * <p>
- * This test mod animates the emerald ore and calcite textures, to check that their variants are animated too.
+ * This test mod animates the emerald ore and calcite textures, to check that their variants are animated too. It
+ * also gives diamond ore a specular map and granite a normal map, like a PBR resource pack, to check that their
+ * variants get maps made from them.
  */
 public class OreVariantClientGameTest implements FabricClientGameTest {
     private static final int WALL_Y = 200;
@@ -80,6 +88,75 @@ public class OreVariantClientGameTest implements FabricClientGameTest {
             if (!animated.equals(expected)) {
                 throw new AssertionError("Expected the variants of animated ores and stones to be animated, and only them: " + animated);
             }
+
+            List<String> mapProblems = context.computeOnClient(minecraft -> checkMaps(minecraft.getResourceManager()));
+            if (!mapProblems.isEmpty()) {
+                throw new AssertionError("Wrong PBR maps: " + mapProblems);
+            }
+        }
+    }
+
+    /**
+     * Variants get the maps their ore or their stone has: a map of a variant takes the map of the ore on the ore, and
+     * the map of the stone elsewhere.
+     */
+    private static List<String> checkMaps(ResourceManager resources) {
+        List<String> problems = new ArrayList<>();
+        Map<String, Boolean> expected = new LinkedHashMap<>();
+        expected.put("granite_diamond_ore_s", true);
+        expected.put("granite_diamond_ore_n", true);
+        expected.put("andesite_diamond_ore_s", true);
+        expected.put("andesite_diamond_ore_n", false);
+        expected.put("granite_coal_ore_n", true);
+        expected.put("granite_coal_ore_s", false);
+        expected.forEach((map, present) -> {
+            if (resources.getResource(variantMap(map)).isPresent() != present) {
+                problems.add(map + (present ? " is missing" : " shouldn't exist"));
+            }
+        });
+        if (!problems.isEmpty()) {
+            return problems;
+        }
+
+        int[] specular = pixels(resources, variantMap("granite_diamond_ore_s"));
+        int[] diamondSpecular = pixels(resources, Identifier.withDefaultNamespace("textures/block/diamond_ore_s.png"));
+        checkMap(problems, "granite_diamond_ore_s", specular, diamondSpecular, PbrMap.SPECULAR.neutral());
+        int[] normal = pixels(resources, variantMap("granite_diamond_ore_n"));
+        int[] graniteNormal = pixels(resources, Identifier.withDefaultNamespace("textures/block/granite_n.png"));
+        checkMap(problems, "granite_diamond_ore_n", normal, graniteNormal, PbrMap.NORMAL.neutral());
+        return problems;
+    }
+
+    /**
+     * Every pixel of the map should either come from the given map, or be neutral, and both should be found.
+     */
+    private static void checkMap(List<String> problems, String name, int[] map, int[] source, int neutral) {
+        int fromSource = 0;
+        int neutrals = 0;
+        for (int i = 0; i < map.length; i++) {
+            if (map[i] == source[i]) {
+                fromSource++;
+            } else if (map[i] == neutral) {
+                neutrals++;
+            } else {
+                problems.add(String.format(Locale.ROOT, "%s has %08X at pixel %d, neither %08X nor neutral", name, map[i], i, source[i]));
+                return;
+            }
+        }
+        if (fromSource == 0 || neutrals == 0) {
+            problems.add(name + " has " + fromSource + " pixels from its source map and " + neutrals + " neutral pixels");
+        }
+    }
+
+    private static Identifier variantMap(String name) {
+        return Identifier.fromNamespaceAndPath("universal_ores", "textures/block/" + name + ".png");
+    }
+
+    private static int[] pixels(ResourceManager resources, Identifier texture) {
+        try (InputStream stream = resources.open(texture); NativeImage image = NativeImage.read(stream)) {
+            return image.getPixels();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 }

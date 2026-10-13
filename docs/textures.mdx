@@ -98,8 +98,16 @@ The generator is tested against Mojang's deepslate ores and the textures that we
 - **Resolutions**: an ore drawn at 16×16 on a 32×32 stone is scaled up pixel by pixel.
 - **Overlays**: if the texture of the stone an ore was drawn on can't be found, the ore texture is taken as an overlay: its opaque pixels are the ore, and the stone around it is shaded like around vanilla ores: darker above the ore, lighter below it.
 
+## Shaders and PBR packs
+
+PBR resource packs give blocks two more textures for shaders, in the [LabPBR](https://shaderlabs.org/wiki/LabPBR_Materials) format: a **normal map** (`_n`, the relief of the texture) and a **specular map** (`_s`, how smooth, metallic or glowing each pixel is).
+
+When the ore or the stone of a variant has them, the variant gets its own, put together like its texture: the ore pixels take the map of the ore, and the rest (the halo included) the map of the stone. Where one of them has no map, the variant gets the value shader mods use for textures without one, so the stone part of a variant looks just like the stone around it, and a glowing ore still glows in every stone.
+
+The maps are found by shader mods like Iris next to the texture of the variant, like `assets/universal_ores/textures/block/granite_diamond_ore_s.png`, so a resource pack can also give a variant its own maps. Only the first frame of animated textures is used for the maps.
+
 ## For resource packs
 
 - A texture at `assets/universal_ores/textures/block/<variant>.png` is used instead of the generated one, like `assets/universal_ores/textures/block/granite_diamond_ore.png` or `assets/universal_ores/textures/block/promenade/blunite/minecraft/coal_ore.png` (see [the IDs of the variants]($adding_stones_and_ores#ids-and-names)).
 - An ore mask (see [above](#the-ore)) fixes an ore whose pixels aren't all found.
-- Start the game with `-Duniversal_ores.dumpTextures=<folder>` to save every generated texture in that folder, to retouch them or check them.
+- Start the game with `-Duniversal_ores.dumpTextures=<folder>` to save every generated texture (and map) in that folder, to retouch them or check them.
