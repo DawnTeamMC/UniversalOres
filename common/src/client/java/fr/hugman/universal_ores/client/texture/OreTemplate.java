@@ -11,6 +11,11 @@ import java.util.Arrays;
  * each halo pixel keeps a lightness level (0 is the darker end of the stone, 1 its lighter end, and values outside
  * go beyond) and the tint it adds to the stone (its OKLab {@code a} and {@code b} offsets).
  * That tint is what makes redstone glow red, emerald cast green shadows and diamond sparkle in cyan.
+ * Each halo pixel also keeps how much lighter or darker it is than the stone pixel under it, so that the pattern of
+ * the new stone can show through.
+ * <p>
+ * Ore pixels that are only shades of their stone (like the black of coal on grey stone) are marked as such, so that
+ * they can take the hue of a new stone.
  */
 public final class OreTemplate {
     /**
@@ -24,18 +29,26 @@ public final class OreTemplate {
     private final int height;
     private final int[] ore;
     private final float[] haloLevel;
+    private final float[] haloOffset;
     private final float[] haloA;
     private final float[] haloB;
+    private final float[] shadeA;
+    private final float[] shadeB;
     private final float hostLightness;
+    private final float visibility;
 
-    private OreTemplate(int width, int height, int[] ore, float[] haloLevel, float[] haloA, float[] haloB, float hostLightness) {
+    private OreTemplate(int width, int height, int[] ore, float[] haloLevel, float[] haloOffset, float[] haloA, float[] haloB, float[] shadeA, float[] shadeB, float hostLightness, float visibility) {
         this.width = width;
         this.height = height;
         this.ore = ore;
         this.haloLevel = haloLevel;
+        this.haloOffset = haloOffset;
         this.haloA = haloA;
         this.haloB = haloB;
+        this.shadeA = shadeA;
+        this.shadeB = shadeB;
         this.hostLightness = hostLightness;
+        this.visibility = visibility;
     }
 
     /**
@@ -66,33 +79,47 @@ public final class OreTemplate {
             }
         } else {
             halo = nearOre(width, height, ore, changed, settings.haloRadius());
+            for (int i = 0; i < size; i++) {
+                halo[i] = halo[i] && isShaded(OkLab.fromArgb(orePixels[i]), OkLab.fromArgb(hostPixels[i]), settings.haloMinChange());
+            }
         }
 
         float low = host.lightnessPercentile(settings.lowPercentile());
         float high = host.lightnessPercentile(settings.highPercentile());
         float range = Math.max(high - low, 1.0E-3F);
+        Palette hostColors = host.significant(settings.minColorShare());
 
         int[] orePart = new int[size];
-        float[] level = new float[size];
+        float[] level = nanArray(size);
+        float[] offset = nanArray(size);
         float[] tintA = new float[size];
         float[] tintB = new float[size];
-        Arrays.fill(level, Float.NaN);
+        float[] shadeA = nanArray(size);
+        float[] shadeB = nanArray(size);
+        float[] distances = new float[size];
+        int oreCount = 0;
         for (int i = 0; i < size; i++) {
+            float[] lab = OkLab.fromArgb(orePixels[i]);
+            float[] hostAb = host.abAt(lab[OkLab.L]);
+            float da = lab[OkLab.A] - hostAb[0];
+            float db = lab[OkLab.B] - hostAb[1];
             if (ore[i]) {
                 orePart[i] = orePixels[i];
+                distances[oreCount++] = hostColors.distanceToClosest(lab);
+                if (Math.hypot(da, db) < settings.stoneLikeHue()) {
+                    shadeA[i] = hostAb[0];
+                    shadeB[i] = hostAb[1];
+                }
             } else if (halo[i]) {
-                float[] lab = OkLab.fromArgb(orePixels[i]);
                 level[i] = (lab[OkLab.L] - low) / range;
-                float[] hostAb = host.abAt(lab[OkLab.L]);
-                float da = lab[OkLab.A] - hostAb[0];
-                float db = lab[OkLab.B] - hostAb[1];
+                offset[i] = (lab[OkLab.L] - OkLab.fromArgb(hostPixels[i])[OkLab.L]) / range;
                 if (Math.hypot(da, db) >= settings.minTint()) {
                     tintA[i] = da;
                     tintB[i] = db;
                 }
             }
         }
-        return new OreTemplate(width, height, orePart, level, tintA, tintB, host.meanLightness());
+        return new OreTemplate(width, height, orePart, level, offset, tintA, tintB, shadeA, shadeB, host.meanLightness(), median(distances, oreCount));
     }
 
     /**
@@ -117,8 +144,7 @@ public final class OreTemplate {
                 orePart[i] = overlayPixels[i];
             }
         }
-        float[] level = new float[size];
-        Arrays.fill(level, Float.NaN);
+        float[] level = nanArray(size);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int i = y * width + x;
@@ -142,7 +168,7 @@ public final class OreTemplate {
                 }
             }
         }
-        return new OreTemplate(width, height, orePart, level, new float[size], new float[size], hostLightness);
+        return new OreTemplate(width, height, orePart, level, nanArray(size), new float[size], new float[size], nanArray(size), nanArray(size), hostLightness, Float.NaN);
     }
 
     public int width() {
@@ -168,6 +194,14 @@ public final class OreTemplate {
         return this.haloLevel[index];
     }
 
+    /**
+     * How much lighter (positive) or darker the halo pixel is than the stone pixel under it, in the same unit as its
+     * level, or {@code NaN} when unknown.
+     */
+    public float haloOffset(int index) {
+        return this.haloOffset[index];
+    }
+
     public float haloTintA(int index) {
         return this.haloA[index];
     }
@@ -177,10 +211,32 @@ public final class OreTemplate {
     }
 
     /**
+     * Whether that ore pixel is only a shade of its stone (a grey on grey stone), which can take the hue of another stone.
+     */
+    public boolean isStoneShade(int index) {
+        return !Float.isNaN(this.shadeA[index]);
+    }
+
+    /**
+     * The hue ({@code a} and {@code b}) of the ore's stone at the lightness of that shade.
+     */
+    public float[] stoneShadeHue(int index) {
+        return new float[]{this.shadeA[index], this.shadeB[index]};
+    }
+
+    /**
      * The mean lightness of the stone the ore was drawn on, or {@code NaN} when unknown.
      */
     public float hostLightness() {
         return this.hostLightness;
+    }
+
+    /**
+     * How well the ore stood out on its own stone: the median OKLab distance between its pixels and the closest common
+     * color of that stone, or {@code NaN} when unknown.
+     */
+    public float visibility() {
+        return this.visibility;
     }
 
     public boolean hasHalo() {
@@ -194,7 +250,8 @@ public final class OreTemplate {
 
     /**
      * Tells the ore apart from its halo by color: ore pixels are far from the stone's own colors, either of another
-     * hue or beyond its lightness range. Pixels mostly surrounded by ore are counted as ore too.
+     * hue or beyond its lightness range. Pixels mostly surrounded by ore are counted as ore too, and the faintly
+     * tinted edge of a colorful ore is left to the halo.
      */
     private static boolean[] detectOre(int width, int height, int[] pixels, boolean[] changed, Palette host, OreTextureSettings settings) {
         int size = width * height;
@@ -203,16 +260,19 @@ public final class OreTemplate {
         float highest = host.lightest() + settings.rampExtension() * step;
 
         boolean[] ore = new boolean[size];
+        float[] hue = new float[size];
+        float[] outside = new float[size];
         for (int i = 0; i < size; i++) {
             if (!changed[i]) {
                 continue;
             }
             float[] lab = OkLab.fromArgb(pixels[i]);
-            boolean outside = lab[OkLab.L] < lowest || lab[OkLab.L] > highest;
+            outside[i] = Math.max(Math.max(host.darkest() - lab[OkLab.L], lab[OkLab.L] - host.lightest()), 0);
             // A different hue than the stone at that lightness: more saturated on grey stone, or grey on red netherrack
             float[] hostAb = host.abAt(lab[OkLab.L]);
-            boolean colorful = Math.hypot(lab[OkLab.A] - hostAb[0], lab[OkLab.B] - hostAb[1]) > settings.oreMinChroma();
-            ore[i] = (outside || colorful) && host.distanceToRamp(lab, settings.rampExtension()) > settings.oreMinDistance();
+            hue[i] = (float) Math.hypot(lab[OkLab.A] - hostAb[0], lab[OkLab.B] - hostAb[1]);
+            boolean beyond = lab[OkLab.L] < lowest || lab[OkLab.L] > highest;
+            ore[i] = (beyond || hue[i] > settings.oreMinChroma()) && host.distanceToRamp(lab, settings.rampExtension()) > settings.oreMinDistance();
         }
         for (int pass = 0; pass < 2; pass++) {
             boolean[] grown = ore.clone();
@@ -235,7 +295,65 @@ public final class OreTemplate {
             }
             ore = grown;
         }
+
+        // The edge of a colorful ore only tinted by it is the glow or shadow it casts on the stone, like the greens
+        // around emerald or the reds around redstone: the halo carries it
+        float maxHue = 0;
+        for (int i = 0; i < size; i++) {
+            if (ore[i]) {
+                maxHue = Math.max(maxHue, hue[i]);
+            }
+        }
+        if (maxHue >= settings.oreMinChroma()) {
+            boolean[] trimmed = ore.clone();
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int i = y * width + x;
+                    if (ore[i] && isEdge(ore, width, height, x, y) && hue[i] < settings.glowHueShare() * maxHue && outside[i] < settings.glowMaxOutside()) {
+                        trimmed[i] = false;
+                    }
+                }
+            }
+            ore = trimmed;
+        }
         return ore;
+    }
+
+    private static boolean isEdge(boolean[] mask, int width, int height, int x, int y) {
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                if ((dx != 0 || dy != 0) && !isSet(mask, width, height, x + dx, y + dy)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Whether a pixel differs enough from the stone pixel under it to be shading, rather than the stone redrawn.
+     */
+    private static boolean isShaded(float[] lab, float[] hostLab, float minChange) {
+        return Math.abs(lab[OkLab.L] - hostLab[OkLab.L]) >= minChange
+                || Math.hypot(lab[OkLab.A] - hostLab[OkLab.A], lab[OkLab.B] - hostLab[OkLab.B]) >= minChange;
+    }
+
+    /**
+     * The median of the first {@code count} values, or {@code NaN} when there are none.
+     */
+    static float median(float[] values, int count) {
+        if (count == 0) {
+            return Float.NaN;
+        }
+        float[] sorted = Arrays.copyOf(values, count);
+        Arrays.sort(sorted);
+        return count % 2 == 1 ? sorted[count / 2] : (sorted[count / 2 - 1] + sorted[count / 2]) / 2;
+    }
+
+    private static float[] nanArray(int size) {
+        float[] array = new float[size];
+        Arrays.fill(array, Float.NaN);
+        return array;
     }
 
     private static boolean[] nearOre(int width, int height, boolean[] ore, boolean[] changed, int radius) {
