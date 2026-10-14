@@ -80,10 +80,11 @@ dependencies {
         localRuntime "maven.modrinth:terralith:OxfI2n80" // Terralith 2.6.4
         localRuntime "maven.modrinth:lithostitched:sGGUpIGT" // Lithostitched 1.8.0, needed by Terralith
     }
-    // Shader mods, to try the PBR maps of the variants: ./gradlew :fabric:runClient -Pshaders
+    // Rendering mods, to try the PBR maps and emissive textures of the variants: ./gradlew :fabric:runClient -Pshaders
     if (project.hasProperty('shaders')) {
         localRuntime "maven.modrinth:sodium:xJZxADzI" // Sodium 0.9.2
         localRuntime "maven.modrinth:iris:gxZWWnKH" // Iris 1.11.4
+        localRuntime "maven.modrinth:continuity:mgUN5Xz2" // Continuity 3.0.1, for emissive textures
     }
 }
 

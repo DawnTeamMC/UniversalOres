@@ -52,25 +52,6 @@ public enum PbrMap {
      * @return the map of the variant, at the given size
      */
     public int[] compose(OreTemplate template, int width, int height, int @Nullable [] oreMap, int @Nullable [] stoneMap) {
-        if (oreMap != null && oreMap.length != template.width() * template.height()) {
-            throw new IllegalArgumentException("The ore map has " + oreMap.length + " pixels instead of " + template.width() * template.height());
-        }
-        if (stoneMap != null && stoneMap.length != width * height) {
-            throw new IllegalArgumentException("The stone map has " + stoneMap.length + " pixels instead of " + width * height);
-        }
-        int[] map = new int[width * height];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int i = y * width + x;
-                // Nearest neighbor, like the texture itself
-                int t = (y * template.height() / height) * template.width() + (x * template.width() / width);
-                if (template.ore(t) != 0) {
-                    map[i] = oreMap != null ? oreMap[t] : this.neutral;
-                } else {
-                    map[i] = stoneMap != null ? stoneMap[i] : this.neutral;
-                }
-            }
-        }
-        return map;
+        return TextureLayers.compose(template, width, height, oreMap, stoneMap, this.neutral);
     }
 }
