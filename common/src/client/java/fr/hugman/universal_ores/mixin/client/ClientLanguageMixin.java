@@ -10,7 +10,8 @@ import java.util.Map;
 
 @Mixin(ClientLanguage.class)
 public class ClientLanguageMixin {
-    @ModifyArg(method = "loadFrom", at = @At(value = "INVOKE", target = "Ljava/util/Map;copyOf(Ljava/util/Map;)Ljava/util/Map;"))
+    // The first copy is the translations: NeoForge makes a second one, of its component translations
+    @ModifyArg(method = "loadFrom", at = @At(value = "INVOKE", target = "Ljava/util/Map;copyOf(Ljava/util/Map;)Ljava/util/Map;", ordinal = 0))
     private static Map<String, String> addOreVariantNames(Map<String, String> translations) {
         OreVariantNames.addMissing(translations);
         return translations;
