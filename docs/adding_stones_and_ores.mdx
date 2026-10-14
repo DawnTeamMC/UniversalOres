@@ -125,7 +125,7 @@ Everything is copied from the original ore when the game starts, so a variant be
 - **Drops**: the ore's loot table, with the ore itself (dropped with Silk Touch) replaced by the variant.
 - **Tags**: the variant is added to every block and item tag that lists the ore (except the `c:ores_in_ground/...` tags, since it is in another stone).
 - **Recipes**: every smelting, blasting... recipe of the ore gets a copy for its variants.
-- **World generation**: wherever the ore generates, its variant generates instead if the stone it would replace is a stone that has a variant.
+- **World generation**: wherever the ore generates, its variant generates instead if the stone it would replace is a stone that has a variant. And the other way round, when a blob of a stone (like granite, or a mod's marble) is placed over the ore, the ore becomes its variant in that stone. Mods often add their stones after the ores, so this is how variants show up in them.
 - **Name**: the names of the stone and of the ore, like _Marble Tin Ore_.
 - **Creative inventory**: in the _Natural Blocks_ tab, right after the ore (or after its deepslate version, if it has one).
 
@@ -161,5 +161,6 @@ The data and assets of the variants are generated in packs at the bottom of the 
 
 ## Limits
 
-- World generation follows the ores placed by `minecraft:ore` and `minecraft:scattered_ore` features, like every ore of vanilla Minecraft. An ore placed by a custom feature gets its variants, but they don't generate in the world by themselves.
+- World generation follows the ores and the stones placed by `minecraft:ore` and `minecraft:scattered_ore` features, like every ore and stone blob of vanilla Minecraft. An ore placed by a custom feature gets its variants, but they don't generate in the world by themselves; neither do the variants in a stone placed by a custom feature, unless the ores are placed after it.
+- A stone blob only turns original ores into variants: an ore that is already a variant (like granite coal ore covered by marble) stays as it is, and so does an ore that has no variant in that stone (like deepslate ores).
 - Stones and ores must be blocks registered by a mod: the files can't create new stones or ores.

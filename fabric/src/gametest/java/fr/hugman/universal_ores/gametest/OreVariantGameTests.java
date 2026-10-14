@@ -7,10 +7,15 @@ import fr.hugman.universal_ores.variant.RegisteredOreVariant;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,7 +24,10 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import org.slf4j.Logger;
 
@@ -36,6 +44,7 @@ public class OreVariantGameTests {
     private static final List<String> OVERWORLD_STONES = List.of("andesite", "diorite", "granite", "tuff", "calcite");
     private static final int DROP_ROLLS = 100;
     private static final List<String> OVERWORLD_ORES = List.of("coal", "iron", "gold", "copper", "lapis", "redstone", "emerald", "diamond");
+    private static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRANITE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.withDefaultNamespace("ore_granite"));
 
     @GameTest
     public void vanillaVariantsKeepTheirIds(GameTestHelper helper) {
@@ -136,6 +145,106 @@ public class OreVariantGameTests {
         LOGGER.info("{} ore features place {} blocks", features, placed.size());
         helper.assertTrue(problems.isEmpty(), String.join("\n", problems));
         helper.succeed();
+    }
+
+    /**
+     * Mods add their stones after the ores, so a stone blob turns the ores it covers into their variants in that stone.
+     */
+    @GameTest
+    public void stonesTurnTheOresTheyCoverIntoVariants(GameTestHelper helper) {
+        Registry<ConfiguredFeature<?, ?>> features = helper.getLevel().registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE);
+        Map<Block, List<RegisteredOreVariant>> variantsByStone = OreVariantRegistrar.registered().stream().collect(Collectors.groupingBy(RegisteredOreVariant::stone));
+        RandomSource random = RandomSource.create(0);
+        List<String> problems = new ArrayList<>();
+        List<String> stoneFeatures = new ArrayList<>();
+        for (var entry : features.entrySet()) {
+            if (!(entry.getValue().config() instanceof OreConfiguration ore)) {
+                continue;
+            }
+            Set<Block> stones = ore.targetStates.stream().map(target -> target.state.getBlock()).filter(variantsByStone::containsKey).collect(Collectors.toSet());
+            if (stones.isEmpty()) {
+                continue;
+            }
+            stoneFeatures.add(entry.getKey().identifier().toString());
+            for (Block stone : stones) {
+                for (RegisteredOreVariant variant : variantsByStone.get(stone)) {
+                    Block placed = placedOver(ore.targetStates, variant.ore().defaultBlockState(), random).getBlock();
+                    // A feature placing several stones turns an ore into its variant in the first one
+                    if (OreVariantRegistrar.registered().stream().noneMatch(other -> other.block() == placed && other.ore() == variant.ore() && stones.contains(other.stone()))) {
+                        problems.add(entry.getKey().identifier() + " turns " + BuiltInRegistries.BLOCK.getKey(variant.ore()) + " into " + BuiltInRegistries.BLOCK.getKey(placed) + " instead of " + variant.variant().id());
+                    }
+                }
+            }
+        }
+        LOGGER.info("{} ore features place stones with variants: {}", stoneFeatures.size(), stoneFeatures);
+        helper.assertTrue(stoneFeatures.contains("minecraft:ore_granite"), "minecraft:ore_granite should place a stone with variants");
+        helper.assertTrue(problems.isEmpty(), String.join("\n", problems));
+        helper.succeed();
+    }
+
+    /**
+     * Runs granite blobs over ores, with the targets of the game's granite blobs but smaller, so that they fit in the test.
+     */
+    @GameTest
+    public void graniteBlobsTurnTheOresTheyCoverIntoVariants(GameTestHelper helper) {
+        OreConfiguration granite = (OreConfiguration) helper.getLevel().registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).getValueOrThrow(ORE_GRANITE).config();
+        // Built again, like any ore configuration: the variants are already in the targets, so nothing is added twice
+        OreConfiguration blob = new OreConfiguration(granite.targetStates, 8);
+        helper.assertTrue(blob.targetStates.equals(granite.targetStates), "Building the granite blob again changed its targets");
+
+        Map<BlockPos, BlockState> before = new HashMap<>();
+        List<BlockState> pattern = List.of(
+                Blocks.COAL_ORE.defaultBlockState(),
+                Blocks.STONE.defaultBlockState(),
+                Blocks.DEEPSLATE_COAL_ORE.defaultBlockState(),
+                Blocks.REDSTONE_ORE.defaultBlockState().setValue(BlockStateProperties.LIT, true)
+        );
+        // A blob of size 8 places blocks at most 2 blocks away horizontally and 3 vertically
+        BlockPos center = new BlockPos(3, 4, 3);
+        BlockPos.betweenClosed(center.offset(-2, -3, -2), center.offset(2, 3, 2)).forEach(pos -> {
+            BlockState state = pattern.get(Math.floorMod(pos.getX() + pos.getY() * 3 + pos.getZ() * 7, pattern.size()));
+            helper.setBlock(pos, state);
+            before.put(pos.immutable(), state);
+        });
+        // Small blobs are thin: a few of them cover more ores
+        for (int seed = 0; seed < 10; seed++) {
+            Feature.ORE.place(blob, helper.getLevel(), helper.getLevel().getChunkSource().getGenerator(), RandomSource.create(seed), helper.absolutePos(center));
+        }
+
+        Block graniteCoalOre = BuiltInRegistries.BLOCK.getValue(UniversalOres.id("granite_coal_ore"));
+        Block graniteRedstoneOre = BuiltInRegistries.BLOCK.getValue(UniversalOres.id("granite_redstone_ore"));
+        Map<Block, Set<Block>> allowed = Map.of(
+                Blocks.STONE, Set.of(Blocks.STONE, Blocks.GRANITE),
+                Blocks.COAL_ORE, Set.of(Blocks.COAL_ORE, graniteCoalOre),
+                Blocks.REDSTONE_ORE, Set.of(Blocks.REDSTONE_ORE, graniteRedstoneOre),
+                Blocks.DEEPSLATE_COAL_ORE, Set.of(Blocks.DEEPSLATE_COAL_ORE)
+        );
+        List<String> problems = new ArrayList<>();
+        Map<Block, Integer> placed = new HashMap<>();
+        before.forEach((pos, state) -> {
+            Block after = helper.getBlockState(pos).getBlock();
+            placed.merge(after, 1, Integer::sum);
+            if (!allowed.get(state.getBlock()).contains(after)) {
+                problems.add(BuiltInRegistries.BLOCK.getKey(state.getBlock()) + " became " + BuiltInRegistries.BLOCK.getKey(after) + " at " + pos);
+            }
+        });
+        LOGGER.info("The granite blobs left {}", placed);
+        helper.assertTrue(problems.isEmpty(), String.join("\n", problems));
+        helper.assertTrue(placed.containsKey(Blocks.GRANITE), "The granite blobs placed no granite");
+        helper.assertTrue(placed.containsKey(graniteCoalOre) && placed.containsKey(graniteRedstoneOre), "The granite blobs should turn both coal and redstone ores into variants");
+        helper.succeed();
+    }
+
+    /**
+     * The state an ore feature with these targets places over this one, like {@link net.minecraft.world.level.levelgen.feature.OreFeature} does.
+     */
+    private static BlockState placedOver(List<OreConfiguration.TargetBlockState> targets, BlockState state, RandomSource random) {
+        for (var target : targets) {
+            if (target.target.test(state, random)) {
+                return target.state;
+            }
+        }
+        return state;
     }
 
     private static Set<Item> drops(Block block, ServerLevel level, BlockPos pos, ItemStack tool) {
