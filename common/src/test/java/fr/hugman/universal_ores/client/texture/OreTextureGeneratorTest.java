@@ -108,6 +108,23 @@ class OreTextureGeneratorTest {
     }
 
     @Test
+    void oreOverlaysAreDrawnOverTheirStone() {
+        // Diamond ore drawn like some mods do: the diamonds alone, to be put over stone
+        OreTemplate full = template("diamond_ore", "stone");
+        int[] overlay = vanilla("diamond_ore").pixels().clone();
+        for (int i = 0; i < overlay.length; i++) {
+            if (full.ore(i) == 0) {
+                overlay[i] = 0;
+            }
+        }
+        OreTemplate template = OreTemplate.extract(16, 16, overlay, vanilla("stone").pixels(), null, null, SETTINGS);
+        for (int i = 0; i < overlay.length; i++) {
+            assertTrue((template.ore(i) != 0) == (overlay[i] != 0), "Pixel " + i + " should be ore only if the overlay has it");
+        }
+        assertTrue(template.hasHalo(), "The stone around the overlay should be shaded");
+    }
+
+    @Test
     void oresStayVisibleOnStonesOfTheirColor() {
         OreTemplate coal = template("coal_ore", "stone");
         Image blackstone = vanilla("blackstone");

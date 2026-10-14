@@ -106,40 +106,43 @@ public final class OreVariantData {
     }
 
     /**
-     * Adds the variants to the block and item tags listing their original ore.
+     * The block and item tags, with the variants added to those listing their original ore.
+     *
+     * @return the same tags if there is nothing to add, otherwise a copy
      */
-    public static void addToTags(String directory, Map<Identifier, List<TagLoader.EntryWithSource>> tags) {
+    public static Map<Identifier, List<TagLoader.EntryWithSource>> withOreVariants(String directory, Map<Identifier, List<TagLoader.EntryWithSource>> tags) {
         if (!directory.equals(BLOCK_TAGS) && !directory.equals(ITEM_TAGS)) {
-            return;
+            return tags;
         }
         Map<Identifier, List<Identifier>> variantsByOre = new HashMap<>();
         for (RegisteredOreVariant variant : OreVariantRegistrar.registered()) {
             variantsByOre.computeIfAbsent(BuiltInRegistries.BLOCK.getKey(variant.ore()), id -> new ArrayList<>()).add(variant.variant().id());
         }
         if (variantsByOre.isEmpty()) {
-            return;
+            return tags;
         }
-        int[] count = {0};
-        tags.forEach((tag, entries) -> {
-            String name = tag.toString();
-            if (EXCLUDED_TAG_PREFIXES.stream().anyMatch(name::startsWith)) {
-                return;
+        Map<Identifier, List<TagLoader.EntryWithSource>> result = new LinkedHashMap<>(tags);
+        int count = 0;
+        for (Map.Entry<Identifier, List<TagLoader.EntryWithSource>> tag : tags.entrySet()) {
+            if (EXCLUDED_TAG_PREFIXES.stream().anyMatch(tag.getKey().toString()::startsWith)) {
+                continue;
             }
             Set<Identifier> added = new LinkedHashSet<>();
-            for (TagLoader.EntryWithSource entry : entries) {
+            for (TagLoader.EntryWithSource entry : tag.getValue()) {
                 TagEntryAccessor accessor = (TagEntryAccessor) entry.entry();
                 if (!accessor.isTag()) {
                     added.addAll(variantsByOre.getOrDefault(accessor.getId(), List.of()));
                 }
             }
-            for (Identifier variant : added) {
-                entries.add(new TagLoader.EntryWithSource(TagEntry.optionalElement(variant), UniversalOres.MOD_ID));
-            }
             if (!added.isEmpty()) {
-                count[0]++;
+                List<TagLoader.EntryWithSource> entries = new ArrayList<>(tag.getValue());
+                added.forEach(variant -> entries.add(new TagLoader.EntryWithSource(TagEntry.optionalElement(variant), UniversalOres.MOD_ID)));
+                result.put(tag.getKey(), entries);
+                count++;
             }
-        });
-        LOGGER.info("Added ore variants to {} {}", count[0], directory);
+        }
+        LOGGER.info("Added ore variants to {} {}", count, directory);
+        return result;
     }
 
     /**

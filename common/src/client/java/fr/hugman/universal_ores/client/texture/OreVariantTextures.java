@@ -45,8 +45,13 @@ public final class OreVariantTextures {
         return List.of(new Face(sprite, stoneTexture));
     }
 
+    /**
+     * Whether the stone is a pillar: its variants have its side and end textures, even those that can't be turned like
+     * it (like redstone ore variants, which light up instead).
+     */
     public static boolean isPillar(RegisteredOreVariant registered) {
-        return registered.block().defaultBlockState().hasProperty(BlockStateProperties.AXIS);
+        return registered.stone().defaultBlockState().hasProperty(BlockStateProperties.AXIS)
+                || registered.block().defaultBlockState().hasProperty(BlockStateProperties.AXIS);
     }
 
     private static List<Face> pillar(Identifier sprite, Identifier side, Identifier end) {
