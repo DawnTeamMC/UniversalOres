@@ -9,10 +9,12 @@
       "strength": 0.5
     },
     "minecraft:blackstone": {
-      "ores_of": "minecraft:netherrack",
+      "ores_of": ["minecraft:netherrack", "minecraft:stone"],
+      "except": ["minecraft:gold_ore"],
       "texture": "minecraft:block/blackstone_top"
     },
-    "minecraft:basalt": "minecraft:netherrack"
+    "minecraft:basalt": "minecraft:netherrack",
+    "minecraft:smooth_basalt": "minecraft:stone"
   },
   "ores": {
     "minecraft:coal_ore": "minecraft:stone",

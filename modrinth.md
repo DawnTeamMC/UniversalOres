@@ -6,7 +6,7 @@
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/DawnTeamMC?style=for-the-badge&labelColor=424549&color=424549&logo=x)](https://twitter.com/DawnTeamMC)
 
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
-diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
+diorite, granite, tuff, calcite, blackstone, basalt and smooth basalt that generate naturally where they should precisely be.
 
 **You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores), or [explore the wiki »](https://dawnteammc.github.io/universal_ores/wiki)**
 

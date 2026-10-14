@@ -11,7 +11,7 @@
 [![License (Polyform Shield 1.0.0)](https://img.shields.io/badge/code%20license-Polyform%20Shield%201.0.0-green.svg?style=for-the-badge)](https://polyformproject.org/licenses/shield/1.0.0/)
 
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
-diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
+diorite, granite, tuff, calcite, blackstone, basalt and smooth basalt that generate naturally where they should precisely be.
 
 **You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores), or [explore the wiki »](https://dawnteammc.github.io/universal_ores/wiki)**
 

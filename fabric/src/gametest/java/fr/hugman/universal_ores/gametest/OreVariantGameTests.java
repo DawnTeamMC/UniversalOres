@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import org.slf4j.Logger;
@@ -40,9 +41,13 @@ public class OreVariantGameTests {
         List<String> expected = new ArrayList<>();
         OVERWORLD_STONES.forEach(stone -> OVERWORLD_ORES.forEach(ore -> expected.add(stone + "_" + ore + "_ore")));
         Stream.of("blackstone", "basalt").forEach(stone -> Stream.of("gold", "quartz").forEach(ore -> expected.add(stone + "_" + ore + "_ore")));
+        OVERWORLD_ORES.forEach(ore -> expected.add("smooth_basalt_" + ore + "_ore"));
+        // Blackstone gold ore is the variant of nether gold ore
+        OVERWORLD_ORES.stream().filter(ore -> !ore.equals("gold")).forEach(ore -> expected.add("blackstone_" + ore + "_ore"));
         List<String> missing = expected.stream().filter(path -> OreVariantRegistrar.get(UniversalOres.id(path)).isEmpty()).toList();
         LOGGER.info("{} ore variants are registered", OreVariantRegistrar.registered().size());
         helper.assertTrue(missing.isEmpty(), "Missing ore variants: " + missing);
+        helper.assertTrue(OreVariantRegistrar.get(UniversalOres.id("blackstone_gold_ore")).orElseThrow().ore() == Blocks.NETHER_GOLD_ORE, "Blackstone gold ore should be the variant of nether gold ore");
         helper.succeed();
     }
 
