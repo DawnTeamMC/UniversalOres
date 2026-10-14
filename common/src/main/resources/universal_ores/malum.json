@@ -1,0 +1,20 @@
+{
+  "ores": {
+    "malum:soulstone_ore": {
+      "in": "minecraft:stone",
+      "texture": "malum:block/ores/soulstone_ore"
+    },
+    "malum:natural_quartz_ore": {
+      "in": "minecraft:stone",
+      "texture": "malum:block/ores/natural_quartz_ore"
+    },
+    "malum:brilliant_stone": {
+      "in": "minecraft:stone",
+      "texture": "malum:block/ores/brilliant_stone"
+    },
+    "malum:blazing_quartz_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "malum:block/ores/blazing_quartz_ore"
+    }
+  }
+}

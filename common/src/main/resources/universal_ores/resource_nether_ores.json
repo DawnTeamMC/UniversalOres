@@ -1,0 +1,32 @@
+{
+  "ores": {
+    "resource_nether_ores:nether_coal_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/coal_ore"
+    },
+    "resource_nether_ores:nether_copper_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/copper_ore"
+    },
+    "resource_nether_ores:nether_diamond_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/diamond_ore"
+    },
+    "resource_nether_ores:nether_emerald_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/emerald_ore"
+    },
+    "resource_nether_ores:nether_iron_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/iron_ore"
+    },
+    "resource_nether_ores:nether_lapis_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/lapis_ore"
+    },
+    "resource_nether_ores:nether_redstone_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "resource_nether_ores:block/redstone_ore"
+    }
+  }
+}

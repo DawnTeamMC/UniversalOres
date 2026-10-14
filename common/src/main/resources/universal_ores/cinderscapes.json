@@ -1,0 +1,8 @@
+{
+  "ores": {
+    "cinderscapes:rose_quartz_ore": "minecraft:netherrack",
+    "cinderscapes:smoky_quartz_ore": "minecraft:netherrack",
+    "cinderscapes:sulfur_ore": "minecraft:netherrack",
+    "cinderscapes:sulfur_quartz_ore": "minecraft:netherrack"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "ores": {
+    "immersiveores:vulpus_ore": "minecraft:netherrack",
+    "immersiveores:enderium_ore": "minecraft:end_stone"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "ores": {
+    "immersiveengineering:ore_aluminum": {
+      "in": "minecraft:stone",
+      "texture": "immersiveengineering:block/metal/ore_aluminum"
+    },
+    "immersiveengineering:ore_lead": {
+      "in": "minecraft:stone",
+      "texture": "immersiveengineering:block/metal/ore_lead"
+    },
+    "immersiveengineering:ore_nickel": {
+      "in": "minecraft:stone",
+      "texture": "immersiveengineering:block/metal/ore_nickel"
+    },
+    "immersiveengineering:ore_silver": {
+      "in": "minecraft:stone",
+      "texture": "immersiveengineering:block/metal/ore_silver"
+    },
+    "immersiveengineering:ore_uranium": {
+      "in": "minecraft:stone",
+      "texture": "immersiveengineering:block/metal/ore_uranium"
+    }
+  }
+}

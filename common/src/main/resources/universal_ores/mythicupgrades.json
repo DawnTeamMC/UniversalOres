@@ -1,0 +1,13 @@
+{
+  "ores": {
+    "mythicupgrades:aquamarine_ore": "minecraft:stone",
+    "mythicupgrades:citrine_ore": "minecraft:stone",
+    "mythicupgrades:peridot_ore": "minecraft:stone",
+    "mythicupgrades:topaz_ore": "minecraft:stone",
+    "mythicupgrades:necoium_ore": "minecraft:stone",
+    "mythicupgrades:ruby_ore": "minecraft:netherrack",
+    "mythicupgrades:sapphire_ore": "minecraft:netherrack",
+    "mythicupgrades:ametrine_ore": "minecraft:end_stone",
+    "mythicupgrades:jade_ore": "minecraft:end_stone"
+  }
+}

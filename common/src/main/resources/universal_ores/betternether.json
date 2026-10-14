@@ -1,0 +1,8 @@
+{
+  "ores": {
+    "betternether:cincinnasite_ore": "minecraft:netherrack",
+    "betternether:nether_lapis_ore": "minecraft:netherrack",
+    "betternether:nether_redstone_ore": "minecraft:netherrack",
+    "betternether:nether_ruby_ore": "minecraft:netherrack"
+  }
+}

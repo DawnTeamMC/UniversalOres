@@ -3,9 +3,20 @@ package fr.hugman.universal_ores.variant;
 import net.minecraft.resources.Identifier;
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -84,5 +95,31 @@ class OreVariantDefinitionsTest {
                 { "stones": { "minecraft:stone": "minecraft:stone" }, "ores": { "minecraft:coal_ore": "minecraft:stone" } }
                 """);
         assertTrue(definitions.combine().isEmpty());
+    }
+
+    /**
+     * A wrong entry is only logged when the game starts: every entry of the files Universal Ores ships must be read.
+     */
+    @Test
+    void shippedFilesAreValid() throws IOException, URISyntaxException {
+        Path folder = Path.of(Objects.requireNonNull(OreVariantDefinitionsTest.class.getResource("/" + OreVariants.DIRECTORY + "/minecraft.json")).toURI()).getParent();
+        List<String> problems = new ArrayList<>();
+        List<Path> files;
+        try (Stream<Path> list = Files.list(folder)) {
+            files = list.filter(file -> file.toString().endsWith(".json")).sorted().toList();
+        }
+        for (Path file : files) {
+            String content = Files.readString(file);
+            JsonObject json = JsonParser.parseString(content).getAsJsonObject();
+            var definitions = new OreVariants.Definitions();
+            read(definitions, content);
+            int stones = json.has("stones") ? json.getAsJsonObject("stones").size() : 0;
+            int ores = json.has("ores") ? json.getAsJsonObject("ores").size() : 0;
+            if (definitions.stones().size() != stones || definitions.ores().size() != ores) {
+                problems.add(file.getFileName() + ": " + definitions.stones().size() + "/" + stones + " stones and " + definitions.ores().size() + "/" + ores + " ores read");
+            }
+        }
+        assertTrue(files.size() > 10, "Only " + files.size() + " files found");
+        assertTrue(problems.isEmpty(), String.join("\n", problems));
     }
 }

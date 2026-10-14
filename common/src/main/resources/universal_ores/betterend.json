@@ -1,0 +1,22 @@
+{
+  "stones": {
+    "betterend:flavolite": "minecraft:end_stone",
+    "betterend:violecite": "minecraft:end_stone",
+    "betterend:sulphuric_rock": {
+      "ores_of": "minecraft:end_stone",
+      "texture": {
+        "side": "betterend:block/sulphuric_rock",
+        "end": "betterend:block/sulphuric_rock_top"
+      }
+    },
+    "betterend:umbralith": "minecraft:end_stone",
+    "betterend:virid_jadestone": "minecraft:end_stone",
+    "betterend:azure_jadestone": "minecraft:end_stone",
+    "betterend:sandy_jadestone": "minecraft:end_stone"
+  },
+  "ores": {
+    "betterend:thallasium_ore": "minecraft:end_stone",
+    "betterend:ender_ore": "minecraft:end_stone",
+    "betterend:amber_ore": "minecraft:end_stone"
+  }
+}
