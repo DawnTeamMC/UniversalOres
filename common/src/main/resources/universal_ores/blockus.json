@@ -1,0 +1,8 @@
+{
+  "stones": {
+    "blockus:limestone": "minecraft:stone",
+    "blockus:marble": "minecraft:stone",
+    "blockus:bluestone": "minecraft:stone",
+    "blockus:viridite": "minecraft:stone"
+  }
+}

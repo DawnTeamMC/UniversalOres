@@ -1,0 +1,18 @@
+{
+  "ores": {
+    "more-ores:aluminium_ore": "minecraft:stone",
+    "more-ores:arsenic_ore": "minecraft:stone",
+    "more-ores:chrome_ore": "minecraft:stone",
+    "more-ores:lithium_ore": "minecraft:stone",
+    "more-ores:nickel_ore": "minecraft:stone",
+    "more-ores:plomb_ore": "minecraft:stone",
+    "more-ores:salt_ore": "minecraft:stone",
+    "more-ores:silicon_ore": "minecraft:stone",
+    "more-ores:silver_ore": "minecraft:stone",
+    "more-ores:tin_ore": "minecraft:stone",
+    "more-ores:titanium_ore": "minecraft:stone",
+    "more-ores:zinc_ore": "minecraft:stone",
+    "more-ores:racknite_ore": "minecraft:netherrack",
+    "more-ores:enderite_ore": "minecraft:end_stone"
+  }
+}

@@ -7,6 +7,14 @@
     "nether_ores_reborn:gold_ore": "minecraft:netherrack",
     "nether_ores_reborn:iron_ore": "minecraft:netherrack",
     "nether_ores_reborn:lapis_ore": "minecraft:netherrack",
-    "nether_ores_reborn:redstone_ore": "minecraft:netherrack"
+    "nether_ores_reborn:redstone_ore": "minecraft:netherrack",
+    "nether_ores_reborn:end_coal_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_copper_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_diamond_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_emerald_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_gold_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_iron_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_lapis_ore": "minecraft:end_stone",
+    "nether_ores_reborn:end_redstone_ore": "minecraft:end_stone"
   }
 }

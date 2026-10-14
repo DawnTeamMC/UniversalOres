@@ -1,0 +1,15 @@
+{
+  "ores": {
+    "modern_industrialization:antimony_ore": "minecraft:stone",
+    "modern_industrialization:bauxite_ore": "minecraft:stone",
+    "modern_industrialization:iridium_ore": "minecraft:stone",
+    "modern_industrialization:lead_ore": "minecraft:stone",
+    "modern_industrialization:lignite_coal_ore": "minecraft:stone",
+    "modern_industrialization:monazite_ore": "minecraft:stone",
+    "modern_industrialization:nickel_ore": "minecraft:stone",
+    "modern_industrialization:salt_ore": "minecraft:stone",
+    "modern_industrialization:tin_ore": "minecraft:stone",
+    "modern_industrialization:tungsten_ore": "minecraft:stone",
+    "modern_industrialization:uranium_ore": "minecraft:stone"
+  }
+}

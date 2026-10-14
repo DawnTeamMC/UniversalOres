@@ -1,0 +1,6 @@
+{
+  "ores": {
+    "caverns_and_chasms:silver_ore": "minecraft:stone",
+    "caverns_and_chasms:spinel_ore": "minecraft:stone"
+  }
+}

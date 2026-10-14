@@ -1,0 +1,14 @@
+{
+  "ores": {
+    "thermal:apatite_ore": "minecraft:stone",
+    "thermal:cinnabar_ore": "minecraft:stone",
+    "thermal:lead_ore": "minecraft:stone",
+    "thermal:nickel_ore": "minecraft:stone",
+    "thermal:niter_ore": "minecraft:stone",
+    "thermal:silver_ore": "minecraft:stone",
+    "thermal:sulfur_ore": "minecraft:stone",
+    "thermal:tin_ore": "minecraft:stone",
+    "thermal:ruby_ore": "minecraft:stone",
+    "thermal:sapphire_ore": "minecraft:stone"
+  }
+}

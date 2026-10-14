@@ -1,0 +1,18 @@
+{
+  "stones": {
+    "enderscape:mirestone": "minecraft:end_stone",
+    "enderscape:kurodite": "minecraft:end_stone",
+    "enderscape:veradite": "minecraft:end_stone",
+    "enderscape:void_shale": {
+      "ores_of": "minecraft:end_stone",
+      "texture": {
+        "side": "enderscape:block/void_shale_side",
+        "end": "enderscape:block/void_shale_end"
+      }
+    }
+  },
+  "ores": {
+    "enderscape:nebulite_ore": "minecraft:end_stone",
+    "enderscape:shadoline_ore": "minecraft:end_stone"
+  }
+}
