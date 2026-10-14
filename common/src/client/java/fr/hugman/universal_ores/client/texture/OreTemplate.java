@@ -64,6 +64,10 @@ public final class OreTemplate {
         checkSize(size, orePixels, "ore");
         checkSize(size, hostPixels, "host");
         Palette host = Palette.of(hostPixels);
+        // Some mods draw their ores as an overlay over their stone: its opaque pixels are the ore
+        if (isOverlay(orePixels, hostPixels)) {
+            return fromOverlay(width, height, orePixels, host.meanLightness(), settings);
+        }
 
         boolean[] changed = new boolean[size];
         for (int i = 0; i < size; i++) {
@@ -354,6 +358,20 @@ public final class OreTemplate {
         float[] array = new float[size];
         Arrays.fill(array, Float.NaN);
         return array;
+    }
+
+    /**
+     * Whether the ore texture is only the ore, over a transparent background (at least a tenth of it) where its
+     * stone is opaque.
+     */
+    private static boolean isOverlay(int[] orePixels, int[] hostPixels) {
+        int transparent = 0;
+        for (int i = 0; i < orePixels.length; i++) {
+            if ((orePixels[i] >>> 24) == 0 && (hostPixels[i] >>> 24) != 0) {
+                transparent++;
+            }
+        }
+        return transparent >= orePixels.length / 10;
     }
 
     private static boolean[] nearOre(int width, int height, boolean[] ore, boolean[] changed, int radius) {

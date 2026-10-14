@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 public class OreVariantGameTests {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final List<String> OVERWORLD_STONES = List.of("andesite", "diorite", "granite", "tuff", "calcite");
+    private static final int DROP_ROLLS = 100;
     private static final List<String> OVERWORLD_ORES = List.of("coal", "iron", "gold", "copper", "lapis", "redstone", "emerald", "diamond");
 
     @GameTest
@@ -65,10 +66,15 @@ public class OreVariantGameTests {
             if (!silkTouchDrops.equals(Set.of(variant.block().asItem()))) {
                 problems.add(variant.variant().id() + " drops " + silkTouchDrops + " with Silk Touch");
             }
+            // Some ores drop random items (like Tech Reborn's extra dusts): what the variant drops must be among what
+            // the ore can drop
             Set<Item> drops = drops(variant.block(), level, pos, pickaxe);
-            Set<Item> oreDrops = drops(variant.ore(), level, pos, pickaxe);
-            if (!drops.equals(oreDrops)) {
-                problems.add(variant.variant().id() + " drops " + drops + " instead of " + oreDrops);
+            Set<Item> oreDrops = new HashSet<>();
+            for (int roll = 0; roll < DROP_ROLLS; roll++) {
+                oreDrops.addAll(drops(variant.ore(), level, pos, pickaxe));
+            }
+            if (!oreDrops.containsAll(drops) || drops.isEmpty() != oreDrops.isEmpty()) {
+                problems.add(variant.variant().id() + " drops " + drops + " instead of some of " + oreDrops);
             }
             if (variant.block().defaultBlockState().requiresCorrectToolForDrops() != variant.ore().defaultBlockState().requiresCorrectToolForDrops()) {
                 problems.add(variant.variant().id() + " doesn't need the same tool as its ore");
