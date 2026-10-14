@@ -26,7 +26,7 @@ public class UniversalOresEnglishLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.@NotNull Provider registries, @NotNull TranslationBuilder builder) {
-        builder.add("modmenu.descriptionTranslation.universal_ores", "Adds ore variants in andesite, diorite, granite, tuff, calcite, blackstone, basalt and the stones of other mods.");
+        builder.add("modmenu.descriptionTranslation.universal_ores", "Adds ore variants in andesite, diorite, granite, tuff, calcite, blackstone, basalt, smooth basalt and the stones of other mods.");
         builder.add("pack.universal_ores.generated.title", "Universal Ores");
         builder.add("pack.universal_ores.generated.description", "Ore variants for the installed mods");
         // How the variants of other mods are named, from the names of their stone and ore
