@@ -9,6 +9,7 @@ import fr.hugman.universal_ores.client.texture.OreTemplate;
 import fr.hugman.universal_ores.client.texture.OreTextureGenerator;
 import fr.hugman.universal_ores.client.texture.OreTextureSettings;
 import fr.hugman.universal_ores.client.texture.OreVariantTextures;
+import fr.hugman.universal_ores.client.texture.EmissiveTextures;
 import fr.hugman.universal_ores.client.texture.PbrMap;
 import fr.hugman.universal_ores.client.texture.Png;
 import fr.hugman.universal_ores.client.texture.TextureFrames;
@@ -51,6 +52,9 @@ import java.util.function.Supplier;
  * like Iris look for them ({@code <texture>_n.png} and {@code <texture>_s.png}). Only the first frame of animated
  * textures is used for them.
  * <p>
+ * Likewise, when an emissive resource pack (in the OptiFine format, read by Continuity) gives the ore or the stone an
+ * emissive texture, the variant gets one, added to the atlas next to its texture.
+ * <p>
  * Set the {@code universal_ores.dumpTextures} system property to a folder to save every generated texture there.
  */
 public record OreVariantSpriteSource() implements SpriteSource {
@@ -64,10 +68,11 @@ public record OreVariantSpriteSource() implements SpriteSource {
         OreTextureSettings settings = OreTextureSettings.DEFAULT;
         // The maps of the previous resources are gone
         GeneratedPacks.removeLiveFiles(PackType.CLIENT_RESOURCES, path -> path.getNamespace().equals(UniversalOres.MOD_ID) && path.getPath().startsWith("textures/"));
+        Optional<String> emissiveSuffix = EmissiveTextures.suffix(resourceManager);
         Map<Identifier, Supplier<Optional<OreFrames>>> templates = new HashMap<>();
         for (RegisteredOreVariant registered : OreVariantRegistrar.registered()) {
             OreVariant variant = registered.variant();
-            var template = templates.computeIfAbsent(variant.oreType().block(), id -> Suppliers.memoize(() -> loadTemplate(resourceManager, variant.oreType(), settings)));
+            var template = templates.computeIfAbsent(variant.oreType().block(), id -> Suppliers.memoize(() -> loadTemplate(resourceManager, variant.oreType(), emissiveSuffix, settings)));
             for (OreVariantTextures.Face face : OreVariantTextures.faces(registered)) {
                 if (OreVariantTextures.exists(resourceManager, face.sprite())) {
                     continue;
@@ -78,6 +83,17 @@ public record OreVariantSpriteSource() implements SpriteSource {
                     continue;
                 }
                 output.add(face.sprite(), new Loader(face.sprite(), face.stone(), stone.get(), resourceManager, template, settings));
+
+                // Added along with the texture, so that emissive texture mods find it whenever they look for it
+                if (emissiveSuffix.isPresent()) {
+                    String suffix = emissiveSuffix.get();
+                    Identifier emissive = face.sprite().withSuffix(suffix);
+                    boolean lit = OreVariantTextures.exists(resourceManager, variant.oreType().textureOrDefault().withSuffix(suffix))
+                            || OreVariantTextures.exists(resourceManager, face.stone().withSuffix(suffix));
+                    if (lit && !OreVariantTextures.exists(resourceManager, emissive)) {
+                        output.add(emissive, new EmissiveLoader(emissive, face.stone(), stone.get(), resourceManager, template, suffix));
+                    }
+                }
             }
         }
     }
@@ -87,7 +103,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
         return MAP_CODEC;
     }
 
-    private static Optional<OreFrames> loadTemplate(ResourceManager resourceManager, OreType type, OreTextureSettings settings) {
+    private static Optional<OreFrames> loadTemplate(ResourceManager resourceManager, OreType type, Optional<String> emissiveSuffix, OreTextureSettings settings) {
         Identifier id = type.block();
         try {
             Texture ore = Texture.read(resourceManager, type.textureOrDefault());
@@ -104,12 +120,17 @@ public record OreVariantSpriteSource() implements SpriteSource {
                     maps.put(map, texture.firstFrameScaledTo(ore.width(), ore.height()));
                 }
             }
+            int[] emissive = null;
+            if (emissiveSuffix.isPresent()) {
+                Texture texture = Texture.read(resourceManager, type.textureOrDefault().withSuffix(emissiveSuffix.get()));
+                emissive = texture == null ? null : texture.firstFrameScaledTo(ore.width(), ore.height());
+            }
             List<OreTemplate> templates = new ArrayList<>();
             Texture host = Texture.read(resourceManager, type.hostTextureOrDefault());
             if (host == null) {
                 LOGGER.warn("The texture {} of the stone {} is found in is missing, so its whole texture is drawn over other stones", type.hostTextureOrDefault(), id);
                 frames.forEach(frame -> templates.add(OreTemplate.fromOverlay(ore.width(), ore.height(), frame, settings)));
-                return Optional.of(new OreFrames(templates, animation, maps));
+                return Optional.of(new OreFrames(templates, animation, maps, emissive));
             }
             int[] hostPixels = host.firstFrameScaledTo(ore.width(), ore.height());
 
@@ -119,7 +140,7 @@ public record OreVariantSpriteSource() implements SpriteSource {
             for (int[] frame : frames) {
                 templates.add(OreTemplate.extract(ore.width(), ore.height(), frame, hostPixels, oreHint, haloHint, settings));
             }
-            return Optional.of(new OreFrames(templates, animation, maps));
+            return Optional.of(new OreFrames(templates, animation, maps, emissive));
         } catch (IOException | IllegalArgumentException e) {
             LOGGER.error("Can't draw the variants of {}", id, e);
             return Optional.empty();
@@ -139,10 +160,39 @@ public record OreVariantSpriteSource() implements SpriteSource {
     }
 
     /**
-     * The templates of an ore: one per frame of its texture when it is animated. With the PBR maps of its texture, at
-     * the size of its templates.
+     * The templates of an ore: one per frame of its texture when it is animated. With the PBR maps and the emissive
+     * texture of its texture, at the size of its templates.
      */
-    private record OreFrames(List<OreTemplate> templates, Optional<AnimationMetadataSection> animation, Map<PbrMap, int[]> maps) {
+    private record OreFrames(List<OreTemplate> templates, Optional<AnimationMetadataSection> animation, Map<PbrMap, int[]> maps, int @Nullable [] emissive) {
+    }
+
+    /**
+     * Draws the emissive texture of a variant: the emissive pixels of the ore on the ore, and those of the stone
+     * elsewhere.
+     */
+    private record EmissiveLoader(Identifier sprite, Identifier stoneTexture, Resource stone, ResourceManager resourceManager, Supplier<Optional<OreFrames>> template, String suffix) implements SpriteSource.DiscardableLoader {
+        @Override
+        public @Nullable SpriteContents get(@NotNull SpriteResourceLoader loader) {
+            Optional<OreFrames> ore = this.template.get();
+            if (ore.isEmpty()) {
+                return null;
+            }
+            try {
+                Texture stone = Texture.of(this.stone);
+                Texture stoneEmissive = Texture.read(this.resourceManager, this.stoneTexture.withSuffix(this.suffix));
+                int[] pixels = EmissiveTextures.compose(ore.get().templates().getFirst(), stone.width(), stone.height(), ore.get().emissive(),
+                        stoneEmissive == null ? null : stoneEmissive.firstFrameScaledTo(stone.width(), stone.height()));
+                NativeImage image = new NativeImage(stone.width(), stone.height(), false);
+                for (int i = 0; i < pixels.length; i++) {
+                    image.setPixel(i % stone.width(), i / stone.width(), pixels[i]);
+                }
+                Loader.dump(image, this.sprite);
+                return new SpriteContents(this.sprite, new FrameSize(stone.width(), stone.height()), image);
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.error("Can't draw {}", this.sprite, e);
+                return null;
+            }
+        }
     }
 
     /**

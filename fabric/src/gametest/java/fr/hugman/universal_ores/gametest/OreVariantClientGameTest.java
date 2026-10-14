@@ -9,6 +9,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.screenshot.TestScreenshotOptions;
 import net.minecraft.core.BlockPos;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
@@ -26,8 +28,8 @@ import java.util.*;
  * takes a screenshot of it, then checks that every variant has a name.
  * <p>
  * This test mod animates the emerald ore and calcite textures, to check that their variants are animated too. It
- * also gives diamond ore a specular map and granite a normal map, like a PBR resource pack, to check that their
- * variants get maps made from them.
+ * also gives diamond ore a specular map and granite a normal map, like a PBR resource pack, and an emissive texture
+ * to diamond ore, like an emissive resource pack, to check that their variants get them too.
  */
 public class OreVariantClientGameTest implements FabricClientGameTest {
     private static final int WALL_Y = 200;
@@ -93,6 +95,11 @@ public class OreVariantClientGameTest implements FabricClientGameTest {
             if (!mapProblems.isEmpty()) {
                 throw new AssertionError("Wrong PBR maps: " + mapProblems);
             }
+
+            List<String> emissiveProblems = context.computeOnClient(minecraft -> checkEmissiveTextures(minecraft.getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS)));
+            if (!emissiveProblems.isEmpty()) {
+                throw new AssertionError("Wrong emissive textures: " + emissiveProblems);
+            }
         }
     }
 
@@ -146,6 +153,36 @@ public class OreVariantClientGameTest implements FabricClientGameTest {
         if (fromSource == 0 || neutrals == 0) {
             problems.add(name + " has " + fromSource + " pixels from its source map and " + neutrals + " neutral pixels");
         }
+    }
+
+    /**
+     * Variants of an ore with an emissive texture get one, and only them. With Continuity, it draws them.
+     */
+    private static List<String> checkEmissiveTextures(net.minecraft.client.renderer.texture.TextureAtlas blocks) {
+        List<String> problems = new ArrayList<>();
+        TextureAtlasSprite texture = blocks.getSprite(Identifier.fromNamespaceAndPath("universal_ores", "block/granite_diamond_ore"));
+        Identifier emissiveId = Identifier.fromNamespaceAndPath("universal_ores", "block/granite_diamond_ore_e");
+        TextureAtlasSprite emissive = blocks.getSprite(emissiveId);
+        if (!emissive.contents().name().equals(emissiveId)) {
+            problems.add(emissiveId + " is missing");
+        }
+        Identifier noEmissiveId = Identifier.fromNamespaceAndPath("universal_ores", "block/granite_coal_ore_e");
+        if (blocks.getSprite(noEmissiveId).contents().name().equals(noEmissiveId)) {
+            problems.add(noEmissiveId + " shouldn't exist");
+        }
+        if (FabricLoader.getInstance().isModLoaded("continuity")) {
+            try {
+                Class<?> api = Class.forName("me.pepperbell.continuity.api.client.EmissiveSpriteApi");
+                Object instance = api.getMethod("get").invoke(null);
+                Object found = api.getMethod("getEmissiveSprite", TextureAtlasSprite.class).invoke(instance, texture);
+                if (found != emissive) {
+                    problems.add("Continuity doesn't draw " + emissiveId + " over granite diamond ore, but " + found);
+                }
+            } catch (ReflectiveOperationException e) {
+                problems.add("Couldn't ask Continuity: " + e);
+            }
+        }
+        return problems;
     }
 
     private static Identifier variantMap(String name) {

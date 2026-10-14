@@ -96,14 +96,14 @@ An ore says **which stone it is found in**, and a stone says **whose ores it get
 - another mod adding _marble_ says `"othermod:marble": "minecraft:stone"`;
 - with both mods installed, there is marble tin ore, along with marble coal ore, granite tin ore, and so on.
 
-Universal Ores comes with the files of vanilla Minecraft (andesite, diorite, granite, tuff and calcite get the ores of stone; blackstone and basalt get the ores of netherrack) and of a few mods. If a mod and Universal Ores both describe the same block, either one may be used; a modpack file always wins.
+Universal Ores comes with the files of vanilla Minecraft (andesite, diorite, granite, tuff, calcite and smooth basalt get the ores of stone; basalt gets the ores of netherrack; blackstone gets both, except gold ore, since it already has nether gold ore) and of a few mods. If a mod and Universal Ores both describe the same block, either one may be used; a modpack file always wins.
 
 ## What a variant gets from its ore
 
 Everything is copied from the original ore when the game starts, so a variant behaves like its ore, even when a data pack changes the ore:
 
 - **Behavior**: hardness, blast resistance (unless the stone sets a `strength`), the right tool, experience drops, and anything the ore block does, like redstone ore lighting up.
-- **Look and sound**: the texture is generated from the ore's own texture, along with the normal and specular maps of PBR resource packs (see the [textures page]($textures)), the map color and note block instrument are the stone's, and the sound is the ore's when it has its own, the stone's otherwise.
+- **Look and sound**: the texture is generated from the ore's own texture, along with the normal and specular maps of PBR resource packs and the emissive textures of glowing ore packs (see the [textures page]($textures)), the map color and note block instrument are the stone's, and the sound is the ore's when it has its own, the stone's otherwise.
 - **Drops**: the ore's loot table, with the ore itself (dropped with Silk Touch) replaced by the variant.
 - **Tags**: the variant is added to every block and item tag that lists the ore (except the `c:ores_in_ground/...` tags, since it is in another stone).
 - **Recipes**: every smelting, blasting... recipe of the ore gets a copy for its variants.

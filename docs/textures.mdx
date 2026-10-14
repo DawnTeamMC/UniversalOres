@@ -106,6 +106,16 @@ When the ore or the stone of a variant has them, the variant gets its own, put t
 
 The maps are found by shader mods like Iris next to the texture of the variant, like `assets/universal_ores/textures/block/granite_diamond_ore_s.png`, so a resource pack can also give a variant its own maps. Only the first frame of animated textures is used for the maps.
 
+## Glowing ore packs
+
+Many resource packs make ores glow in the dark with **emissive textures**, in the OptiFine format: next to `diamond_ore.png`, a `diamond_ore_e.png` holds the pixels that glow (the suffix is set by the pack in `assets/minecraft/optifine/emissive.properties`). They are drawn by [Continuity](https://modrinth.com/mod/continuity) (on Fabric), with or without shaders.
+
+When the ore or the stone of a variant has one, the variant gets its own, put together like its texture: the glowing pixels of the ore on the ore, and those of the stone elsewhere. A variant of a glowing ore glows in every stone.
+
+<Callout variant="info">
+    Shader packs like Photon or Complementary don't read emissive textures in the OptiFine format: they make pixels glow from the specular maps of PBR packs (see above), and only if those maps make them emissive.
+</Callout>
+
 ## For resource packs
 
 - A texture at `assets/universal_ores/textures/block/<variant>.png` is used instead of the generated one, like `assets/universal_ores/textures/block/granite_diamond_ore.png` or `assets/universal_ores/textures/block/promenade/blunite/minecraft/coal_ore.png` (see [the IDs of the variants]($adding_stones_and_ores#ids-and-names)).
