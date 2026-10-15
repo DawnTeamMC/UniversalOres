@@ -92,6 +92,11 @@ dependencies {
         localRuntime "maven.modrinth:mythic-upgrades:wXpiq0fe" // Mythic Upgrades 5.1.1
         localRuntime "maven.modrinth:cloth-config:Nv3xnWXd" // Cloth Config 26.2.155, needed by Mythic Upgrades
         localRuntime "maven.modrinth:terrablender:KQix25Qc" // TerraBlender 26.2.0.0.2, needed by Mythic Upgrades
+        localRuntime "maven.modrinth:jewelry:7Uhj05Kr" // Jewelry (RPG Series) 2.5.1
+        localRuntime "maven.modrinth:ranged-weapon-api:pAKK9B14" // Ranged Weapon API 4.0.0, needed by Jewelry
+        localRuntime "maven.modrinth:structure-pool-api:JO33Bce1" // Structure Pool API 1.3.0, needed by Jewelry
+        localRuntime "maven.modrinth:spell-power:hZSvBdgk" // Spell Power 1.6.2, needed by Jewelry
+        localRuntime "maven.modrinth:trinkets-updated:YH8OYfzQ" // Trinkets Updated 4.1.1, needed by Jewelry
         // Stones, and ores
         localRuntime "maven.modrinth:blockus:wKScvq1F" // Blockus 2.17.3
         localRuntime "maven.modrinth:wilder-wild:jO1Bwxn3" // Wilder Wild 4.3
