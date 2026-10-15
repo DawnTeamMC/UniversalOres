@@ -74,7 +74,20 @@ public final class OreTemplate {
             changed[i] = (orePixels[i] >>> 24) != 0 && (orePixels[i] & 0xFFFFFF) != (hostPixels[i] & 0xFFFFFF);
         }
 
-        boolean[] ore = fits(oreHint, changed, size) ? oreHint : detectOre(width, height, orePixels, changed, host, settings);
+        boolean[] ore;
+        if (fits(oreHint, changed, size)) {
+            ore = oreHint;
+        } else {
+            ore = detectOre(width, height, orePixels, changed, host, settings.oreMinChroma(), settings.oreMinDistance(), settings);
+            // An ore of a faint hue (like a greenish grey on grey stone) is mostly taken for its stone: look for it again
+            // with lower thresholds
+            if (count(ore) < settings.faintOreShare() * count(changed)) {
+                boolean[] faint = detectOre(width, height, orePixels, changed, host, settings.faintOreChroma(), settings.faintOreDistance(), settings);
+                if (count(faint) > count(ore)) {
+                    ore = faint;
+                }
+            }
+        }
         boolean[] halo;
         if (fits(haloHint, changed, size)) {
             halo = new boolean[size];
@@ -243,6 +256,18 @@ public final class OreTemplate {
         return this.visibility;
     }
 
+    /**
+     * Whether the ore has any pixel: an ore texture taken for its stone gives variants without ore.
+     */
+    public boolean hasOre() {
+        for (int pixel : this.ore) {
+            if (pixel != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasHalo() {
         for (float level : this.haloLevel) {
             if (!Float.isNaN(level)) {
@@ -257,7 +282,7 @@ public final class OreTemplate {
      * hue or beyond its lightness range. Pixels mostly surrounded by ore are counted as ore too, and the faintly
      * tinted edge of a colorful ore is left to the halo.
      */
-    private static boolean[] detectOre(int width, int height, int[] pixels, boolean[] changed, Palette host, OreTextureSettings settings) {
+    private static boolean[] detectOre(int width, int height, int[] pixels, boolean[] changed, Palette host, float minChroma, float minDistance, OreTextureSettings settings) {
         int size = width * height;
         float step = host.meanStep();
         float lowest = host.darkest() - settings.rampExtension() * step;
@@ -276,7 +301,7 @@ public final class OreTemplate {
             float[] hostAb = host.abAt(lab[OkLab.L]);
             hue[i] = (float) Math.hypot(lab[OkLab.A] - hostAb[0], lab[OkLab.B] - hostAb[1]);
             boolean beyond = lab[OkLab.L] < lowest || lab[OkLab.L] > highest;
-            ore[i] = (beyond || hue[i] > settings.oreMinChroma()) && host.distanceToRamp(lab, settings.rampExtension()) > settings.oreMinDistance();
+            ore[i] = (beyond || hue[i] > minChroma) && host.distanceToRamp(lab, settings.rampExtension()) > minDistance;
         }
         for (int pass = 0; pass < 2; pass++) {
             boolean[] grown = ore.clone();
@@ -308,7 +333,7 @@ public final class OreTemplate {
                 maxHue = Math.max(maxHue, hue[i]);
             }
         }
-        if (maxHue >= settings.oreMinChroma()) {
+        if (maxHue >= minChroma) {
             boolean[] trimmed = ore.clone();
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
@@ -321,6 +346,14 @@ public final class OreTemplate {
             ore = trimmed;
         }
         return ore;
+    }
+
+    private static int count(boolean[] mask) {
+        int count = 0;
+        for (boolean set : mask) {
+            count += set ? 1 : 0;
+        }
+        return count;
     }
 
     private static boolean isEdge(boolean[] mask, int width, int height, int x, int y) {

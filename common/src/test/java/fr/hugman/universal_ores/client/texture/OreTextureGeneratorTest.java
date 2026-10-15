@@ -125,6 +125,29 @@ class OreTextureGeneratorTest {
     }
 
     @Test
+    void findsOresOfAFaintHue() {
+        // Like More Ores' zinc ore: the ore of iron ore, redrawn in greenish greys of the stone's lightness
+        int[] stone = vanilla("stone").pixels();
+        boolean[] mask = TestImages.resource("/assets/universal_ores/textures/ore_hint/minecraft/iron_ore.png").mask();
+        int[] faint = stone.clone();
+        int expected = 0;
+        for (int i = 0; i < faint.length; i++) {
+            if (mask[i]) {
+                int grey = stone[i] & 0xFF;
+                faint[i] = 0xFF000000 | (grey - 6) << 16 | (grey + 10) << 8 | (grey - 6);
+                expected++;
+            }
+        }
+        OreTemplate template = OreTemplate.extract(16, 16, faint, stone, null, null, SETTINGS);
+        int found = 0;
+        for (int i = 0; i < faint.length; i++) {
+            found += mask[i] && template.ore(i) != 0 ? 1 : 0;
+        }
+        System.out.printf("Faint ore: %d of its %d pixels found%n", found, expected);
+        assertTrue(found >= 0.9 * expected, "Only " + found + " of the " + expected + " pixels of a faint ore were found");
+    }
+
+    @Test
     void oresStayVisibleOnStonesOfTheirColor() {
         OreTemplate coal = template("coal_ore", "stone");
         Image blackstone = vanilla("blackstone");

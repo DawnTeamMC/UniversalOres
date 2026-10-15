@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Builds a wall of every registered ore variant (one row per stone, sorted like their blocks are registered) and
@@ -70,7 +71,8 @@ public class OreVariantClientGameTest implements FabricClientGameTest {
             List<String> unnamed = context.computeOnClient(minecraft -> OreVariantRegistrar.registered().stream()
                     .filter(variant -> {
                         String name = new ItemStack(variant.block()).getHoverName().getString();
-                        return name.equals(variant.block().getDescriptionId()) || name.isBlank();
+                        // Neither wholly nor partly a translation key, like "Granite block.mod.tin_ore"
+                        return name.isBlank() || Stream.of(variant.block(), variant.stone(), variant.ore()).anyMatch(block -> name.contains(block.getDescriptionId()));
                     })
                     .map(variant -> variant.variant().id().toString())
                     .toList());

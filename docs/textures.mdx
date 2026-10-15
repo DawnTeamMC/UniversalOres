@@ -30,7 +30,9 @@ The **ore pixels** are the changed pixels that look nothing like the stone: eith
 
 <Asset width={160} location="universal_ores:wiki/textures/ore_pixels" title="The ore pixels of the diamond ore"/>
 
-This finds the same pixels as the masks drawn by hand for the vanilla ores 97% of the time. Universal Ores still ships these masks, and a mod or a resource pack can give one to any ore: a texture at `assets/universal_ores/textures/ore_hint/<ore namespace>/<ore>.png`, whose opaque pixels are the ore. A mask that doesn't fit the ore texture (because a resource pack changed it) is ignored.
+Some ores are only a faint tint of their stone, like a greenish grey zinc on grey stone. When almost none of the changed pixels look like ore, the ore is looked for again, this time counting even barely colored pixels as ore.
+
+This finds the same pixels as the masks drawn by hand for the vanilla ores 97% of the time. Universal Ores still ships these masks (and masks for a few ores of other mods that are hard to tell apart from their stone), and a mod or a resource pack can give one to any ore: a texture at `assets/universal_ores/textures/ore_hint/<ore namespace>/<ore>.png`, whose opaque pixels are the ore. A mask that doesn't fit the ore texture (because a resource pack changed it) is ignored. If no ore is found at all, the game log says so, and the variants of that ore look like their stone until it gets a mask.
 
 ### The halo
 
