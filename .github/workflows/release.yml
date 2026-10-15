@@ -53,7 +53,7 @@ jobs:
           path: './gradle.properties'
           properties: 'mod_id mod_name mod_logo mod_color minecraft_version'
 
-      # Project IDs and loaders are read from fabric.mod.json
+      # Project IDs, loaders and dependencies (with the mods Universal Ores is compatible with) are read from fabric.mod.json
       - name: Publish Fabric jar to GitHub, CurseForge and Modrinth
         id: publish_fabric
         uses: Kir-Antipov/mc-publish@v3.3
@@ -87,6 +87,44 @@ jobs:
           version: ${{ env.MOD_VERSION }}+neoforge
           changelog: ${{ github.event.release.body }}
           loaders: neoforge
+          # The mods Universal Ores is compatible with (see common/src/main/resources/universal_ores), shown as
+          # optional dependencies. The Fabric ones are in fabric.mod.json.
+          dependencies: |
+            betterend(optional){modrinth:IcERKldh}{curseforge:413596}
+            betternether(optional){modrinth:fxX3RlL5}{curseforge:311377}
+            biomeswevegone(optional){modrinth:NTi7d3Xc}{curseforge:1070751}
+            caverns_and_chasms(optional){modrinth:tfjmPSbI}{curseforge:438005}
+            create(optional){modrinth:LNytGWDc}{curseforge:328085}
+            deeperdarker(optional){modrinth:fnAffV0n}{curseforge:659011}
+            end_reborn(optional){modrinth:eYJwCO7t}#(ignore:curseforge)
+            enderscape(optional){modrinth:btCrWvHr}{curseforge:536638}
+            energizedpower(optional){modrinth:6pku8gW1}{curseforge:782147}
+            expore(optional){modrinth:1HwCh5vX}#(ignore:curseforge)
+            galosphere(optional){modrinth:Kn7xyQ1v}{curseforge:631098}
+            immersiveengineering(optional){modrinth:tIm2nV03}{curseforge:231951}
+            immersiveores(optional){modrinth:F9Vuwq3S}#(ignore:curseforge)
+            jewelry(optional){modrinth:sNJAIjUm}{curseforge:910706}
+            malum(optional){modrinth:jgzwYsAN}{curseforge:484064}
+            mekanism(optional){modrinth:Ce6I4WUE}{curseforge:268560}
+            modern_industrialization(optional){modrinth:Gov5Dboq}{curseforge:405388}
+            mythicupgrades(optional){modrinth:ERH7cFoy}{curseforge:663567}
+            natures_spirit(optional){modrinth:WBvnqHfV}{curseforge:907816}
+            nether_ores_reborn(optional){modrinth:EUV7foM2}#(ignore:curseforge)
+            occultism(optional){modrinth:sbJh4AZw}{curseforge:361026}
+            oreganized(optional){modrinth:2FJutzEL}{curseforge:769203}
+            overworld_netherite_ore(optional){modrinth:EvuYS8gZ}{curseforge:625133}
+            overworldquartzore(optional){modrinth:yBLrXpfD}{curseforge:1061276}
+            powah(optional){modrinth:KZO4S4DO}{curseforge:352656}
+            promenade(optional){modrinth:GuE5FpvB}{curseforge:399648}
+            quark(optional){modrinth:qnQsVE2z}{curseforge:243121}
+            regions_unexplored(optional){modrinth:Tkikq67H}{curseforge:659110}
+            resource_nether_ores(optional){modrinth:GXPQteCw}{curseforge:1009367}
+            spectrum(optional){modrinth:3rc31Hgo}{curseforge:556967}
+            stonier_stone(optional){curseforge:533396}#(ignore:modrinth)
+            terralith(optional){modrinth:8oi3bsk5}{curseforge:513688}
+            thermal(optional){modrinth:Xvg6q5Wp}{curseforge:222880}
+            twigs(optional){modrinth:RG50cUrX}{curseforge:496913}
+            wilderwild(optional){modrinth:AtHRJSUW}{curseforge:648511}
           java: 25
           game-versions: |
             >=${{ steps.gradle_properties.outputs.minecraft_version }}

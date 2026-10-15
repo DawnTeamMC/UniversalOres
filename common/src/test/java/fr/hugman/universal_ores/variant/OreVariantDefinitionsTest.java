@@ -122,4 +122,24 @@ class OreVariantDefinitionsTest {
         assertTrue(files.size() > 10, "Only " + files.size() + " files found");
         assertTrue(problems.isEmpty(), String.join("\n", problems));
     }
+
+    /**
+     * Every mod Universal Ores has a file for is shown as compatible on CurseForge and Modrinth: as an optional
+     * dependency of the Fabric jar (fabric.mod.json) or of the NeoForge one (release workflow).
+     */
+    @Test
+    void compatibleModsArePublished() throws IOException, URISyntaxException {
+        Path folder = Path.of(Objects.requireNonNull(OreVariantDefinitionsTest.class.getResource("/" + OreVariants.DIRECTORY + "/minecraft.json")).toURI()).getParent();
+        String published = Files.readString(Path.of("../fabric/src/main/resources/fabric.mod.json")) + Files.readString(Path.of("../.github/workflows/release.yml"));
+        List<String> missing;
+        try (Stream<Path> list = Files.list(folder)) {
+            missing = list.map(file -> file.getFileName().toString())
+                    .filter(name -> name.endsWith(".json") && !name.equals("minecraft.json"))
+                    .map(name -> name.substring(0, name.length() - ".json".length()))
+                    .filter(mod -> !published.contains(mod + "(optional)"))
+                    .sorted()
+                    .toList();
+        }
+        assertTrue(missing.isEmpty(), "Not published as compatible: " + missing);
+    }
 }
