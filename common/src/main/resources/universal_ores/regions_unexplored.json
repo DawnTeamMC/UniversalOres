@@ -1,0 +1,6 @@
+{
+  "stones": {
+    "regions_unexplored:argillite": "minecraft:stone",
+    "regions_unexplored:chalk": "minecraft:stone"
+  }
+}

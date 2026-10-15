@@ -11,9 +11,9 @@
 [![License (Polyform Shield 1.0.0)](https://img.shields.io/badge/code%20license-Polyform%20Shield%201.0.0-green.svg?style=for-the-badge)](https://polyformproject.org/licenses/shield/1.0.0/)
 
 Universal Ores is a mod for the latest version of Minecraft that adds new vanilla ores variants for andesite, 
-diorite, granite, tuff, calcite, blackstone and basalt that generate naturally where they should precisely be.
+diorite, granite, tuff, calcite, blackstone, basalt and smooth basalt that generate naturally where they should precisely be.
 
-**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores).**
+**You can visit the [official website for Universal Ores for more information](https://dawnteammc.github.io/universal_ores), or [explore the wiki »](https://dawnteammc.github.io/universal_ores/wiki)**
 
 ## 📦 Download
 We use [CurseForge](https://www.curseforge.com/minecraft/mc-mods/universal-ores-fabric) and [Modrinth](https://modrinth.com/mod/universal_ores) to publish **stable builds** of Universal Ores for Minecraft.
@@ -23,6 +23,25 @@ Universal Ores is available for both **Fabric** and **NeoForge**.
 ⚠ On Fabric, Universal Ores **requires** Fabric API to be installed: [GitHub](https://github.com/FabricMC/fabric) / [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) / [Modrinth](https://modrinth.com/mod/fabric-api)
 
 On NeoForge, no other mod is required.
+
+## 🧩 Adding stones and ores
+
+Universal Ores makes a variant of every ore it knows of in every stone it knows of, with its own texture, drops, tags, recipes and world generation, all copied from the original ore when the game starts.
+
+Any mod or modpack can add its stones and ores with a small JSON file, without code or dependency:
+
+```json
+{
+  "stones": {
+    "mymod:marble": "minecraft:stone"
+  },
+  "ores": {
+    "mymod:tin_ore": "minecraft:stone"
+  }
+}
+```
+
+Mods put it in a `universal_ores/` folder at the root of their jar, modpacks in `config/universal_ores/`. The [wiki](https://dawnteammc.github.io/universal_ores/wiki) explains [the whole format](https://moddedmc.wiki/project/universal-ores/docs/adding_stones_and_ores) and [how the textures are drawn](https://moddedmc.wiki/project/universal-ores/docs/textures).
 
 ## 🐛 Reporting bugs
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/DawnTeamMC/UniversalOres/issues).

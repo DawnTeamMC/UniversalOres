@@ -1,0 +1,7 @@
+{
+  "stones": {
+    "biomeswevegone:dacite": "minecraft:stone",
+    "biomeswevegone:white_dacite": "minecraft:stone",
+    "biomeswevegone:red_rock": "minecraft:stone"
+  }
+}

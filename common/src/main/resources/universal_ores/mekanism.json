@@ -1,0 +1,9 @@
+{
+  "ores": {
+    "mekanism:osmium_ore": "minecraft:stone",
+    "mekanism:tin_ore": "minecraft:stone",
+    "mekanism:lead_ore": "minecraft:stone",
+    "mekanism:uranium_ore": "minecraft:stone",
+    "mekanism:fluorite_ore": "minecraft:stone"
+  }
+}

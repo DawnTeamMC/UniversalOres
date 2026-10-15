@@ -13,12 +13,13 @@ public class UniversalOresDataGenerator implements DataGeneratorEntrypoint {
 
         // Resource Pack
         pack.addProvider(UniversalOresModelProvider::new);
+        pack.addProvider(UniversalOresEnglishLangProvider::new);
 
         // Data Pack
-        var blockTags = pack.addProvider(UniversalOresBlockTagProvider::new);
-        pack.addProvider((fabricDataOutput, completableFuture) -> new UniversalOresItemTagProvider(fabricDataOutput, completableFuture, blockTags));
         pack.addProvider(UniversalOresBlockLootTableProvider::new);
-        pack.addProvider(UniversalOresRecipeGenerator::new);
+        pack.addProvider(UniversalOresBlockTagProvider::new);
+        pack.addProvider(UniversalOresItemTagProvider::new);
+        pack.addProvider(UniversalOresRecipeProvider::new);
     }
 
     @Override

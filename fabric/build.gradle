@@ -10,6 +10,9 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // For the Wiki Export runs. Version list: https://maven.su5ed.dev/#/releases/org/sinytra/wiki-exporter-fabric
+    //runtimeOnly "org.sinytra:wiki-exporter-fabric:2.2.1+1.21.11"
 }
 
 loom {
@@ -24,23 +27,26 @@ loom {
         }
     }
 
+    // Renders the blocks and items of the mod for the wiki, with the wiki exporter below
     runs {
-        // Boots a server, runs the game tests and exits: a quick way to check that the mod loads
-        gameTestServer {
+        exportClient {
+            client()
+            name = "Wiki Export Client"
+            property "wiki_exporter.enabled", "true"
+            property "wiki_exporter.config.path", "${rootDir}/wiki_exporter_config.json"
+        }
+        exportServer {
             server()
-            name = "Game Test Server"
-            vmArg "-Dfabric-api.gametest"
-            runDir "build/gametest"
+            name = "Wiki Export Server"
+            property "wiki_exporter.enabled", "true"
+            property "wiki_exporter.config.path", "${rootDir}/wiki_exporter_config.json"
         }
     }
 }
 
-// Lets the IDE resolve the shared code; the classes themselves are compiled from source below
-dependencies {
-    compileOnly common.sourceSets.main.output
-    clientCompileOnly common.sourceSets.client.output
-}
-
+// Data generation, in src/datagen: ./gradlew :fabric:runDatagen
+// Game tests, in src/gametest: ./gradlew :fabric:runGameTest (also part of check), and
+// ./gradlew :fabric:runClientGameTest, which opens the game and takes a screenshot of every ore variant
 fabricApi {
     configureDataGeneration() {
         modId = "universal_ores-datagen"
@@ -50,6 +56,67 @@ fabricApi {
         outputDirectory = common.file("src/main/generated")
         addToResources = false
     }
+    configureTests {
+        createSourceSet = true
+        modId = "universal_ores-gametest"
+        enableGameTests = true
+        enableClientGameTests = true
+        eula = true
+    }
+}
+
+// Mods Universal Ores has compatibility with, to try them in development: ./gradlew :fabric:runClient -PcompatMods
+// Their versions are Modrinth version IDs, for this Minecraft version.
+repositories {
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+dependencies {
+    if (project.hasProperty('compatMods')) {
+        localRuntime "maven.modrinth:promenade:ldF03LkA" // Promenade 5.6.0
+        localRuntime "maven.modrinth:terralith:OxfI2n80" // Terralith 2.6.4
+        localRuntime "maven.modrinth:lithostitched:sGGUpIGT" // Lithostitched 1.8.0, needed by Terralith and Enderscape
+        // Ores
+        localRuntime "maven.modrinth:techreborn:YsPVZIsK" // Tech Reborn 6.1.1
+        localRuntime "maven.modrinth:energized-power:A3hDTNxB" // Energized Power 3.0.1
+        localRuntime "maven.modrinth:rayvaxmodmore_ores:IuVxD9FW" // More Ores 1.1.2
+        localRuntime "maven.modrinth:skniros-nether-end-ores:ufHVaUqt" // Skniro's Nether & End Ores 1.2.0
+        localRuntime "maven.modrinth:resource-nether-ores:YQ6W4YKx" // Resource Nether Ores 3.1.0
+        localRuntime "maven.modrinth:resource-library:6qFsFbAY" // Resource Library 4.0.3, needed by Resource Nether Ores
+        localRuntime "maven.modrinth:exp-ore:jnsX6f1D" // Exp Ore 0.1
+        localRuntime "maven.modrinth:immersive-ores:ads983oF" // Immersive Ores 0.2
+        localRuntime "maven.modrinth:cinderscapes:bM8lo55u" // Cinderscapes 6.1.0-alpha.2
+        localRuntime "maven.modrinth:mythic-upgrades:wXpiq0fe" // Mythic Upgrades 5.1.1
+        localRuntime "maven.modrinth:cloth-config:Nv3xnWXd" // Cloth Config 26.2.155, needed by Mythic Upgrades
+        localRuntime "maven.modrinth:terrablender:KQix25Qc" // TerraBlender 26.2.0.0.2, needed by Mythic Upgrades
+        // Stones, and ores
+        localRuntime "maven.modrinth:blockus:wKScvq1F" // Blockus 2.17.3
+        localRuntime "maven.modrinth:wilder-wild:jO1Bwxn3" // Wilder Wild 4.3
+        localRuntime "maven.modrinth:frozenlib:DFsk0uXB" // FrozenLib 3.0.3, needed by Wilder Wild
+        localRuntime "maven.modrinth:betternether-neoforge:oTWVE5bx" // BetterNether 26.2.3
+        localRuntime "maven.modrinth:betterend-neoforge:XTWzPt7X" // BetterEnd 26.2.6
+        localRuntime "maven.modrinth:worldweaver-neoforge:z1VkPaCU" // WorldWeaver 26.2.4, needed by BetterNether and BetterEnd
+        localRuntime "maven.modrinth:wunderlib-neoforge:lHRSdEKP" // WunderLib 26.2.1, needed by WorldWeaver
+        localRuntime "maven.modrinth:bclib-neoforge:XsdGmdVY" // BCLib 26.2.3, needed by WorldWeaver
+        localRuntime "maven.modrinth:enderscape:g1hBr7BS" // Enderscape 3.0.3
+        localRuntime "maven.modrinth:yacl:DoR7RYgi" // YACL 3.9.7, needed by Enderscape
+        localRuntime "maven.modrinth:trim-patcher:VwpMfwIb" // Trim Patcher 2.1, needed by Enderscape
+    }
+    // Rendering mods, to try the PBR maps and emissive textures of the variants: ./gradlew :fabric:runClient -Pshaders
+    if (project.hasProperty('shaders')) {
+        localRuntime "maven.modrinth:sodium:xJZxADzI" // Sodium 0.9.2
+        localRuntime "maven.modrinth:iris:gxZWWnKH" // Iris 1.11.4
+        localRuntime "maven.modrinth:continuity:mgUN5Xz2" // Continuity 3.0.1, for emissive textures
+    }
+}
+
+// Lets the IDE resolve the shared code; the classes themselves are compiled from source below
+dependencies {
+    compileOnly common.sourceSets.main.output
+    clientCompileOnly common.sourceSets.client.output
 }
 
 // Compile the shared sources into this jar

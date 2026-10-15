@@ -1,0 +1,7 @@
+{
+  "ores": {
+    "expore:exp_ore": "minecraft:stone",
+    "expore:nether_exp_ore": "minecraft:netherrack",
+    "expore:end_exp_ore": "minecraft:end_stone"
+  }
+}

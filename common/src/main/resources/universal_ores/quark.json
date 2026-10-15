@@ -1,0 +1,8 @@
+{
+  "stones": {
+    "quark:jasper": "minecraft:stone",
+    "quark:limestone": "minecraft:stone",
+    "quark:shale": "minecraft:stone",
+    "quark:myalite": "minecraft:end_stone"
+  }
+}

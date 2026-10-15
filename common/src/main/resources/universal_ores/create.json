@@ -1,0 +1,35 @@
+{
+  "stones": {
+    "create:asurine": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/natural/asurine_0"
+    },
+    "create:crimsite": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/natural/crimsite_0"
+    },
+    "create:limestone": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/limestone"
+    },
+    "create:ochrum": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/natural/ochrum_0"
+    },
+    "create:scoria": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/scoria"
+    },
+    "create:veridium": {
+      "ores_of": "minecraft:stone",
+      "texture": "create:block/palettes/stone_types/natural/veridium_0"
+    },
+    "create:scorchia": {
+      "ores_of": "minecraft:netherrack",
+      "texture": "create:block/palettes/stone_types/scorchia"
+    }
+  },
+  "ores": {
+    "create:zinc_ore": "minecraft:stone"
+  }
+}

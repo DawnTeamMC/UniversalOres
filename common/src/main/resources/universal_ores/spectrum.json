@@ -1,0 +1,23 @@
+{
+  "stones": {
+    "spectrum:blackslag": {
+      "ores_of": "minecraft:stone",
+      "texture": {
+        "side": "spectrum:block/blackslag",
+        "end": "spectrum:block/blackslag_top"
+      }
+    }
+  },
+  "ores": {
+    "spectrum:azurite_ore": "minecraft:stone",
+    "spectrum:malachite_ore": "minecraft:stone",
+    "spectrum:shimmerstone_ore": "minecraft:stone",
+    "spectrum:amethyst_ore": "minecraft:stone",
+    "spectrum:citrine_ore": "minecraft:stone",
+    "spectrum:topaz_ore": "minecraft:stone",
+    "spectrum:onyx_ore": "minecraft:stone",
+    "spectrum:moonstone_ore": "minecraft:stone",
+    "spectrum:stratine_ore": "minecraft:netherrack",
+    "spectrum:paltaeria_ore": "minecraft:end_stone"
+  }
+}

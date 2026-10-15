@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DropExperienceRotatedPillarBlock extends RotatedPillarBlock {
     public static final MapCodec<DropExperienceRotatedPillarBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(IntProviders.codec(0, 10).fieldOf("experience").forGetter(block -> block.experienceDropped), propertiesCodec())
+            instance -> instance.group(IntProviders.NON_NEGATIVE_CODEC.fieldOf("experience").forGetter(block -> block.experienceDropped), propertiesCodec())
                     .apply(instance, DropExperienceRotatedPillarBlock::new)
     );
 
@@ -31,6 +31,10 @@ public class DropExperienceRotatedPillarBlock extends RotatedPillarBlock {
     public DropExperienceRotatedPillarBlock(IntProvider experienceDropped, Properties settings) {
         super(settings);
         this.experienceDropped = experienceDropped;
+    }
+
+    public IntProvider experienceDropped() {
+        return this.experienceDropped;
     }
 
     @Override

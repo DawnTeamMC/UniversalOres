@@ -1,6 +1,7 @@
 plugins {
     id "net.fabricmc.fabric-loom" version "${loom_version}" apply false
     id "net.neoforged.moddev" version "${moddev_version}" apply false
+    id 'org.moddedmc.wiki.toolkit' version '0.5.0'
 }
 
 subprojects {
@@ -43,5 +44,14 @@ subprojects {
     // for JitPack
     configurations.configureEach {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+// The wiki, published on https://moddedmc.wiki/project/universal-ores from the docs folder
+wiki {
+    docs {
+        "universal-ores" {
+            root = file('docs')
+        }
     }
 }
