@@ -18,6 +18,10 @@ package fr.hugman.universal_ores.client.texture;
  * @param oreMinDistance     how far (OKLab) from the stone's colors an ore pixel must be
  * @param oreMinChroma       how far from the stone's hue (OKLab a/b distance) an ore pixel must be, unless out of its lightness range
  * @param oreFillNeighbors   a changed pixel with at least this many ore neighbors is ore too
+ * @param faintOreShare      when less than this share of the pixels that differ from the stone are found to be ore, the
+ *                           ore is looked for again with the two thresholds below
+ * @param faintOreChroma     {@code oreMinChroma} when looking again, for ores of a faint hue
+ * @param faintOreDistance   {@code oreMinDistance} when looking again
  * @param glowHueShare       the edge pixels of a colorful ore with less than this share of its strongest hue (OKLab a/b
  *                           distance to the stone) are the glow or shadow it casts, not the ore
  * @param glowMaxOutside     ...as long as their lightness is less than this beyond the stone's
@@ -44,6 +48,9 @@ public record OreTextureSettings(
         float oreMinDistance,
         float oreMinChroma,
         int oreFillNeighbors,
+        float faintOreShare,
+        float faintOreChroma,
+        float faintOreDistance,
         float glowHueShare,
         float glowMaxOutside,
         float contrastThreshold,
@@ -61,6 +68,7 @@ public record OreTextureSettings(
             0.01F, 1.0F,
             1, 0.04F, 0.25F,
             1.5F, 0.04F, 0.05F, 6,
+            0.125F, 0.012F, 0.01F,
             0.3F, 0.2F,
             0.25F, 0.5F,
             0.03F, 0.5F,

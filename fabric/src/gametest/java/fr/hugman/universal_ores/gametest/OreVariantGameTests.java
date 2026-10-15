@@ -2,6 +2,8 @@ package fr.hugman.universal_ores.gametest;
 
 import com.mojang.logging.LogUtils;
 import fr.hugman.universal_ores.UniversalOres;
+import fr.hugman.universal_ores.block.DropExperienceRotatedPillarBlock;
+import fr.hugman.universal_ores.mixin.DropExperienceBlockAccessor;
 import fr.hugman.universal_ores.variant.OreVariantRegistrar;
 import fr.hugman.universal_ores.variant.RegisteredOreVariant;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
@@ -11,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,6 +22,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import org.slf4j.Logger;
@@ -28,8 +32,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Checks that every registered ore variant behaves like its original ore: drops, tags, cooking recipes and world
- * generation. With {@code -PcompatMods}, this covers the variants of the mods Universal Ores is compatible with.
+ * Checks that every registered ore variant behaves like its original ore: drops, experience, tags, cooking recipes
+ * and world generation. With {@code -PcompatMods}, this covers the variants of the mods Universal Ores is compatible with.
  */
 public class OreVariantGameTests {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -78,6 +82,28 @@ public class OreVariantGameTests {
             }
             if (variant.block().defaultBlockState().requiresCorrectToolForDrops() != variant.ore().defaultBlockState().requiresCorrectToolForDrops()) {
                 problems.add(variant.variant().id() + " doesn't need the same tool as its ore");
+            }
+        }
+        helper.assertTrue(problems.isEmpty(), String.join("\n", problems));
+        helper.succeed();
+    }
+
+    @GameTest
+    public void variantsDropTheExperienceOfTheirOre(GameTestHelper helper) {
+        List<String> problems = new ArrayList<>();
+        for (RegisteredOreVariant variant : OreVariantRegistrar.registered()) {
+            if (!(variant.ore() instanceof DropExperienceBlock ore)) {
+                continue;
+            }
+            IntProvider expected = ((DropExperienceBlockAccessor) ore).getXpRange();
+            IntProvider actual = switch (variant.block()) {
+                case DropExperienceBlock block -> ((DropExperienceBlockAccessor) block).getXpRange();
+                case DropExperienceRotatedPillarBlock block -> block.experienceDropped();
+                default -> null;
+            };
+            if (actual == null || actual.minInclusive() != expected.minInclusive() || actual.maxInclusive() != expected.maxInclusive()) {
+                problems.add(variant.variant().id() + " drops " + (actual == null ? "no" : actual.minInclusive() + "-" + actual.maxInclusive())
+                        + " experience instead of " + expected.minInclusive() + "-" + expected.maxInclusive());
             }
         }
         helper.assertTrue(problems.isEmpty(), String.join("\n", problems));

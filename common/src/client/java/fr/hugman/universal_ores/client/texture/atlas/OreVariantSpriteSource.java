@@ -140,6 +140,10 @@ public record OreVariantSpriteSource() implements SpriteSource {
             for (int[] frame : frames) {
                 templates.add(OreTemplate.extract(ore.width(), ore.height(), frame, hostPixels, oreHint, haloHint, settings));
             }
+            if (!templates.getFirst().hasOre()) {
+                LOGGER.warn("Found no ore in the texture {} of {}, so its variants look like their stone. A mask at {} can tell where the ore is",
+                        type.textureOrDefault(), id, TEXTURE_ID_CONVERTER.idToFile(hint));
+            }
             return Optional.of(new OreFrames(templates, animation, maps, emissive));
         } catch (IOException | IllegalArgumentException e) {
             LOGGER.error("Can't draw the variants of {}", id, e);

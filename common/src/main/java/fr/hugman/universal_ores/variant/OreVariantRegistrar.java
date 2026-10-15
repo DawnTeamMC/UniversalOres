@@ -1,16 +1,14 @@
 package fr.hugman.universal_ores.variant;
 
 import com.mojang.logging.LogUtils;
-import com.mojang.serialization.JsonOps;
 import fr.hugman.universal_ores.block.DropExperienceRotatedPillarBlock;
+import fr.hugman.universal_ores.mixin.DropExperienceBlockAccessor;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -117,20 +115,9 @@ public final class OreVariantRegistrar {
             return new RedStoneOreBlock(properties);
         }
         if (ore instanceof DropExperienceBlock experienceOre) {
-            IntProvider experience = experienceOf(experienceOre);
+            IntProvider experience = ((DropExperienceBlockAccessor) experienceOre).getXpRange();
             return pillar ? new DropExperienceRotatedPillarBlock(experience, properties) : new DropExperienceBlock(experience, properties);
         }
         return pillar ? new RotatedPillarBlock(properties) : new Block(properties);
-    }
-
-    /**
-     * Read through the block's codec, which is the only public way to get it.
-     */
-    private static IntProvider experienceOf(DropExperienceBlock block) {
-        return DropExperienceBlock.CODEC.codec().encodeStart(JsonOps.INSTANCE, block)
-                .map(json -> json.getAsJsonObject().get("experience"))
-                .flatMap(json -> IntProviders.codec(0, 10).parse(JsonOps.INSTANCE, json))
-                .resultOrPartial(error -> LOGGER.warn("Couldn't read the experience dropped by {}: {}", block, error))
-                .orElse(ConstantInt.ZERO);
     }
 }
