@@ -1,0 +1,68 @@
+{
+  "ores": {
+    "techreborn:bauxite_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/bauxite_ore"
+    },
+    "techreborn:galena_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/galena_ore"
+    },
+    "techreborn:iridium_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/iridium_ore"
+    },
+    "techreborn:lead_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/lead_ore"
+    },
+    "techreborn:ruby_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/ruby_ore"
+    },
+    "techreborn:sapphire_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/sapphire_ore"
+    },
+    "techreborn:silver_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/silver_ore"
+    },
+    "techreborn:tin_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/tin_ore"
+    },
+    "techreborn:uranium_ore": {
+      "in": "minecraft:stone",
+      "texture": "techreborn:block/ore/uranium_ore"
+    },
+    "techreborn:cinnabar_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "techreborn:block/ore/cinnabar_ore"
+    },
+    "techreborn:pyrite_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "techreborn:block/ore/pyrite_ore"
+    },
+    "techreborn:sphalerite_ore": {
+      "in": "minecraft:netherrack",
+      "texture": "techreborn:block/ore/sphalerite_ore"
+    },
+    "techreborn:peridot_ore": {
+      "in": "minecraft:end_stone",
+      "texture": "techreborn:block/ore/peridot_ore"
+    },
+    "techreborn:sheldonite_ore": {
+      "in": "minecraft:end_stone",
+      "texture": "techreborn:block/ore/sheldonite_ore"
+    },
+    "techreborn:sodalite_ore": {
+      "in": "minecraft:end_stone",
+      "texture": "techreborn:block/ore/sodalite_ore"
+    },
+    "techreborn:tungsten_ore": {
+      "in": "minecraft:end_stone",
+      "texture": "techreborn:block/ore/tungsten_ore"
+    }
+  }
+}

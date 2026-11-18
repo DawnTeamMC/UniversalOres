@@ -1,0 +1,125 @@
+---
+title: Textures
+---
+
+Universal Ores doesn't ship hand-drawn textures for its ore variants: **it draws them when the game loads its resources**, from the textures of the stone and of the original ore. Any ore of any mod gets textures, and they follow resource packs: retexture granite or diamond ore, and granite diamond ore follows.
+
+Each variant is drawn from three textures: the ore, the stone the ore was drawn on, and the new stone.
+
+<Asset width={160} location="universal_ores:wiki/textures/ore" title="Diamond ore"/>
+<Asset width={160} location="universal_ores:wiki/textures/host" title="Stone"/>
+<Asset width={160} location="universal_ores:wiki/textures/new_stone" title="Granite"/>
+
+All the images of this page are drawn by the generator itself, with the textures of vanilla Minecraft.
+
+## Colors
+
+Colors are compared in [OKLab](https://bottosson.github.io/posts/oklab/), a color space made so that the distance between two colors matches how different they look. A color has a **lightness** (`L`, from black to white) and two color axes (`a`, from green to red, and `b`, from blue to yellow). The **hue** of a color is where it sits on the `a` and `b` axes: grey is at the center.
+
+Working in OKLab means that "lighter by 10%" looks just as much lighter on a dark stone as on a light one.
+
+## 1. Taking the ore apart
+
+The ore texture is compared, pixel by pixel, with the texture of the stone it was drawn on. Most ore textures redraw their stone a little, so many pixels change, not only the ore:
+
+<Asset width={160} location="universal_ores:wiki/textures/changed" title="Pixels changed by the diamond ore"/>
+
+### The ore
+
+The **ore pixels** are the changed pixels that look nothing like the stone: either their hue is unlike the stone's at that lightness (diamonds on stone, but also grey quartz on red netherrack), or they are lighter or darker than any color of the stone (coal). Pixels mostly surrounded by ore are ore too. The faintly tinted edge of a colorful ore is left out: that's the glow it casts on the stone, like the reds around redstone or the greens around emeralds.
+
+<Asset width={160} location="universal_ores:wiki/textures/ore_pixels" title="The ore pixels of the diamond ore"/>
+
+Some ores are only a faint tint of their stone, like a greenish grey zinc on grey stone. When almost none of the changed pixels look like ore, the ore is looked for again, this time counting even barely colored pixels as ore.
+
+This finds the same pixels as the masks drawn by hand for the vanilla ores 97% of the time. Universal Ores still ships these masks (and masks for a few ores of other mods that are hard to tell apart from their stone), and a mod or a resource pack can give one to any ore: a texture at `assets/universal_ores/textures/ore_hint/<ore namespace>/<ore>.png`, whose opaque pixels are the ore. A mask that doesn't fit the ore texture (because a resource pack changed it) is ignored. If no ore is found at all, the game log says so, and the variants of that ore look like their stone until it gets a mask.
+
+### The halo
+
+Ores cast shadows, highlights and glints on the stone around them: that's the **halo**. Its pixels are the ones next to the ore that differ enough from the stone pixel under them, so that a stone slightly redrawn isn't mistaken for shading.
+
+Each halo pixel is stored **relative to the stone**, so that it can be redrawn on any other stone:
+
+- its **lightness level**: 0 is the dark end of the stone (10% of its pixels are darker), 1 is its light end (90% of its pixels are darker), and the levels go beyond for shadows darker and highlights lighter than the stone. Below, the darkest grey is a deep shadow, white a bright highlight;
+- its **tint**: how its hue differs from the stone's at the same lightness. That's what makes redstone glow red, emeralds cast green shadows and diamonds sparkle in cyan.
+
+<Asset width={160} location="universal_ores:wiki/textures/halo_levels" title="Lightness levels of the halo"/>
+<Asset width={160} location="universal_ores:wiki/textures/halo_tints" title="Tints of the halo"/>
+
+## 2. Drawing on the new stone
+
+First, the **common colors** of the new stone are listed: those used by at least 3% of its pixels. Below, the colors of granite from darkest to lightest; the tall ones are common. Rare colors are never used for the halo, so that a speck of the stone doesn't end up all around the ore.
+
+<Asset width={320} location="universal_ores:wiki/textures/new_stone_palette" title="Colors of granite"/>
+
+Then, the template is drawn on the new stone:
+
+- each **halo pixel** takes the lightness at the same level of the new stone, mixed with the stone pixel under it (made lighter or darker like the original halo pixel was), so that the pattern of the new stone shows through. It then takes the common color of the new stone closest to that lightness, plus its tint;
+- the **ore pixels** keep their colors, except when the new stone would hide them (see below);
+- every other pixel is the new stone, untouched.
+
+<Asset width={160} location="universal_ores:wiki/textures/result" title="Granite diamond ore"/>
+
+Only pixels that really differ from the stone under them make the halo. Counting every changed pixel would spread the shading of the ore over the new stone:
+
+<Asset width={160} location="universal_ores:wiki/textures/halo_every_change" title="Diorite diamond ore, with every changed pixel in the halo"/>
+<Asset width={160} location="universal_ores:wiki/textures/halo_shading_only" title="Diorite diamond ore, with only the shading in the halo"/>
+
+## 3. Keeping the ore readable
+
+An ore is drawn for its own stone: on another stone, it could blend in. Three rules keep it readable without changing ores that already stand out:
+
+- **Shades of the stone take the hue of the new stone.** Ore pixels that are only shades of their own stone, like the greys of coal, take half of the hue of the new stone: coal on netherrack is a reddish black rather than a grey.
+
+<Asset width={160} location="universal_ores:wiki/textures/stone_hue_off" title="Coal on netherrack, with its own greys"/>
+<Asset width={160} location="universal_ores:wiki/textures/stone_hue_on" title="Coal on netherrack, with the hue of netherrack"/>
+
+- **Dark greys get darker on darker stones**, like Mojang did for the deepslate ores: coal stays darker than the stone around it.
+- **An ore that would blend in is made lighter or darker as a whole**, keeping its own shading, until it stands out from the new stone as well as it did from its own one. How much an ore stands out is how far (in OKLab) its pixels are from the closest common colors of the stone; the median is used, so that a dark outline doesn't make up for the rest of the ore blending in.
+
+<Asset width={160} location="universal_ores:wiki/textures/visibility_off" title="Coal on blackstone, as it is"/>
+<Asset width={160} location="universal_ores:wiki/textures/visibility_on" title="Coal on blackstone, made lighter"/>
+
+## Results
+
+Mojang's deepslate ores are the stone ores redrawn on deepslate. Here they are (top), and the ones Universal Ores draws from the stone ores (bottom):
+
+<Asset width={720} location="universal_ores:wiki/textures/deepslate_mojang" title="Mojang's deepslate ores"/>
+<Asset width={720} location="universal_ores:wiki/textures/deepslate_generated" title="Deepslate ores drawn by Universal Ores"/>
+
+And every vanilla ore in andesite, diorite, granite, tuff and calcite:
+
+<Asset width={720} location="universal_ores:wiki/textures/gallery" title="Every vanilla ore in the stones of Universal Ores"/>
+
+The generator is tested against Mojang's deepslate ores and the textures that were drawn by hand for Universal Ores before: on average, a generated texture differs from them like the same texture with a few pixels shaded differently.
+
+## Other textures
+
+- **Pillars**: stones like basalt get a variant texture for their sides and one for their ends, each drawn on the matching texture of the stone.
+- **Animations**: an animated ore gets animated variants, with each frame drawn from the matching frame of the ore. A still ore in an animated stone is drawn on every frame of the stone.
+- **Resolutions**: an ore drawn at 16×16 on a 32×32 stone is scaled up pixel by pixel.
+- **Overlays**: if the texture of the stone an ore was drawn on can't be found, the ore texture is taken as an overlay: its opaque pixels are the ore, and the stone around it is shaded like around vanilla ores: darker above the ore, lighter below it.
+
+## Shaders and PBR packs
+
+PBR resource packs give blocks two more textures for shaders, in the [LabPBR](https://shaderlabs.org/wiki/LabPBR_Materials) format: a **normal map** (`_n`, the relief of the texture) and a **specular map** (`_s`, how smooth, metallic or glowing each pixel is).
+
+When the ore or the stone of a variant has them, the variant gets its own, put together like its texture: the ore pixels take the map of the ore, and the rest (the halo included) the map of the stone. Where one of them has no map, the variant gets the value shader mods use for textures without one, so the stone part of a variant looks just like the stone around it, and a glowing ore still glows in every stone.
+
+The maps are found by shader mods like Iris next to the texture of the variant, like `assets/universal_ores/textures/block/granite_diamond_ore_s.png`, so a resource pack can also give a variant its own maps. Only the first frame of animated textures is used for the maps.
+
+## Glowing ore packs
+
+Many resource packs make ores glow in the dark with **emissive textures**, in the OptiFine format: next to `diamond_ore.png`, a `diamond_ore_e.png` holds the pixels that glow (the suffix is set by the pack in `assets/minecraft/optifine/emissive.properties`). They are drawn by [Continuity](https://modrinth.com/mod/continuity) (on Fabric), with or without shaders.
+
+When the ore or the stone of a variant has one, the variant gets its own, put together like its texture: the glowing pixels of the ore on the ore, and those of the stone elsewhere. A variant of a glowing ore glows in every stone.
+
+<Callout variant="info">
+    Shader packs like Photon or Complementary don't read emissive textures in the OptiFine format: they make pixels glow from the specular maps of PBR packs (see above), and only if those maps make them emissive.
+</Callout>
+
+## For resource packs
+
+- A texture at `assets/universal_ores/textures/block/<variant>.png` is used instead of the generated one, like `assets/universal_ores/textures/block/granite_diamond_ore.png` or `assets/universal_ores/textures/block/promenade/blunite/minecraft/coal_ore.png` (see [the IDs of the variants]($adding_stones_and_ores#ids-and-names)).
+- An ore mask (see [above](#the-ore)) fixes an ore whose pixels aren't all found.
+- Start the game with `-Duniversal_ores.dumpTextures=<folder>` to save every generated texture (and map) in that folder, to retouch them or check them.

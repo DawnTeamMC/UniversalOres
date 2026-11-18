@@ -1,0 +1,37 @@
+{
+  "stones": {
+    "minecraft:granite": "minecraft:stone",
+    "minecraft:diorite": "minecraft:stone",
+    "minecraft:andesite": "minecraft:stone",
+    "minecraft:tuff": "minecraft:stone",
+    "minecraft:calcite": {
+      "ores_of": "minecraft:stone",
+      "strength": 0.5
+    },
+    "minecraft:blackstone": {
+      "ores_of": ["minecraft:netherrack", "minecraft:stone"],
+      "except": ["minecraft:gold_ore"],
+      "texture": "minecraft:block/blackstone_top"
+    },
+    "minecraft:basalt": "minecraft:netherrack",
+    "minecraft:smooth_basalt": "minecraft:stone"
+  },
+  "ores": {
+    "minecraft:coal_ore": "minecraft:stone",
+    "minecraft:iron_ore": "minecraft:stone",
+    "minecraft:gold_ore": "minecraft:stone",
+    "minecraft:copper_ore": "minecraft:stone",
+    "minecraft:lapis_ore": "minecraft:stone",
+    "minecraft:redstone_ore": "minecraft:stone",
+    "minecraft:emerald_ore": "minecraft:stone",
+    "minecraft:diamond_ore": "minecraft:stone",
+    "minecraft:nether_gold_ore": {
+      "in": "minecraft:netherrack",
+      "name": "gold"
+    },
+    "minecraft:nether_quartz_ore": {
+      "in": "minecraft:netherrack",
+      "name": "quartz"
+    }
+  }
+}

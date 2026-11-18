@@ -1,0 +1,6 @@
+{
+  "ores": {
+    "bewitchment:salt_ore": "minecraft:stone",
+    "bewitchment:silver_ore": "minecraft:stone"
+  }
+}

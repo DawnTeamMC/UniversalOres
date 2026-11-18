@@ -1,0 +1,12 @@
+{
+  "stones": {
+    "stonier_stone:galaxy_granite": "minecraft:stone",
+    "stonier_stone:lepidolite": "minecraft:stone",
+    "stonier_stone:limestone": "minecraft:stone",
+    "stonier_stone:marble_stone": {
+      "ores_of": "minecraft:stone",
+      "texture": "stonier_stone:block/marble_stone_back"
+    },
+    "stonier_stone:travertine": "minecraft:stone"
+  }
+}

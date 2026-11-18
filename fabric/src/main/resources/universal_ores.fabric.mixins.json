@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "fr.hugman.universal_ores.fabric.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "BuiltInPackSourceAccessor",
+    "BuiltInRegistriesMixin",
+    "PackRepositoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

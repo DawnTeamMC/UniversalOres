@@ -1,0 +1,8 @@
+{
+  "ores": {
+    "overworldquartzore:quartz_ore": {
+      "in": "minecraft:stone",
+      "texture": "overworldquartzore:block/quartzorenew"
+    }
+  }
+}

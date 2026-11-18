@@ -1,0 +1,13 @@
+{
+  "stones": {
+    "twigs:rhyolite": {
+      "ores_of": "minecraft:stone",
+      "texture": {
+        "side": "twigs:block/rhyolite_side",
+        "end": "twigs:block/rhyolite_top"
+      }
+    },
+    "twigs:schist": "minecraft:stone",
+    "twigs:bloodstone": "minecraft:netherrack"
+  }
+}

@@ -1,11 +1,13 @@
 package fr.hugman.universal_ores.data.provider;
 
-import fr.hugman.universal_ores.block.UniversalOresBlocks;
+import fr.hugman.universal_ores.data.BuiltInOreVariants;
+import fr.hugman.universal_ores.variant.RegisteredOreVariant;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 
 public class UniversalOresModelProvider extends FabricModelProvider {
@@ -13,17 +15,22 @@ public class UniversalOresModelProvider extends FabricModelProvider {
         super(output);
     }
 
+    /**
+     * A cube, or a column for pillar stones like basalt, using the generated textures.
+     */
     @Override
     public void generateBlockStateModels(@NotNull BlockModelGenerators gen) {
-        for (var ores : UniversalOresBlocks.OVERWORLD_ORE_BLOCKS) {
-            ores.forEach(gen::createTrivialCube);
+        for (RegisteredOreVariant variant : BuiltInOreVariants.all()) {
+            if (variant.block().defaultBlockState().hasProperty(BlockStateProperties.AXIS)) {
+                gen.createAxisAlignedPillarBlock(variant.block(), TexturedModel.COLUMN);
+            } else {
+                gen.createTrivialCube(variant.block());
+            }
         }
-        UniversalOresBlocks.BLACKSTONE_ORES.forEach(gen::createTrivialCube);
-        UniversalOresBlocks.BASALT_ORES.forEach(block -> gen.createAxisAlignedPillarBlock(block, TexturedModel.COLUMN));
     }
 
     @Override
     public void generateItemModels(@NotNull ItemModelGenerators gen) {
-        // Nothing to do here :D
+        // Block items get their block's model
     }
 }
